@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)https://workday-wake.netlify.app/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workday Wake - Smart Alarm for Workdays</title>
+    <link rel="stylesheet" href="./Workday Wake - Smart Alarm for Workdays_files/css2">
+    <style>
+        :root {
+            --primary: #185776;
+            --primary-light: #25a6d7;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --background: #f9f9f9;
+            --surface: #ffffff;
+            --text: #2c3e50;
+            --text-light: #7f8c8d;
+            --success: #2ecc71;
+            --border: #ecf0f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 0;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: var(--surface);
+        }
+
+        .hero h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .features {
+            padding: 80px 0;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 50px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+        }
+
+        .screenshot-section {
+            padding: 80px 0;
+            background: var(--surface);
+            text-align: center;
+        }
+
+        .screenshot-section h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .screenshot {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 8px solid var(--primary);
+        }
+
+        .docs {
+            padding: 80px 0;
+        }
+
+        .docs h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 50px;
+        }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .doc-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        .doc-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .doc-card p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .doc-card a {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .doc-section {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        .doc-section h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .doc-section h4 {
+            color: var(--primary);
+            margin: 25px 0 15px;
+        }
+
+        .faq {
+            padding: 80px 0;
+            background: var(--surface);
+        }
+
+        .faq h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 50px;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .faq-question {
+            padding: 20px;
+            background: var(--background);
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-answer {
+            padding: 20px;
+            color: var(--text-light);
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 50px 0 30px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: white;
+            opacity: 0.8;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .copyright {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .tagline {
+                font-size: 1rem;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        pre {
+            background: #2d3436;
+            color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+<link rel="stylesheet" type="text/css" href="chrome-extension://mfidniedemcgceagapgdekdbmanojomk/css/content-shared.css"></head>
+<body>
+    <header>
+        <div class="container">
+            <img class="logo" width="100" height="100" src="./Workday Wake - Smart Alarm for Workdays_files/workday-wake.svg" alt="Workday-Wake Icon">
+            <h1>Workday Wake</h1>
+            <p class="tagline">The smart alarm that knows your work schedule</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="https://workday-wake.netlify.app/#features">Features</a>
+            <a href="https://workday-wake.netlify.app/#screenshot">Screenshot</a>
+            <a href="https://workday-wake.netlify.app/#documentation">Documentation</a>
+            <a href="https://workday-wake.netlify.app/#faq">FAQ</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Wake Up Smarter, Not Harder</h2>
+                <p>
+                    Workday Wake is an intelligent alarm app that automatically adjusts to your work schedule.
+                    It skips weekends and holidays, so you only wake up when you need to.
+                </p>
+                <div class="cta-buttons">
+                    <a href="https://workday-wake.netlify.app/#" class="btn btn-primary">
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card animate">
+                        <div class="feature-icon">📅</div>
+                        <h3>Smart Scheduling</h3>
+                        <p>Automatically skips alarms on weekends and public holidays based on your location.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🌍</div>
+                        <h3>Location-Aware</h3>
+                        <p>Adapts to your country's official holidays and workday patterns automatically.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Custom Workdays</h3>
+                        <p>Define your own work schedule. Perfect for shift workers or non-standard weeks.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🏖️</div>
+                        <h3>Custom Holidays</h3>
+                        <p>Add personal holidays, vacations, or any days you want to sleep in.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🔔</div>
+                        <h3>Multiple Alarms</h3>
+                        <p>Set different alarms for different days with custom labels and sounds.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Beautiful UI</h3>
+                        <p>Clean, modern interface following Material Design guidelines.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screenshot" class="screenshot-section">
+            <div class="container">
+                <h2>App Preview</h2>
+                <img src="data:image/webp;base64,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" alt="Workday Wake App Screenshot" class="screenshot">
+            </div>
+        </section>
+
+        <section id="documentation" class="docs">
+            <div class="container">
+                <h2>Documentation</h2>
+                <div class="docs-grid">
+                    <div class="doc-card animate">
+                        <h3>Getting Started</h3>
+                        <p>New to Workday Wake? Learn how to set up your first alarm and configure your work schedule.</p>
+                        <a href="https://workday-wake.netlify.app/#getting-started">Read more</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Configuration</h3>
+                        <p>Dive deep into all the settings and options to customize your alarm experience.</p>
+                        <a href="https://workday-wake.netlify.app/#configuration">Read more</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Location Settings</h3>
+                        <p>Understand how location affects your alarm schedule and holiday detection.</p>
+                        <a href="https://workday-wake.netlify.app/#location">Read more</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Custom Holidays</h3>
+                        <p>Learn how to add your own holidays and special days when you don't need to wake up.</p>
+                        <a href="https://workday-wake.netlify.app/#custom-holidays">Read more</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Troubleshooting</h3>
+                        <p>Find solutions to common issues and learn how to report bugs effectively.</p>
+                        <a href="https://workday-wake.netlify.app/#troubleshooting">Read more</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Contributing</h3>
+                        <p>Interested in contributing? Check out our development guidelines.</p>
+                        <a href="https://github.com/peterandree/Workday-Wake/blob/main/CONTRIBUTING.md">Read more</a>
+                    </div>
+                </div>
+
+                <div id="getting-started" class="doc-section">
+                    <h3>Getting Started</h3>
+                    <p>Welcome to Workday Wake! Here's how to get started:</p>
+                    <ol>
+                        <li><strong>Download the app</strong> from the releases page</li>
+                        <li><strong>Open the app</strong> and grant the necessary permissions (location, notifications)</li>
+                        <li><strong>Set your location</strong> so the app can determine your local holidays</li>
+                        <li><strong>Configure your workdays</strong> in the settings menu</li>
+                        <li><strong>Create your first alarm</strong> by tapping the + button</li>
+                    </ol>
+                </div>
+
+                <div id="configuration" class="doc-section">
+                    <h3>Configuration Guide</h3>
+                    <h4>Work Schedule</h4>
+                    <p>By default, Workday Wake assumes a Monday-Friday work week. To customize:</p>
+                    <ol>
+                        <li>Go to Settings &gt; Work Schedule</li>
+                        <li>Tap on the days you work</li>
+                        <li>Select your typical work hours</li>
+                    </ol>
+                    <h4>Alarm Settings</h4>
+                    <p>Each alarm can be configured with:</p>
+                    <ul>
+                        <li><strong>Time:</strong> When the alarm should ring</li>
+                        <li><strong>Label:</strong> A name for the alarm (e.g., "Morning Commute")</li>
+                        <li><strong>Sound:</strong> Choose from available alarm sounds</li>
+                        <li><strong>Vibration:</strong> Enable or disable vibration</li>
+                        <li><strong>Snooze:</strong> Allow snoozing and set duration</li>
+                        <li><strong>Active Days:</strong> Override the global work schedule for this specific alarm</li>
+                    </ul>
+                </div>
+
+                <div id="location" class="doc-section">
+                    <h3>Location Settings</h3>
+                    <p>Workday Wake uses your location to:</p>
+                    <ul>
+                        <li>Determine your country's official holidays</li>
+                        <li>Detect your timezone for accurate alarm scheduling</li>
+                        <li>Provide region-specific workday defaults</li>
+                    </ul>
+                    <p><strong>Changing your location:</strong></p>
+                    <ol>
+                        <li>Go to Settings &gt; Location</li>
+                        <li>Tap Change Location</li>
+                        <li>Search for your city or allow automatic detection</li>
+                    </ol>
+                </div>
+
+                <div id="custom-holidays" class="doc-section">
+                    <h3>Custom Holidays</h3>
+                    <p>In addition to automatic holiday detection, you can add your own special days:</p>
+                    <h4>Adding a Single Holiday</h4>
+                    <ol>
+                        <li>Go to Settings &gt; Holidays</li>
+                        <li>Tap Add Holiday</li>
+                        <li>Select the date and give it a name (e.g., "Summer Vacation")</li>
+                        <li>Save the holiday</li>
+                    </ol>
+                    <h4>Adding Recurring Holidays</h4>
+                    <p>For holidays that repeat every year (like your birthday or anniversary):</p>
+                    <ol>
+                        <li>Go to Settings &gt; Holidays</li>
+                        <li>Tap Add Recurring Holiday</li>
+                        <li>Select the month and day</li>
+                        <li>Give it a name and save</li>
+                    </ol>
+                </div>
+
+                <div id="troubleshooting" class="doc-section">
+                    <h3>Troubleshooting</h3>
+                    <h4>Alarms Not Ringing</h4>
+                    <p><strong>Check the following:</strong></p>
+                    <ol>
+                        <li>Ensure the alarm is enabled (toggle switch should be on)</li>
+                        <li>Verify the alarm time is set correctly</li>
+                        <li>Check that today is a workday in your schedule</li>
+                        <li>Make sure your phone's volume is up and Do Not Disturb is off</li>
+                        <li>Verify that the app has notification permissions</li>
+                    </ol>
+                    <h4>Alarms Ringing on Holidays</h4>
+                    <p><strong>Possible causes:</strong></p>
+                    <ul>
+                        <li>Your location might not be set correctly</li>
+                        <li>The holiday might not be in our database for your region</li>
+                        <li>You might have overridden the holiday in your custom settings</li>
+                    </ul>
+                    <p><strong>Solution:</strong> Add the holiday manually in Settings &gt; Holidays</p>
+                    <h4>Battery Optimization Issues</h4>
+                    <p>Some Android devices aggressively optimize battery usage, which can prevent alarms from ringing. To fix this:</p>
+                    <ol>
+                        <li>Go to your phone's Settings &gt; Battery &gt; Battery Optimization</li>
+                        <li>Find Workday Wake in the list</li>
+                        <li>Select Don't optimize</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question">Is Workday Wake available for iOS?</div>
+                        <div class="faq-answer">
+                            <p>Currently, Workday Wake is only available for Android. The app is open source, so contributions for other platforms are welcome!</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Does the app work offline?</div>
+                        <div class="faq-answer">
+                            <p>Yes! Once you've set up your location and work schedule, the app works completely offline. Holiday data is cached locally.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How does the app know about holidays?</div>
+                        <div class="faq-answer">
+                            <p>Workday Wake uses publicly available holiday data for each country. When you set your location, the app downloads the relevant holiday calendar for your region.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Can I sync alarms between devices?</div>
+                        <div class="faq-answer">
+                            <p>Currently, Workday Wake doesn't support cloud sync. You can export your alarms and settings to a file and import them on another device.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Is my data private?</div>
+                        <div class="faq-answer">
+                            <p>All your alarm data, location information, and custom settings are stored locally on your device. We don't collect or share any personal data.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How do I report a bug or request a feature?</div>
+                        <div class="faq-answer">
+                            <p>Please open an issue on our GitHub repository with as much detail as possible, such as your device model, Android version, and steps to reproduce the issue.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <svg class="logo" style="width: 30px; height: auto; filter: brightness(0) invert(1);" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0 C396 0 792 0 1200 0 C1200 396 1200 792 1200 1200 C804 1200 408 1200 0 1200 C0 804 0 408 0 0 Z" fill="#ffffff"></path>
+                        <path d="M0 0 C1.71435651 -0.00389386 3.42871207 -0.00822994 5.14306641 -0.01298523 C8.72366474 -0.02041684 12.3041644 -0.02017792 15.88476562 -0.01489258 C20.45410621 -0.00909392 25.02304198 -0.02605334 29.59231567 -0.04923725 C33.12868578 -0.06402525 36.66495943 -0.06483956 40.20135498 -0.06172752 C41.88532311 -0.06223792 43.56929705 -0.06742234 45.25323486 -0.07753944 C66.74922379 -0.19088365 66.74922379 -0.19088365 74.08984375 6.59765625 C78.2519139 12.113348 80.05393469 19.33441951 79.69921875 26.171875" fill="#ffffff" transform="translate(579.625,209.69921875)"></path>
+                    </svg>
+                    <span style="margin-left: 10px; font-weight: 600;">Workday Wake</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/peterandree/Workday-Wake">GitHub</a>
+                    <a href="https://github.com/peterandree/Workday-Wake/blob/main/LICENSE">License</a>
+                    <a href="https://github.com/peterandree/Workday-Wake/blob/main/CONTRIBUTING.md">Contribute</a>
+                    <a href="https://github.com/peterandree/Workday-Wake/issues">Issues</a>
+                </div>
+            </div>
+            <p class="copyright">2026 Peter Andree. Built with Kotlin &amp; Jetpack Compose.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .doc-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+
+</body></html>

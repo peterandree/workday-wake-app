@@ -460,12 +460,12 @@
                     <div class="feature-card animate">
                         <div class="feature-icon">📅</div>
                         <h3>Smart Scheduling</h3>
-                        <p>Automatically skips alarms on weekends and public holidays based on your location.</p>
+                        <p>Automatically skips alarms on weekends and public holidays for the region you pick.</p>
                     </div>
                     <div class="feature-card animate">
                         <div class="feature-icon">🌍</div>
-                        <h3>Location-Aware</h3>
-                        <p>Adapts to your country's official holidays and workday patterns automatically.</p>
+                        <h3>Region-Aware</h3>
+                        <p>Adapts to your country's and subdivision's official holidays and workday patterns. The app never reads your GPS.</p>
                     </div>
                     <div class="feature-card animate">
                         <div class="feature-icon">⚙️</div>
@@ -513,8 +513,8 @@
                         <a href="#configuration">Read more</a>
                     </div>
                     <div class="doc-card animate">
-                        <h3>Location Settings</h3>
-                        <p>Understand how location affects your alarm schedule and holiday detection.</p>
+                        <h3>Region Settings</h3>
+                        <p>Understand how your chosen region affects your alarm schedule and holiday detection.</p>
                         <a href="#location">Read more</a>
                     </div>
                     <div class="doc-card animate">
@@ -539,8 +539,8 @@
                     <p>Welcome to Workday Wake! Here's how to get started:</p>
                     <ol>
                         <li><strong>Download the app</strong> from the releases page</li>
-                        <li><strong>Open the app</strong> and grant the necessary permissions (location, notifications)</li>
-                        <li><strong>Set your location</strong> so the app can determine your local holidays</li>
+                        <li><strong>Open the app</strong> and grant notification access</li>
+                        <li><strong>Select your country and region</strong> so the app can load your local public holidays</li>
                         <li><strong>Configure your workdays</strong> in the settings menu</li>
                         <li><strong>Create your first alarm</strong> by tapping the + button</li>
                     </ol>
@@ -568,19 +568,26 @@
                 </div>
 
                 <div id="location" class="doc-section">
-                    <h3>Location Settings</h3>
-                    <p>Workday Wake uses your location to:</p>
+                    <h3>Region Settings</h3>
+                    <p>Workday Wake picks public holidays for the country and region <strong>you
+                        choose</strong>. It uses that to:</p>
                     <ul>
-                        <li>Determine your country's official holidays</li>
-                        <li>Detect your timezone for accurate alarm scheduling</li>
+                        <li>Load the official public holidays for that country and subdivision</li>
                         <li>Provide region-specific workday defaults</li>
                     </ul>
-                    <p><strong>Changing your location:</strong></p>
+                    <p><strong>There is no automatic location detection.</strong> The app does not
+                        request any location permission and never reads your GPS &mdash; your
+                        timezone comes from your device's system settings, not from a location fix.</p>
+                    <p><strong>Choosing your region:</strong></p>
                     <ol>
-                        <li>Go to Settings &gt; Location</li>
-                        <li>Tap Change Location</li>
-                        <li>Search for your city or allow automatic detection</li>
+                        <li>Go to Settings &gt; Change location</li>
+                        <li>Search for your country and select it</li>
+                        <li>If your country has states or regions, select yours</li>
+                        <li>The app refreshes the holiday calendar for that region</li>
                     </ol>
+                    <p>You can also set this during onboarding, or from the dashboard's
+                        &ldquo;Configure location&rdquo; prompt. Until a region is selected, holiday
+                        skipping stays inactive and alarms ring on every day.</p>
                 </div>
 
                 <div id="custom-holidays" class="doc-section">
@@ -617,8 +624,8 @@
                     <h4>Alarms Ringing on Holidays</h4>
                     <p><strong>Possible causes:</strong></p>
                     <ul>
-                        <li>Your location might not be set correctly</li>
-                        <li>The holiday might not be in our database for your region</li>
+                        <li>No region is selected yet &mdash; go to Settings &gt; Change location</li>
+                        <li>The holiday data for your region has not loaded (needs internet once)</li>
                         <li>You might have overridden the holiday in your custom settings</li>
                     </ul>
                     <p><strong>Solution:</strong> Add the holiday manually in Settings &gt; Holidays</p>
@@ -656,13 +663,13 @@
                     <div class="faq-item">
                         <div class="faq-question">Does the app work offline?</div>
                         <div class="faq-answer">
-                            <p>Yes! Once you've set up your location and work schedule, the app works completely offline. Holiday data is cached locally.</p>
+                            <p>Yes! Once you've chosen your region and work schedule, the app works completely offline. Holiday data is cached locally.</p>
                         </div>
                     </div>
                     <div class="faq-item">
                         <div class="faq-question">How does the app know about holidays?</div>
                         <div class="faq-answer">
-                            <p>Workday Wake uses publicly available holiday data for each country. When you set your location, the app downloads the relevant holiday calendar for your region.</p>
+                            <p>Workday Wake uses publicly available holiday data for each country. When you select your region, the app downloads the relevant holiday calendar for it.</p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -674,7 +681,7 @@
                     <div class="faq-item">
                         <div class="faq-question">Is my data private?</div>
                         <div class="faq-answer">
-                            <p>All your alarm data, location information, and custom settings are stored locally on your device. We don't collect or share any personal data.</p>
+                            <p>All your alarm data, chosen region, and custom settings are stored locally on your device. The app requests no location permission and has no analytics or advertising. We don't collect or share any personal data.</p>
                         </div>
                     </div>
                     <div class="faq-item">

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Workday Wake</title>
+<meta name="description" content="How Workday Wake handles your data. No ads, no analytics, no accounts. Everything stays on your device.">
+<style>
+  :root { --fg:#1b1b1f; --muted:#5b5b66; --bg:#ffffff; --line:#e4e4ea; --accent:#3b5bdb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg:#e8e8ed; --muted:#a0a0ad; --bg:#141416; --line:#2c2c33; --accent:#91a7ff; }
+  }
+  body { background:var(--bg); color:var(--fg); font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+         max-width:44rem; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+  h1 { font-size:1.9rem; line-height:1.25; margin:0 0 .25rem; }
+  h2 { font-size:1.2rem; margin:2.25rem 0 .5rem; }
+  .sub { color:var(--muted); margin:0 0 2rem; }
+  .box { border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:6px;
+         padding:.9rem 1.1rem; margin:1.25rem 0; }
+  table { border-collapse:collapse; width:100%; margin:1rem 0; font-size:.94rem; }
+  th,td { text-align:left; padding:.55rem .6rem; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  code { font-size:.9em; background:rgba(127,127,127,.14); padding:.1rem .3rem; border-radius:3px; }
+  ul { padding-left:1.2rem; }
+  li { margin:.3rem 0; }
+  footer { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+
+<h1>Privacy Policy</h1>
+<p class="sub">Workday Wake — last updated 4 October 2026</p>
+
+<div class="box">
+  <strong>The short version.</strong> Workday Wake has no accounts, no servers of its own,
+  no advertising and no analytics. Your alarms and settings stay in your device's own
+  storage. The app contacts the network only to download public holiday calendars and,
+  if you use the optional tip jar, to reach the payment provider your store uses.
+</div>
+
+<h2>What we collect</h2>
+<p><strong>Nothing is collected.</strong> The app has no user accounts, no sign-in, and no
+backend that we operate. We cannot see your alarms, your labels, your working hours, or
+your custom holidays, because none of it ever leaves your device.</p>
+
+<h2>What stays on your device</h2>
+<p>Everything you enter is stored in the app's private, on-device storage (a local
+database and a local preferences file). None of it is uploaded, backed up to us, or
+readable by us or anyone else:</p>
+<ul>
+  <li>Your alarms &mdash; time, label, repeat pattern, ringtone, volume, vibration and snooze settings</li>
+  <li>Your working week and per-alarm day patterns</li>
+  <li>Your custom holidays, including any calendar files you import</li>
+  <li>Your country/region selection, and UI preferences such as theme and language</li>
+</ul>
+
+<h2>What leaves your device, and why</h2>
+<p>The app makes outbound requests only to the hosts below, always over HTTPS. Each
+request is a lookup for public holiday data for the country/region <em>you</em> selected.
+It does not contain your alarms, your settings, a device identifier, or an advertising
+identifier.</p>
+
+<table>
+  <tr><th>Destination</th><th>Why</th><th>What is sent</th></tr>
+  <tr>
+    <td><code>openholidaysapi.org</code></td>
+    <td>Public and school holiday calendars</td>
+    <td>Country code, region code and year</td>
+  </tr>
+  <tr>
+    <td><code>date.nager.at</code></td>
+    <td>Fallback holiday source if the primary one does not answer</td>
+    <td>Country code and year</td>
+  </tr>
+  <tr>
+    <td><code>feiertage-api.de</code></td>
+    <td>Fallback holiday source for German-speaking regions</td>
+    <td>State code and year</td>
+  </tr>
+  <tr>
+    <td><code>peterandree.github.io</code></td>
+    <td>Fetches the optional list of project supporters</td>
+    <td>Ordinary web request; nothing identifying</td>
+  </tr>
+  <tr>
+    <td>Google Play Billing <em>(Play version only)</em></td>
+    <td>Optional tip jar</td>
+    <td>Handled entirely by Google Play; the app receives a purchase token, never payment details</td>
+  </tr>
+  <tr>
+    <td>Ko-fi or Afdian <em>(direct version only)</em></td>
+    <td>Optional tip jar, where Play Billing is absent</td>
+    <td>Nothing but an ordinary link tap; the payment page opens in your browser and the app receives nothing back</td>
+  </tr>
+</table>
+<p>Holiday calendars are cached on your device so the app keeps working offline. You can
+clear the cache at any time by clearing the app's storage in Android Settings.</p>
+
+<h2>Permissions, and what each one is for</h2>
+<p>The app requests only the permissions it needs to ring an alarm. It requests
+<strong>no location permission</strong> &mdash; your country and region are chosen by you
+from a list, and the app never reads your GPS position.</p>
+
+<table>
+  <tr><th>Permission</th><th>Purpose</th></tr>
+  <tr><td><code>USE_EXACT_ALARM</code>, <code>USE_FULL_SCREEN_INTENT</code></td><td>Ring your alarm at the exact minute and show it over the lock screen</td></tr>
+  <tr><td><code>POST_NOTIFICATIONS</code></td><td>Show alarm and reminder notifications</td></tr>
+  <tr><td><code>RECEIVE_BOOT_COMPLETED</code></td><td>Re-arm your alarms after a reboot</td></tr>
+  <tr><td><code>FOREGROUND_SERVICE</code> (+ system-exempted / special-use)</td><td>Keep the alarm reliable on manufacturers that aggressively kill background apps</td></tr>
+  <tr><td><code>WAKE_LOCK</code>, <code>VIBRATE</code></td><td>Wake the device and vibrate when an alarm fires</td></tr>
+  <tr><td><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code></td><td>Download holiday calendars</td></tr>
+</table>
+
+<h2>Analytics, advertising and tracking</h2>
+<p>There is none. The app contains no analytics SDK, no advertising SDK, no crash
+reporting service, and no fingerprinting. It embeds no third-party tracking code and sets
+no cookies.</p>
+
+<h2>Children</h2>
+<p>The app is not directed at children and collects no personal information from anyone,
+of any age.</p>
+
+<h2>Your rights</h2>
+<p>Because your data never reaches us, there is nothing for us to export, correct or
+delete. You can erase everything the app holds by uninstalling it, or selectively by
+clearing its storage in Android Settings.</p>
+
+<h2>Changes to this policy</h2>
+<p>If a future version changes what the app transmits, this page will be updated before
+that version is distributed, and the effective date above will change.</p>
+
+<h2>Contact</h2>
+<p>Questions about this policy can be raised as an issue on the project's
+<a href="https://github.com/peterandree/workday-wake-app/issues">public issue
+tracker</a>.</p>
+
+<footer>
+  Workday Wake is open source. This policy describes the shipped application; it is not a
+  legal document and does not create rights beyond those the law already gives you.
+</footer>
+
+</body>
+</html>

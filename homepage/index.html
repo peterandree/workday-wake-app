@@ -1,8 +1,34 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workday Wake - Smart Alarm for Workdays</title>
+    <meta name="description" content="Workday Wake is a free Android alarm clock that skips weekends and public holidays for your region. No ads, no analytics, no location permission; your alarms never leave your device.">
+    <link rel="canonical" href="https://peterandree.github.io/workday-wake-app/">
+    <meta name="theme-color" content="#185776">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Workday Wake">
+    <meta property="og:title" content="Workday Wake — the smart alarm that knows your work schedule">
+    <meta property="og:description" content="A free Android alarm clock that skips weekends and public holidays for your region. No ads, no analytics, no location permission.">
+    <meta property="og:url" content="https://peterandree.github.io/workday-wake-app/">
+    <meta property="og:image" content="https://peterandree.github.io/workday-wake-app/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Workday Wake — the smart alarm that knows your work schedule">
+    <meta name="twitter:description" content="A free Android alarm clock that skips weekends and public holidays for your region. No ads, no analytics, no location permission.">
+    <meta name="twitter:image" content="https://peterandree.github.io/workday-wake-app/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "Workday Wake",
+      "operatingSystem": "Android",
+      "applicationCategory": "UtilitiesApplication",
+      "description": "A free alarm clock that skips weekends and public holidays for your region. No ads, no analytics, no location permission; your alarms never leave your device.",
+      "url": "https://peterandree.github.io/workday-wake-app/",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": "Skips weekends and public holidays, region-aware holiday calendars, custom workdays, custom holidays, multiple alarms with labels and sounds, widgets, evening warning, snooze, on-device diagnostics",
+      "screenshot": "https://peterandree.github.io/workday-wake-app/screenshot-1.webp"
+    }
+    </script>
     <link rel="stylesheet" href="./css2">
     <style>
         :root {
@@ -104,6 +130,84 @@
 
         nav a:hover::after {
             width: 100%;
+        }
+
+        .trust-strip {
+            padding: 18px 0;
+            background: #eef6f3;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .trust-strip .container {
+            display: flex;
+            justify-content: center;
+            gap: 26px;
+            flex-wrap: wrap;
+            font-size: 0.92rem;
+            color: var(--text);
+        }
+
+        .trust-strip span::before {
+            content: '\2713';
+            color: var(--success);
+            font-weight: 700;
+            margin-right: 6px;
+        }
+
+        .download {
+            padding: 70px 0;
+            background: var(--surface);
+            text-align: center;
+        }
+
+        .download h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 18px;
+        }
+
+        .download p {
+            color: var(--text-light);
+            max-width: 640px;
+            margin: 0 auto 18px;
+        }
+
+        .download .channels {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .channel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px 26px;
+            max-width: 300px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .channel h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .channel p {
+            font-size: 0.92rem;
+            margin-bottom: 12px;
+        }
+
+        .channel .status {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #fdf3e7;
+            color: #9a6b1f;
         }
 
         .hero {
@@ -430,12 +534,23 @@
 
     <nav>
         <div class="container">
+            <a href="#download">Download</a>
             <a href="#features">Features</a>
             <a href="#screenshot">Screenshot</a>
             <a href="#documentation">Documentation</a>
             <a href="#faq">FAQ</a>
         </div>
     </nav>
+
+    <div class="trust-strip" role="list" aria-label="Product facts">
+        <div class="container">
+            <span role="listitem">Free</span>
+            <span role="listitem">No ads</span>
+            <span role="listitem">No analytics</span>
+            <span role="listitem">No location permission</span>
+            <span role="listitem">Works offline</span>
+        </div>
+    </div>
 
     <main>
         <section class="hero">
@@ -446,9 +561,35 @@
                     It skips weekends and holidays, so you only wake up when you need to.
                 </p>
                 <div class="cta-buttons">
-                    <a href="https://github.com/peterandree/workday-wake-app" class="btn btn-primary">
-                        View on GitHub
+                    <a href="#download" class="btn btn-primary">
+                        Get the app
                     </a>
+                    <a href="https://github.com/peterandree/workday-wake-app" class="btn btn-outline">
+                        Issues and documentation
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <div class="container">
+                <h2>Download</h2>
+                <p>Workday Wake has not been released yet. Both install channels below go live
+                    with the first release &dash; this section links them the day they exist.</p>
+                <div class="channels">
+                    <div class="channel">
+                        <h3>Google Play</h3>
+                        <p>Full Play version with the optional in-app tip jar. Closed beta
+                            starts first; this button will become the store badge.</p>
+                        <span class="status">Coming soon — first release</span>
+                    </div>
+                    <div class="channel">
+                        <h3>Direct APK</h3>
+                        <p>Signed universal APK from GitHub Releases (same app, Ko-fi donation
+                            link instead of the tip jar). SHA-256 fingerprint published with
+                            the release.</p>
+                        <span class="status">Coming soon — first release</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -581,7 +722,7 @@
                         <li>Provide region-specific workday defaults</li>
                     </ul>
                     <p><strong>There is no automatic location detection.</strong> The app does not
-                        request any location permission and never reads your GPS &mdash; your
+                        request any location permission and never reads your GPS &dash; your
                         timezone comes from your device's system settings, not from a location fix.</p>
                     <p><strong>Choosing your region:</strong></p>
                     <ol>
@@ -629,7 +770,7 @@
                     <h4>Alarms Ringing on Holidays</h4>
                     <p><strong>Possible causes:</strong></p>
                     <ul>
-                        <li>No region is selected yet &mdash; go to Settings &gt; Change location</li>
+                        <li>No region is selected yet &dash; go to Settings &gt; Change location</li>
                         <li>The holiday data for your region has not loaded (needs internet once)</li>
                         <li>You might have overridden the holiday in your custom settings</li>
                     </ul>
@@ -644,7 +785,7 @@
 					<p>Note: If you are using a device from Xiaomi, Realme, Oppo, Vivo, or Samsung, standard Android settings are not enough.<br>
 						Please open the Workday-Wake app, navigate to Settings, and follow the specific 'Device Battery Guide' provided for your phone.
 					</p>
-					<p>For the full picture of how Workday Wake survives these devices &mdash; watchdog process, self-healing, diagnostics &mdash; read the
+					<p>For the full picture of how Workday Wake survives these devices &dash; watchdog process, self-healing, diagnostics &dash; read the
 						<a href="against-hostile-oems.html">Alarm Reliability guide</a>.
 					</p>
 					<h4>Widgets Not Updating</h4>

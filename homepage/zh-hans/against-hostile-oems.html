@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>闹钟可靠性 — Workday Wake</title>
+<meta name="description" content="Workday Wake 如何在小米、三星、华为等采取激进电池管理的安卓设备上保持闹钟响铃 — 以及你可以在自己设备上检查什么。">
+<meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="../css/against-hostile-oems.css">
+<script src="../js/lang.js" defer></script>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="../index.html" hreflang="en" title="English">EN</a><a href="../de/index.html" hreflang="de" title="Deutsch">DE</a><a href="index.html" hreflang="zh-Hans" title="中文（简体）" aria-current="page">中文</a><a href="../es-419/index.html" hreflang="es-419" title="Español">ES</a><a href="../fr/index.html" hreflang="fr" title="Français">FR</a><a href="../pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="../ja/index.html" hreflang="ja" title="日本語">日本語</a></div>
+
+
+<h1>闹钟可靠性</h1>
+<p class="sub">Workday Wake 如何经过工程化设计，在小米、三星、华为和其他
+  采用激进电池管理的设备上持续响铃 &mdash; 以及你能在手机上检查什么。</p>
+
+<nav class="toc" aria-label="In this guide">
+  <a href="#why">为什么有这个页面</a> ·
+  <a href="#threats">敌意环境实际会做什么</a> ·
+  <a href="#layers">我们叠加的层</a> ·
+  <a href="#diagrams">图示</a> ·
+  <a href="#diag">设备上的诊断</a> ·
+  <a href="#share">共享诊断数据 — 自愿，由你决定</a> ·
+  <a href="#opt-out">一切由你掌控</a> ·
+  <a href="#limits">坦诚的局限</a> ·
+  <a href="#closing">结语</a>
+</nav>
+
+<h2 id="why">为什么有这个页面</h2>
+<p>在原生安卓设备（比如 Google Pixel）上，一款写得好的闹钟应用
+  通常都能正常工作。但在相当大一部分安卓装机量上并非如此：多家
+  厂商的电源管理功能会杀掉后台应用、悄悄丢掉已排定的
+  闹钟，或阻止应用自启 &mdash; 往往
+  <em>而且完全不从通知应用“有东西被取消了”</em>。</p>
+<div class="box">
+  关键问题正是这种不对称：你的闹钟没了，应用却永远不知情。
+  Workday Wake 为此做的所有设计都围绕一个问题：
+  <strong>如果一个机制被清除了，哪个其他机制会发现？</strong>
+</div>
+<p>本页面就是这段工程设计的公开可读版本。它解释这些设备
+  实际会做什么、应用如何应对，以及万一出了问题，你如何在应用内
+  查看并共享诊断数据。各品牌设置步骤和
+  应用自带的指引来自同一来源；如果本页面与应用
+  出现分歧，以应用内 <em>设置 &gt; 可靠性</em> 界面
+  为准。</p>
+
+<h2 id="threats">敌意环境实际会做什么</h2>
+<table>
+  <tr><th>机制</th><th>常见于</th><th>对天真的闹钟应用的影响</th></tr>
+  <tr><td>最近任务上划杀进程 / 强制停止</td><td>Xiaomi (MIUI/HyperOS), Samsung (One&nbsp;UI)</td><td>已注册的闹钟被清空，且不回调应用</td></tr>
+  <tr><td>缓存进程清除（“内存清理”）</td><td>Xiaomi, Oppo/ColorOS, Samsung</td><td>进程无预警死亡；应用在进程层面的计划全部落空</td></tr>
+  <tr><td>后台冻结 / 自启动限制</td><td>Xiaomi (HyperOS/MIUI Autostart), Oppo/ColorOS (DuraSpeed)</td><td>闹钟可能照常送达，但响铃的进程被冻结 &mdash; 或应用永远无法自行重启</td></tr>
+  <tr><td>电池优化被设为“受限制”</td><td>原生安卓也有，外加厂商电池管理</td><td>闹钟被延迟或批量投递；即使最高优先级的闹钟 API 也可能被饿死</td></tr>
+  <tr><td>深度 Doze / 低活跃度存储桶</td><td>所有安卓；阈值因系统定制而异</td><td>除非闹钟 API 获得豁免，否则投递被推迟</td></tr>
+  <tr><td>开机广播被拦截（自启动）</td><td>Xiaomi/MIUI, HyperOS</td><td>重启后闹钟不会重新注册，直到用户允许自启动</td></tr>
+  <tr><td>备份恢复和系统升级</td><td>All Android</td><td>与上划杀进程一样：注册无声无息消失</td></tr>
+</table>
+
+<h2 id="layers">我们叠加的层层防线</h2>
+<p>上面的每一种系统皮肤都无法被单一机制覆盖，因此 Workday Wake 叠加了多道独立防线。每一层都假设上一层可能已被破坏：</p>
+<div class="layers">
+  <div class="layer"><b>预防</b><span>你的闹钟通过
+    <code>setAlarmClock()</code> 调度 &mdash; 这是安卓提供的最高优先级闹钟 API：
+    不受 Doze 限制、在系统时钟界面可见，即使进程已死也会送达。
+    它还会在状态栏显示小闹钟图标；这是应用正常工作，
+    不是 Bug。</span></div>
+  <div class="layer"><b>恢复</b><span>重启后、时区变更后、每次应用启动时，
+    以及由定期离线维护任务重新注册闹钟
+    （精确闹钟权限每 8 小时检查一次）。这些任务不依赖
+    进程是否存活，因此能重建厂商清除的一切。</span></div>
+  <div class="layer"><b>监督</b><span>在需要的设备上，一个小的第二进程
+    每 6 小时与主进程互相签到。如果一方
+    13 小时无动静，另一方就重新注册闹钟。这层默认
+    <em>关闭</em>（占内存）；对已知行为的品牌或发生第一次可靠性事件后
+    自动开启，且绝不会悄悄再关闭。</span></div>
+  <div class="layer"><b>检测与自愈</b><span>每个闹钟记录它
+    <em>预期</em>响铃的时间；每次实际响铃也记录在案。如果预期
+    的闹钟没响，应用记为一次漏响，并从闹钟列表使用的
+    同一数据源悄悄重新排定 &mdash; 甚至在你熟睡时完成。</span></div>
+  <div class="layer"><b>诚实上报</b><span>如果检测机制本身似乎
+    失效（守护连续三次无签到），应用会发出一条清晰可见的通知，
+    告知闹钟可靠性已下降 &mdash;
+    而不是假装一切正常。</span></div>
+</div>
+<p class="fallback-note">如果一层存在的意义只是接住上一层的失败，
+  那它就在正常履职 &mdash; 漏响、自愈和上报都被如实记录，绝不隐瞒。</p>
+
+<h3 id="diagrams">各层图示</h3>
+<p>这些图直接从工程文档渲染。它们与实现同步人工维护，
+  只在可靠性设计本身变化时更新。
+  
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d1dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d1.svg" alt="Timeline of one missed alarm: it is scheduled with setAlarmClock, the OEM kills the process and wipes registrations, boot and per-day watchdog jobs re-arm everything, the 6-hour mutual heartbeat notices the stale peer, the miss detector compares expected against actual fire, a self-heal reschedules all alarms, one incident escalates the device to tier 2, and three consecutive stale observations raise a user-facing distress notification." loading="lazy">
+  </picture>
+  <figcaption class="figcap">图 1 &mdash; 一次闹钟漏响，以及每层的应对</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d2dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d2.svg" alt="Flowchart of the primary fire path: the user sets an alarm, the scheduler computes a holiday-aware fire time and registers setAlarmClock with AlarmManager, when the wall clock is reached a broadcast receiver starts the foreground ring service and audio, raises a full-screen intent to the UI, reschedules the next occurrence, and the ring marker is the only oracle." loading="lazy">
+  </picture>
+  <figcaption class="figcap">图 2 &mdash; 主触发路径：<code>setAlarmClock()</code> 在进程死亡时也能送达</figcaption>
+</figure>
+
+<figure class="fig port">
+  <picture>
+    <source srcset="../d3dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d3.svg" alt="Flowchart of restore triggers: boot completed is direct-boot aware, time and timezone changes, application process start, and WorkManager periodic jobs all feed one central reschedule routine that re-registers setAlarmClock entries and re-arms the evening warning." loading="lazy">
+  </picture>
+  <figcaption class="figcap">图 3 &mdash; 恢复：四个独立触发器重建被厂商清除的内容</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d4dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d4.svg" alt="Flowchart of the supervision layer: the main process and the watchdog process each write a heartbeat every six hours to a shared database, each reads the other's beat and checks it against a thirteen-hour staleness threshold, a stale peer triggers a restart or reschedule, per-side failure counters feed a distress notifier that posts one user-facing notification after three consecutive stale observations, with a twelve-hour claim preventing duplicate notices." loading="lazy">
+  </picture>
+  <figcaption class="figcap">图 4 &mdash; 监督：主进程与守护进程之间的互搏心跳</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d5dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d5.svg" alt="Flowchart of the local detect and heal loop: on each heartbeat tick the expected fire time is checked against the last fired time within a grace window, a real miss increments the miss counter and triggers a self-heal that reschedules all alarms and stamps the last self-heal time, a recent self-heal coasts to avoid a heal loop, and the diagnostics screen shows all timestamps; sharing happens only on explicit user consent." loading="lazy">
+  </picture>
+  <figcaption class="figcap">图 5 &mdash; 检测与自愈：本地漏响检测与静默自愈</figcaption>
+</figure>
+
+<figure class="fig port">
+  <picture>
+    <source srcset="../d6dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d6.svg" alt="Flowchart of tiering: at process start the tier manager initializes, a hostile-OEM allowlist match escalates directly to tier 2 with the watchdog enabled, no match stays at tier 1 with the watchdog disabled, and a recorded reliability incident escalates tier 1 to tier 2; tier 2 is sticky with no automatic de-escalation." loading="lazy">
+  </picture>
+  <figcaption class="figcap">图 6 &mdash; 分级：守护进程正好在值得占用内存时启用</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d7dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d7.svg" alt="Flowchart of the stress harness: a script drives a throwaway Pixel emulator, installs the debug app, seeds a real alarm through the production scheduler, applies a restriction such as force-stop, process kill, deep doze or a standby bucket, waits while checking for the ring marker in the log, and reports pass, fail or skip with a report file; the emulator and its disk image are deleted afterwards." loading="lazy">
+  </picture>
+  <figcaption class="figcap">图 7 &mdash; 验证：压力测试驱动生产闹钟链路，而非合成测试</figcaption>
+</figure>
+
+<h3 id="per-brand">各品牌设置步骤（来自应用内置指引）</h3>
+<p>应用内置指引（受影响设备上的设置 &gt; 可靠性），
+  包含各厂商的精确步骤。以下为简版 &mdash; 若设置界面点名应用，
+  请在你的启动器里把“Workday Wake”替换为应用名称：</p>
+<table>
+  <tr><th>品牌 / 系统</th><th>步骤（与应用内设备电池指南一致）</th></tr>
+  <tr><td>小米 / MIUI、HyperOS</td><td>允许<b>自启动</b>；在自定义权限中启用“锁屏显示”和“后台弹出界面”；
+    把应用的省电策略设为“无限制”；在最近任务中锁定应用（下滑或点挂锁）。
+    
+    
+  <tr><td>三星 / One UI</td><td>设置 &gt; 电池和设备维护 &gt; 电池 &gt; 后台使用限制：从“休眠应用程序”“深度休眠应用程序”移除并加入“永不休眠应用程序”；设置 &gt; 应用程序 &gt; Workday Wake &gt; 电池 &gt; 不受限制。同时确认“让未使用的应用程序进入休眠”是关闭的 &mdash; 它可能抑制多日未用应用的闹钟。
+    
+    
+    
+    
+  <tr><td>华为 / EMUI、HarmonyOS</td><td>设置 &gt; 电池 &gt; 应用启动方式：设为“手动管理”，打开自动启动、被其他应用启动、后台运行；电池优化：选择“不允许”。
+    
+    
+  <tr><td>一加 / Oppo / Realme（ColorOS）</td><td>电池优化：选“未优化”；应用信息 &gt; 电池：“允许后台活动”/“不受限制”；在启动管理器中允许自启动；在 DuraSpeed 中把 Workday Wake 移出被监管列表。
+    
+    
+  <tr><td>Vivo / iQOO</td><td>在权限管理器中允许自启动；关闭电池优化；允许后台活动并在最近任务中锁定应用。
+    
+  <tr><td>Sony</td><td>设置 &gt; 电池 &gt; STAMINA 模式：“关闭” &mdash; 或关掉其“优先使用电池时间”的附加限制。
+    
+</table>
+<p>其他系列（华硕 PowerMaster、魅族、联想、摩托罗拉 Battery care、诺基亚
+  DuraSpeed、传音/itel/Infinix Phone Master）在应用内也可同样处理：
+  <em>设置 &gt; 可靠性</em> 会识别你的厂商，只显示适用于你设备的
+  步骤。所有步骤都以固定的字符串资源存在应用里；
+  没有硬编码或品牌专属分支。</p>
+<div class="box">
+  <strong>几乎在所有系统上都有效的技巧：</strong>打开最近任务并
+  <b>锁定</b> Workday Wake（挂锁图标）。这一步就能避免绝大多数上划杀进程
+  和内存清理造成的丢失，还能修复点按“跳过”后不再更新的小组件。
+</div>
+
+<h2 id="diag">设备上的诊断</h2>
+<p>上面每一项可靠性工程都会在本地留下可检查的痕迹。
+  在<em>设置 &gt; 诊断</em>中，应用会回答一份错误报告需要问的所有问题：
+  </p>
+<ul>
+  <li>接入侧：守护进程心跳正常吗？闹钟最后一次<b>排定</b>
+      是什么时候、<b>预期</b>何时响铃、<b>实际</b>何时响铃？</li>
+  <li>检测到多少次<b>漏响</b>，应用最后一次<b>自愈</b>
+      （漏响后重新排定）是什么时候？</li>
+  <li>应用版本、安卓版本、厂商和型号 &mdash; 正是厂商相关行为
+      发生的地方。</li>
+</ul>
+<div class="box ok">
+  这个界面的一切都在你的设备上计算和存储。诊断是
+  镜子，不是发射器：应用无法自行上传其中任何内容。
+</div>
+<p>在<em>设置 &gt; 可靠性</em>中还能看到设备所处的保护级别
+  （“级别 1 / 级别 2”）、累计漏响次数，而且 &mdash; 在
+  受影响的品牌上 &mdash; 还有设备电池指南本身。</p>
+
+<h2 id="share">共享诊断数据 &mdash; 自愿，由你决定</h2>
+<p>如果闹钟失效需要帮助，<em>设置 &gt; 诊断</em>里有
+  “发送给开发者”的操作：</p>
+<ol>
+  <li>这是<strong>自愿开启</strong>的：发生任何事之前，对话框会列出每一个字段。</li>
+  <li>报告只含技术信息 &mdash; 时间戳、计数器、版本、厂商/型号。
+      不含闹钟标签、姓名或任何标识符。</li>
+  <li><em>你</em>选择目的地（电子邮件、即时通讯，任何有分享面板
+      的都可以）。除非你在草稿上按下发送，否则什么都不会离开设备。</li>
+</ol>
+<div class="box">
+  应用中没有任何上传端点、崩溃上报服务或自动后台发送。
+  如果你不想用分享面板，也备有复制到剪贴板的替代方式。
+  
+</div>
+
+<h2 id="opt-out">一切由你掌控</h2>
+<ul>
+  <li><strong>无账号、无数据统计、无广告</strong> &mdash; 可靠性
+      工程只使用设备上的资源。参见
+      <a href="privacy.html">隐私政策</a>。</li>
+  <li><strong>Alarm Guard</strong>：保持应用存活的常驻通知服务可以在
+      设置 &gt; 可靠性中关闭（在限制严格的设备上会损失部分漏响保护）。</li>
+      
+  <li><strong>级别 2 监控</strong>只在命中已知品牌或发生已记录事件后启用额外组件；
+      绝无任何隐藏的上报渠道。</li>
+  <li><strong>卸载或清除应用存储就是完全重置：每一个诊断计数器、心跳时间戳
+      和漏响记录都只存在于你设备的应用存储中。</li>
+      
+</ul>
+
+<h2 id="limits">坦诚的局限</h2>
+<ul>
+  <li><strong>在 AOSP 基线设备上验证，而非所有设备。</strong>韧性
+      设计用 Android 开源项目原语（进程击杀、深度 Doze、
+      待机分桶）在一次性 Pixel 模拟器上测试，因为只有这些可以自动化。
+      模拟器无法完全复现小米自启动限制、三星设备维护或厂商的
+      闹钟节流 &mdash; 真实设备表现只能通过 dontkillmyapp.com 指南、
+      各品牌报告和用户发来的诊断数据来逼近。</li>
+  <li><strong>不承诺万无一失。</strong>激进的厂商会在固件版本之间
+      更改电源管理。如果某个品牌引入新的杀进程机制，应用可能需要
+      更新来适配；诊断数据正是我们发现问题的途径。</li>
+  <li><strong>状态栏的闹钟图标是有意为之</strong> &mdash; 它随承载
+      你闹钟的调度 API 而来。</li>
+  <li><strong>没有 iOS 版本。</strong>上述工程依赖安卓专有 API
+      （合约式闹钟、WorkManager、精确闹钟权限），iOS 没有可
+      比拟的对应物。</li>
+</ul>
+
+<h2 id="closing">结语</h2>
+<p>闹钟只有一个职责。Workday Wake 从第一天起就围绕这个职责最难的情形来设计：
+  它以能在进程死亡中幸存的方式排定，
+  重建被清除的内容，必要时用第二个进程自监督，
+  出问题时在设备上如实报告。隐私底线是绝对的 &mdash; 这些坦诚不
+  会牺牲你的任何数据。</p>
+<p>发现某个设备上本指南不适用？请
+  <a href="https://github.com/peterandree/workday-wake-app/issues">提交 issue</a>，
+  可能的话用自愿分享功能附上设备上的诊断数据。这条反馈回路
+  正是模拟器无法替代的东西。</p>
+
+<footer>
+  Workday Wake &mdash; 懂你工作日程的智能闹钟。相关页面：
+  <a href="index.html">主页</a> · <a href="privacy.html">隐私政策</a> ·
+  <a href="support.html">支持</a> · <a href="impressum.html" hreflang="de">Impressum</a>
+</footer>
+
+</body>
+</html>

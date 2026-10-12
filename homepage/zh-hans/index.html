@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-Hans"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workday Wake - 懂你工作日的智能闹钟</title>
+    <meta name="description" content="Workday Wake 是一款免费的安卓闹钟，自动跳过你所在地区的周末和法定节假日。没有广告、没有数据统计、不需要定位权限；你的闹钟数据永远不会离开你的设备。">
+    <link rel="canonical" href="https://peterandree.github.io/workday-wake-app/">
+    <meta name="theme-color" content="#185776">
+    <link rel="icon" href="../favicon.ico" sizes="48x48">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Workday Wake">
+    <meta property="og:title" content="Workday Wake — 懂你工作日程的智能闹钟">
+    <meta property="og:description" content="一款免费的安卓闹钟，自动跳过你所在地区的周末和法定节假日。没有广告、没有数据统计、不需要定位权限。">
+    <meta property="og:url" content="https://peterandree.github.io/workday-wake-app/">
+    <meta property="og:image" content="https://peterandree.github.io/workday-wake-app/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Workday Wake — 懂你工作日程的智能闹钟">
+    <meta name="twitter:description" content="一款免费的安卓闹钟，自动跳过你所在地区的周末和法定节假日。没有广告、没有数据统计、不需要定位权限。">
+    <meta name="twitter:image" content="https://peterandree.github.io/workday-wake-app/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "Workday Wake",
+      "operatingSystem": "Android",
+      "applicationCategory": "UtilitiesApplication",
+      "description": "一款免费的闹钟，自动跳过你所在地区的周末和法定节假日。没有广告、没有数据统计、不需要定位权限；你的闹钟数据永远不会离开你的设备。",
+      "url": "https://peterandree.github.io/workday-wake-app/",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": "跳过周末和法定节假日、按地区加载假日日历、自定义工作日、自定义节假日、多个闹钟（含标签和铃声）、小组件、晚间预警、贪睡、设备内诊断",
+      "screenshot": "https://peterandree.github.io/workday-wake-app/screenshot-1.webp"
+    }
+    </script>
+    <link rel="stylesheet" href="../css/style.css">
+<script src="../js/lang.js" defer></script>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="../index.html" hreflang="en" title="English">EN</a><a href="../de/index.html" hreflang="de" title="Deutsch">DE</a><a href="index.html" hreflang="zh-Hans" title="中文（简体）" aria-current="page">中文</a><a href="../es-419/index.html" hreflang="es-419" title="Español">ES</a><a href="../fr/index.html" hreflang="fr" title="Français">FR</a><a href="../pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="../ja/index.html" hreflang="ja" title="日本語">日本語</a></div>
+
+    <header>
+        <div class="container">
+            <img class="logo" width="100" height="100" src="../workday-wake.svg" alt="Workday Wake 图标">
+            <h1>Workday Wake</h1>
+            <p class="tagline">懂你工作日程的智能闹钟</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="#download">下载</a>
+            <a href="#specs">规格</a>
+            <a href="#features">功能</a>
+            <a href="#screenshot">截图</a>
+            <a href="#documentation">文档</a>
+            <a href="#faq">FAQ</a>
+        </div>
+    </nav>
+
+    <div class="trust-strip" role="list" aria-label="Product facts">
+        <div class="container">
+            <span role="listitem">免费</span>
+            <span role="listitem">无广告</span>
+            <span role="listitem">无数据统计</span>
+            <span role="listitem">不需要定位权限</span>
+            <span role="listitem">离线可用</span>
+        </div>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>更聪明地醒来，而不是更辛苦</h2>
+                <p>
+                    Workday Wake 是一款智能闹钟应用，会自动配合你的工作日程。
+                    它跳过周末和节假日，只在真正需要的时候叫醒你。
+                </p>
+                <div class="cta-buttons">
+                    <a href="#download" class="btn btn-primary">
+                        获取应用
+                    </a>
+                    <a href="https://github.com/peterandree/workday-wake-app" class="btn btn-outline">
+                        Issue 与文档
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <div class="container">
+                <h2>下载</h2>
+                <p>Workday Wake 尚未发布。以下两个安装渠道将随第一个正式版本上线
+                    &mdash;本节会在它们上线当天放上链接。</p>
+                <div class="channels">
+                    <div class="channel">
+                        <h3>Google Play</h3>
+                        <p>完整的 Play 版本，内含可选的应用内打赏。先开始
+                            封闭测试；这个按钮届时会变成商店徽章。</p>
+                        <span class="status">即将上线 — 第一个正式版本</span>
+                    </div>
+                    <div class="channel">
+                        <h3>直接分发 APK</h3>
+                        <p>来自 GitHub Releases 的已签名通用 APK（同一个应用，用 Ko-fi
+                            打赏链接取代应用内打赏）。发布时会一并公布
+                            SHA-256 指纹。</p>
+                        <span class="status">即将上线 — 第一个正式版本</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="specs" class="specs">
+            <div class="container">
+                <h2>规格</h2>
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <h3>语言</h3>
+                        <p>English, Deutsch, Espa&ntilde;ol (LatAm), Fran&ccedil;ais, Portugu&ecirc;s (Brasil), 
+                        &#20013;&#25991; &#65288;&#31616;&#20307;&#65289;, &#26085;&#26412;&#35486; 等 &mdash; 由社区翻译，
+                        也欢迎补充。</p>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Android 最低版本</h3>
+                        <p>Android 12 或更高（API 31）。闹钟通过
+                        <code>setAlarmClock()</code> 进行调度，因此新版 Android
+                        无需申请精确闹钟豁免。</p>
+                    </div>
+                    <div class="spec-card">
+                        <h3>权限</h3>
+                        <ul>
+                            <li><code>USE_EXACT_ALARM</code> &mdash; 在你设定的那一分钟触发闹钟</li>
+                            <li><code>POST_NOTIFICATIONS</code> &mdash; 显示闹钟和预警通知</li>
+                            <li><code>FOREGROUND_SERVICE</code> &mdash; 保活可靠性守护服务（可选层）</li>
+                            <li><code>RECEIVE_BOOT_COMPLETED</code> &mdash; 重启后重新注册闹钟</li>
+                            <li><code>WAKE_LOCK</code>、<code>VIBRATE</code> &mdash; 在闹钟时间唤醒设备并振动</li>
+                            <li><code>INTERNET</code>、<code>ACCESS_NETWORK_STATE</code> &mdash; 仅用于下载假日日历</li>
+                        </ul>
+                        <p>永远不需要定位权限。</p>
+                    </div>
+                    <div class="spec-card">
+                        <h3>可验证的隐私</h3>
+                        <p>完整的证据 &mdash; 精确的权限列表、唯一的对外假日网络请求及其内容、商店
+                        “数据安全”披露 &mdash; 都记录在
+                        <a href="privacy.html">隐私页面</a>上。闹钟、日程和设置永远不会离开
+                        你的设备。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2>功能</h2>
+                <div class="features-grid">
+                    <div class="feature-card animate">
+                        <div class="feature-icon">📅</div>
+                        <h3>智能调度</h3>
+                        <p>自动跳过你所选地区周末和法定节假日的闹钟。</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🌍</div>
+                        <h3>按地区适配</h3>
+                        <p>适配你的国家和省级行政区的法定节假日与工作日模式。应用绝不读取你的 GPS。</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>自定义工作日</h3>
+                        <p>定义你自己的工作日程。适合轮班工作者和非标准工作周。</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🏖️</div>
+                        <h3>自定义节假日</h3>
+                        <p>添加个人假日、休假日，或任何你想睡懒觉的日子。</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🔔</div>
+                        <h3>多个闹钟</h3>
+                        <p>为不同的日子设置不同的闹钟，可自定义标签和铃声。</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🎨</div>
+                        <h3>美观的界面</h3>
+                        <p>遵循 Material Design 规范的简洁现代界面。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screenshot" class="screenshot-section">
+            <div class="container">
+                <h2>应用预览</h2>
+                <img src="../screenshot-1.webp" alt="Workday Wake 应用：闹钟列表中有工作日闹钟" class="screenshot" width="615" height="1315" loading="lazy">
+            </div>
+        </section>
+
+        <section id="documentation" class="docs">
+            <div class="container">
+                <h2>文档</h2>
+                <div class="docs-grid">
+                    <div class="doc-card animate">
+                        <h3>入门</h3>
+                        <p>第一次用 Workday Wake？了解如何设置第一个闹钟并配置工作日程。</p>
+                        <a href="#getting-started">了解更多</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>配置</h3>
+                        <p>深入了解所有设置和选项，定制你的闹钟体验。</p>
+                        <a href="#configuration">了解更多</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>地区设置</h3>
+                        <p>了解你选择的地区如何影响闹钟日程和节假日识别。</p>
+                        <a href="#location">了解更多</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>自定义节假日</h3>
+                        <p>了解如何在不需要起床的日子里添加自己的节假日和特殊日子。</p>
+                        <a href="#custom-holidays">了解更多</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>常见问题排查</h3>
+                        <p>查找常见问题的解决方案，学习如何高效地报告问题。</p>
+                        <a href="#troubleshooting">了解更多</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>闹钟可靠性</h3>
+                        <p>Workday Wake 如何在小米、三星、华为等激进电池管理的设备上保持响铃。</p>
+                        <a href="against-hostile-oems.html">了解更多</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>参与贡献</h3>
+                        <p>Workday Wake 由一个小团队开发，不接受代码贡献。你可以帮忙报告问题、翻译应用、向他人推荐。</p>
+                        <a href="https://github.com/peterandree/workday-wake-app/blob/main/CONTRIBUTING.md">了解更多</a>
+                    </div>
+                </div>
+
+                <div id="getting-started" class="doc-section">
+                    <h3>入门</h3>
+                    <p>欢迎使用 Workday Wake！开始使用的方法：</p>
+                    <ol>
+                        <li><strong>Workday Wake 尚未发布。</strong>应用正在为第一个正式版本做准备；一旦发布，本页会立即放安装入口。</li>
+                        <li><strong>打开应用</strong>并授予通知权限</li>
+                        <li><strong>选择你的国家和地区</strong>，让应用加载当地法定节假日</li>
+                        <li>在设置菜单中<strong>配置工作日</strong></li>
+                        <li>点击 + 按钮创建<strong>第一个闹钟</strong></li>
+                    </ol>
+                </div>
+
+                <div id="configuration" class="doc-section">
+                    <h3>配置指南</h3>
+                    <h4>工作日程</h4>
+                    <p>By default, Workday Wake assumes a Monday-Friday work week. To customize:</p>
+                    <ol>
+                        <li>打开「设置 &gt; 工作日历」</li>
+                        <li>点按你工作的日子</li>
+                        <li>选择你常用的工作时段</li>
+                    </ol>
+                    <h4>闹钟设置</h4>
+                    <p>每个闹钟可配置：</p>
+                    <ul>
+                        <li><strong>时间：</strong>闹钟什么时候响铃</li>
+                        <li><strong>标签：</strong>闹钟的名称（例如“上班通勤”）</li>
+                        <li><strong>闹钟铃声：</strong>从可选铃声中选择</li>
+                        <li><strong>振动：</strong>开启或关闭振动</li>
+                        <li><strong>贪睡：</strong>允许贪睡并设置时长</li>
+                        <li><strong>生效日：</strong>为此闹钟单独设置例外，覆盖全局工作日程</li>
+                    </ul>
+                </div>
+
+                <div id="location" class="doc-section">
+                    <h3>地区设置</h3>
+                    <p>Workday Wake 按<strong>你选择的</strong>国家和地区加载法定节假日，
+                        并用于：</p>
+                    <ul>
+                        <li>加载该国家和地区行政区的法定节假日</li>
+                        <li>提供按地区预设的工作日默认值</li>
+                    </ul>
+                    <p><strong>没有自动位置检测。</strong>应用不申请
+                        任何定位权限，也从不读取 GPS &mdash; 你的时区来自
+                        设备系统设置，而不是定位结果。</p>
+                    <p><strong>选择地区：</strong></p>
+                    <ol>
+                        <li>进入设置 &gt; 更改地区</li>
+                        <li>搜索你的国家并选中</li>
+                        <li>如果你的国家有省或地区，选择你所在的</li>
+                        <li>应用会刷新该地区的假日日历</li>
+                    </ol>
+                    <p>你也可以在首次使用时设置，或在仪表盘的
+                        “配置地区”提示中设置。在选定地区之前，
+                        跳过节假日不会生效，闹钟每天都会响。</p>
+                </div>
+
+                <div id="custom-holidays" class="doc-section">
+                    <h3>自定义节假日</h3>
+                    <p>除了自动识别节假日，你还可以添加自己的特殊日子：</p>
+                    <h4>添加单日节假日</h4>
+                    <ol>
+                        <li>进入设置 &gt; 节假日</li>
+                        <li>点按添加节假日</li>
+                        <li>选择日期并命名（例如“暑假”）</li>
+                        <li>保存节假日</li>
+                    </ol>
+                    <h4>添加重复节假日</h4>
+                    <p>对于每年重复的节假日（比如生日或纪念日）：</p>
+                    <ol>
+                        <li>进入设置 &gt; 节假日</li>
+                        <li>点按添加重复节假日</li>
+                        <li>选择月份和日期</li>
+                        <li>命名并保存</li>
+                    </ol>
+                </div>
+
+                <div id="troubleshooting" class="doc-section">
+                    <h3>常见问题排查</h3>
+                    <h4>闹钟不响</h4>
+                    <p><strong>请检查：</strong></p>
+                    <ol>
+                        <li>确认闹钟已启用（开关处于打开状态）</li>
+                        <li>核对闹钟时间设置是否正确</li>
+                        <li>确认今天在你的日程中是工作日</li>
+                        <li>确认手机音量已调大且“勿扰模式”已关闭</li>
+                        <li>确认应用拥有通知权限</li>
+                    </ol>
+                    <h4>节假日闹钟照常响</h4>
+                    <p><strong>可能原因：</strong></p>
+                    <ul>
+                        <li>尚未选择地区 &mdash; 进入设置 &gt; 更改地区</li>
+                        <li>你所在地区的假日数据未加载（需要联网一次）</li>
+                        <li>你可能在自己的自定义设置中加了例外</li>
+                    </ul>
+                    <p><strong>解决方法：</strong>在设置 &gt; 节假日中手动添加该节假日</p>
+                    <h4>电池优化问题</h4>
+                    <p>有些安卓设备会激进地优化电池，可能导致闹钟不响。解决方法：</p>
+                    <ol>
+                        <li>进入手机设置 &gt; 电池 &gt; 电池优化</li>
+                        <li>在列表中找到 Workday Wake</li>
+                        <li>选择“不优化”</li>
+                    </ol>
+					<p>注意：如果你使用小米、Realme、Oppo、Vivo 或三星设备，仅靠标准安卓设置是不够的。<br>
+						请打开 Workday-Wake 应用，进入设置，按照针对你手机提供的“设备电池指南”操作。
+					</p>
+					<p>想完整了解 Workday Wake 如何在这些设备上存活 &mdash; 保活看门狗、自愈、诊断 &mdash; 请阅读
+						<a href="against-hostile-oems.html">闹钟可靠性指南</a>。
+					</p>
+					<h4>小组件不更新</h4>
+					<p>如果你的主屏幕小组件一直显示某个旧闹钟，或点按“跳过”后没有立即更新：</p>
+					<ol>
+						<li>打开手机的<strong>最近任务</strong>界面。</li>
+						<li>在 Workday Wake 卡片上点按三个点（或下滑）。</li>
+						<li>选择<strong>锁定</strong>。会出现锁定图标，小组件之后会即时更新。</li>
+					</ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq">
+            <div class="container">
+                <h2>常见问题</h2>
+                <div class="faq-list">
+                    <details class="faq-item">
+                        <summary>Workday Wake 有 iOS 版吗？</summary>
+                        <div class="faq-answer">
+                            <p>目前 Workday Wake 只支持安卓。暂时没有 iOS 版本计划。</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>应用可以离线使用吗？</summary>
+                        <div class="faq-answer">
+                            <p>可以！选好地区和工作日程后，应用完全离线可用。假日数据会缓存在本地。</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>应用怎么知道节假日？</summary>
+                        <div class="faq-answer">
+                            <p>Workday Wake 使用各国公开的假日数据。选择地区后，应用会下载对应的假日日历。</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>能在设备间同步闹钟吗？</summary>
+                        <div class="faq-answer">
+                            <p>不能。Workday Wake 没有账号也没有云同步，闹钟数据不会上传到任何地方。设置在每台设备上单独进行：在每台设备上安装应用，并在那里选择工作日程和地区。</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>我的数据是私密的吗？</summary>
+                        <div class="faq-answer">
+                            <p>你的所有闹钟数据、所选地区和自定义设置都只存储在设备本地。可验证的证据（精确权限列表、唯一的对外网络请求、数据安全链接）见<a href="privacy.html">隐私页面</a>。</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>如何报告问题或提出功能建议？</summary>
+                        <div class="faq-answer">
+                            <p>请在我们的 GitHub 仓库提交 issue，并尽量写明细节：设备型号、安卓版本和复现步骤。</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <img src="../workday-wake.svg" class="logo" alt="Workday Wake Logo" style="width: 50px; height: auto; margin: 0;">
+                    <span style="margin-left: 10px; font-weight: 600;">Workday Wake</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/peterandree/workday-wake-app">GitHub</a>
+                    <a href="https://github.com/peterandree/workday-wake-app/blob/main/LICENSE" target="_blank">许可</a>
+                    <a href="https://github.com/peterandree/workday-wake-app/issues">Issues</a>
+                    <a href="privacy.html">隐私</a>
+                    <a href="support.html">Support</a>
+                    <a href="against-hostile-oems.html">闹钟可靠性</a>
+                    <a href="impressum.html" hreflang="de">Impressum</a>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2026 NoirOrioN (peterandree)。保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .doc-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es-419">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de privacidad — Workday Wake</title>
+<meta name="description" content="Cómo maneja Workday Wake tus datos. Sin anuncios, sin análisis de datos, sin cuentas. Todo se queda en tu dispositivo.">
+    <link rel="stylesheet" href="../css/privacy.css">
+<script src="../js/lang.js" defer></script>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="../index.html" hreflang="en" title="English">EN</a><a href="../de/index.html" hreflang="de" title="Deutsch">DE</a><a href="../zh-hans/index.html" hreflang="zh-Hans" title="中文（简体）">中文</a><a href="index.html" hreflang="es-419" title="Español" aria-current="page">ES</a><a href="../fr/index.html" hreflang="fr" title="Français">FR</a><a href="../pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="../ja/index.html" hreflang="ja" title="日本語">日本語</a></div>
+
+
+<h1>Política de privacidad</h1>
+<p class="sub">Workday Wake — última actualización: 4 de octubre de 2026</p>
+
+<div class="box">
+  <strong>La versión corta.</strong> Workday Wake no tiene cuentas ni servidores propios,
+  ni anuncios ni análisis de datos. Tus alarmas y ajustes se quedan en el almacenamiento
+  propio de tu dispositivo. La app se conecta a la red solo para descargar calendarios
+  de feriados y, si usas la propina opcional, para llegar al proveedor de pagos de tu tienda.
+</div>
+
+<h2>Qué recopilamos</h2>
+<p><strong>No se recopila nada.</strong> La app no tiene cuentas de usuario, ni inicio de
+sesión, ni un backend operado por nosotros. No podemos ver tus alarmas, etiquetas,
+horarios de trabajo ni días feriados propios, porque nada de eso sale de tu dispositivo.</p>
+
+<h2>Qué se queda en tu dispositivo</h2>
+<p>Todo lo que ingresas se guarda en el almacenamiento privado de la app en el dispositivo
+(una base de datos local y un archivo de preferencias). Nada se sube, no lo respaldamos,
+ni nosotros ni nadie más puede leerlo:</p>
+<ul>
+  <li>Tus alarmas &mdash; hora, etiqueta, patrón de repetición, tono, volumen, vibración y posponer</li>
+  <li>Tu semana laboral y los días activos de cada alarma</li>
+  <li>Tus días feriados propios, incluidos los calendarios que importes</li>
+  <li>Tu elección de país/región y preferencias de interfaz como tema e idioma</li>
+</ul>
+
+<h2>Qué sale de tu dispositivo y por qué</h2>
+<p>La app solo hace solicitudes salientes a los hosts de abajo, siempre por HTTPS. Cada
+petición es una consulta de feriados para el país o región <em>que tú</em> elegiste.
+No incluye tus alarmas, ajustes, identificador de dispositivo ni identificador
+publicitario.</p>
+
+<table>
+  <tr><th>Destino</th><th>Por qué</th><th>Qué se envía</th></tr>
+  <tr>
+    <td><code>openholidaysapi.org</code></td>
+    <td>Calendarios de feriados oficiales y escolares</td>
+    <td>Código de país, código de región y año</td>
+  </tr>
+  <tr>
+    <td><code>date.nager.at</code></td>
+    <td>Fuente alternativa de feriados si la principal no responde</td>
+    <td>Código de país y año</td>
+  </tr>
+  <tr>
+    <td><code>feiertage-api.de</code></td>
+    <td>Fallback holiday source for German-speaking regions</td>
+    <td>Código de estado y año</td>
+  </tr>
+  <tr>
+    <td><code>peterandree.github.io</code></td>
+    <td>Descarga la lista opcional de patrocinadores del proyecto</td>
+    <td>Solicitud web común; nada identificable</td>
+  </tr>
+  <tr>
+    <td>Google Play Billing <em>(solo versión Play)</em></td>
+    <td>Propina opcional</td>
+    <td>Lo maneja por completo Google Play; la app recibe un token de compra, nunca datos de pago</td>
+  </tr>
+  <tr>
+    <td>Ko-fi o Afdian <em>(solo versión directa)</em></td>
+    <td>Propina opcional donde no existe Play Billing</td>
+    <td>Solo un toque de un enlace común; la página de pago se abre en tu navegador y la app no recibe nada</td>
+  </tr>
+</table>
+<p>Los calendarios de feriados se guardan en caché en tu dispositivo para que la app siga
+funcionando sin conexión. Puedes vaciar la caché borrando el almacenamiento de la app en Ajustes.</p>
+
+<h2>Permisos y para qué sirve cada uno</h2>
+<p>La app pide solo los permisos necesarios para hacer sonar una alarma. Pide
+<strong>ningún permiso de ubicación</strong> &mdash; tú eliges país y región
+de una lista, y la app nunca lee tu posición GPS.</p>
+
+<table>
+  <tr><th>Permiso</th><th>Propósito</th></tr>
+  <tr><td><code>USE_EXACT_ALARM</code>, <code>USE_FULL_SCREEN_INTENT</code></td><td>Hacer sonar tu alarma al minuto exacto y mostrarla sobre la pantalla de bloqueo</td></tr>
+  <tr><td><code>POST_NOTIFICATIONS</code></td><td>Mostrar notificaciones de alarma y recordatorio</td></tr>
+  <tr><td><code>RECEIVE_BOOT_COMPLETED</code></td><td>Reprogramar tus alarmas tras un reinicio</td></tr>
+  <tr><td><code>FOREGROUND_SERVICE</code> (+ system-exempted / special-use)</td><td>Mantener la alarma fiable en fabricantes que matan apps en segundo plano</td></tr>
+  <tr><td><code>WAKE_LOCK</code>, <code>VIBRATE</code></td><td>Despertar el equipo y vibrar cuando suena la alarma</td></tr>
+  <tr><td><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code></td><td>Descargar calendarios de feriados</td></tr>
+</table>
+
+<h2>Análisis de datos, publicidad y rastreo</h2>
+<p>No existe. La app no incluye SDK de análisis, ni SDK de anuncios, ni servicio de
+informes de fallos, ni fingerprinting. No incrusta código de rastreo de terceros
+ni pone cookies.</p>
+
+<h2>Niños</h2>
+<p>La app no está dirigida a niños y no recopila información personal de nadie,
+de ninguna edad.</p>
+
+<h2>Tus derechos</h2>
+<p>Como tus datos jamás nos llegan, nada hay que exportar, corregir o eliminar.
+Puedes borrar todo el contenido de la app desinstalándola, o de forma selectiva
+borrando su almacenamiento en los Ajustes de Android.</p>
+
+<h2>Cambios en esta política</h2>
+<p>Si una versión futura cambia lo que la app transmite, esta página se actualizará antes
+de distribuir esa versión, y la fecha de arriba cambiará.</p>
+
+<h2>Contacto</h2>
+<p>Las preguntas se pueden plantear como issue en el
+<a href="https://github.com/peterandree/workday-wake-app/issues">rastreador público de
+issues</a> del proyecto.</p>
+
+<footer>
+  Workday Wake es de código abierto. Esta política describe la aplicación publicada; no es
+  un documento legal y no crea derechos más allá de los que la ley ya te da.
+  <br><a href="impressum.html" hreflang="de">Impressum</a>
+</footer>
+
+</body>
+</html>

@@ -6,51 +6,20 @@
 <title>Alarm Reliability — Workday Wake</title>
 <meta name="description" content="How Workday Wake keeps alarms ringing on Xiaomi, Samsung, Huawei and other Android devices with aggressive battery management — and what to check on your device.">
 <meta name="color-scheme" content="light dark">
-<style>
-  :root { --fg:#1b1b1f; --muted:#5b5b66; --bg:#ffffff; --line:#e4e4ea; --accent:#3b5bdb; --ok:#2e7d32; }
-  @media (prefers-color-scheme: dark) {
-    :root { --fg:#e8e8ed; --muted:#a0a0ad; --bg:#141416; --line:#2c2c33; --accent:#91a7ff; --ok:#8fce9a; }
-  }
-  body { background:var(--bg); color:var(--fg); font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-         max-width:44rem; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
-  h1 { font-size:1.9rem; line-height:1.25; margin:0 0 .25rem; }
-  h2 { font-size:1.3rem; margin:2.5rem 0 .5rem; scroll-margin-top:1rem; }
-  h3 { font-size:1.05rem; margin:1.5rem 0 .35rem; }
-  .sub { color:var(--muted); margin:0 0 2rem; }
-  .box { border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:6px;
-         padding:.9rem 1.1rem; margin:1.25rem 0; }
-  .box.ok { border-left-color: var(--ok); }
-  a { color:var(--accent); }
-  ul, ol { padding-left:1.2rem; }
-  li { margin:.35rem 0; }
-  table { border-collapse:collapse; width:100%; margin:1rem 0; font-size:.94rem; }
-  th,td { text-align:left; padding:.55rem .6rem; border-bottom:1px solid var(--line); vertical-align:top; }
-  th { color:var(--muted); font-weight:600; }
-  code { font-size:.9em; background:rgba(127,127,127,.14); padding:.1rem .3rem; border-radius:3px; }
-  .toc { border:1px solid var(--line); border-radius:6px; padding:.9rem 1.1rem; margin:0 0 2rem; font-size:.95rem; }
-  .toc a { text-decoration:none; margin-right:.35rem; }
-  /* Layer diagram: a stack of independent safety nets, rendered as boxes */
-  .layers { counter-reset:layer; display:grid; gap:.6rem; margin:1.25rem 0; }
-  .layer { border:1px solid var(--line); border-radius:8px; padding:.8rem 1rem; position:relative;
-           padding-left:3.2rem; }
-  .layer::before { counter-increment:layer; content:counter(layer);
-           display:flex; align-items:center; justify-content:center;
-           position:absolute; left:.8rem; top:.8rem; width:1.7rem; height:1.7rem;
-           border-radius:50%; background:var(--accent); color:var(--bg); font-weight:700; font-size:.85rem; }
-  .layer b { display:block; }
-  .layer span { color:var(--muted); display:block; }
-  .fallback-note { color:var(--muted); font-size:.9rem; text-align:center; margin:.4rem 0; }
-  .fig { margin:2rem 0; text-align:center; }
-  .fig svg, .fig img { width:92%; max-width:640px; height:auto; }
-  .fig.port img { width:auto; max-width:100%; max-height:460px; }
-  .figcap { color:var(--muted); font-size:.87rem; margin-top:.4rem; text-align:center; }
-  footer { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line); color:var(--muted); font-size:.9rem; }
-  @media (prefers-reduced-motion: no-preference) {
-    html { scroll-behavior: smooth; }
-  }
-</style>
+    <link rel="stylesheet" href="css/against-hostile-oems.css">
+<link rel="alternate" hreflang="en" href="https://peterandree.github.io/workday-wake-app/against-hostile-oems.html">
+<link rel="alternate" hreflang="de" href="https://peterandree.github.io/workday-wake-app/de/against-hostile-oems.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://peterandree.github.io/workday-wake-app/zh-hans/against-hostile-oems.html">
+<link rel="alternate" hreflang="es-419" href="https://peterandree.github.io/workday-wake-app/es-419/against-hostile-oems.html">
+<link rel="alternate" hreflang="fr" href="https://peterandree.github.io/workday-wake-app/fr/against-hostile-oems.html">
+<link rel="alternate" hreflang="pt-BR" href="https://peterandree.github.io/workday-wake-app/pt-br/against-hostile-oems.html">
+<link rel="alternate" hreflang="ja" href="https://peterandree.github.io/workday-wake-app/ja/against-hostile-oems.html">
+<link rel="alternate" hreflang="x-default" href="https://peterandree.github.io/workday-wake-app/against-hostile-oems.html">
+<script src="js/lang.js" defer></script>
 </head>
 <body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="index.html" hreflang="en" title="English" aria-current="page">EN</a><a href="de/index.html" hreflang="de" title="Deutsch">DE</a><a href="zh-hans/index.html" hreflang="zh-Hans" title="中文（简体）">中文</a><a href="es-419/index.html" hreflang="es-419" title="Español">ES</a><a href="fr/index.html" hreflang="fr" title="Français">FR</a><a href="pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="ja/index.html" hreflang="ja" title="日本語">日本語</a></div>
+
 
 <h1>Alarm Reliability</h1>
 <p class="sub">How Workday Wake is engineered to keep ringing on Xiaomi, Samsung, Huawei and
@@ -309,7 +278,7 @@
 <footer>
   Workday Wake &mdash; the smart alarm that knows your work schedule. Companion pages:
   <a href="index.html">the homepage</a> · <a href="privacy.html">privacy policy</a> ·
-  <a href="support.html">support</a>
+  <a href="support.html">support</a> · <a href="impressum.html" hreflang="de">Impressum</a>
 </footer>
 
 </body>

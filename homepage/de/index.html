@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workday Wake - Der clevere Wecker für Arbeitstage</title>
+    <meta name="description" content="Workday Wake ist ein kostenloser Android-Wecker, der Wochenenden und gesetzliche Feiertage in deiner Region überspringt. Keine Werbung, keine Analyse-Tools, keine Standort-Berechtigung; deine Wecker verlassen dein Gerät nie.">
+    <link rel="canonical" href="https://peterandree.github.io/workday-wake-app/">
+    <meta name="theme-color" content="#185776">
+    <link rel="icon" href="../favicon.ico" sizes="48x48">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Workday Wake">
+    <meta property="og:title" content="Workday Wake — der clevere Wecker, der deinen Arbeitszeitplan kennt">
+    <meta property="og:description" content="Ein kostenloser Android-Wecker, der Wochenenden und gesetzliche Feiertage in deiner Region überspringt. Keine Werbung, keine Analyse-Tools, keine Standort-Berechtigung.">
+    <meta property="og:url" content="https://peterandree.github.io/workday-wake-app/">
+    <meta property="og:image" content="https://peterandree.github.io/workday-wake-app/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Workday Wake — der clevere Wecker, der deinen Arbeitszeitplan kennt">
+    <meta name="twitter:description" content="Ein kostenloser Android-Wecker, der Wochenenden und gesetzliche Feiertage in deiner Region überspringt. Keine Werbung, keine Analyse-Tools, keine Standort-Berechtigung.">
+    <meta name="twitter:image" content="https://peterandree.github.io/workday-wake-app/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "Workday Wake",
+      "operatingSystem": "Android",
+      "applicationCategory": "UtilitiesApplication",
+      "description": "Ein kostenloser Wecker, der Wochenenden und gesetzliche Feiertage in deiner Region überspringt. Keine Werbung, keine Analyse-Tools, keine Standort-Berechtigung; deine Wecker verlassen dein Gerät nie.",
+      "url": "https://peterandree.github.io/workday-wake-app/",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": "Überspringt Wochenenden und gesetzliche Feiertage, regionsbezogene Feiertagskalender, eigene Arbeitstage, eigene Feiertage, mehrere Wecker mit Bezeichnung und Weckton, Widgets, Abendwarnung, Schlummern, Diagnose auf dem Gerät",
+      "screenshot": "https://peterandree.github.io/workday-wake-app/screenshot-1.webp"
+    }
+    </script>
+    <link rel="stylesheet" href="../css/style.css">
+<script src="../js/lang.js" defer></script>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="../index.html" hreflang="en" title="English">EN</a><a href="index.html" hreflang="de" title="Deutsch" aria-current="page">DE</a><a href="../zh-hans/index.html" hreflang="zh-Hans" title="中文（简体）">中文</a><a href="../es-419/index.html" hreflang="es-419" title="Español">ES</a><a href="../fr/index.html" hreflang="fr" title="Français">FR</a><a href="../pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="../ja/index.html" hreflang="ja" title="日本語">日本語</a></div>
+
+    <header>
+        <div class="container">
+            <img class="logo" width="100" height="100" src="../workday-wake.svg" alt="Workday-Wake-Symbol">
+            <h1>Workday Wake</h1>
+            <p class="tagline">Der clevere Wecker, der deinen Arbeitszeitplan kennt</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="#download">Download</a>
+            <a href="#specs">Details</a>
+            <a href="#features">Funktionen</a>
+            <a href="#screenshot">Screenshot</a>
+            <a href="#documentation">Dokumentation</a>
+            <a href="#faq">FAQ</a>
+        </div>
+    </nav>
+
+    <div class="trust-strip" role="list" aria-label="Product facts">
+        <div class="container">
+            <span role="listitem">Kostenlos</span>
+            <span role="listitem">Keine Werbung</span>
+            <span role="listitem">Keine Analyse-Tools</span>
+            <span role="listitem">Keine Standort-Berechtigung</span>
+            <span role="listitem">Funktioniert offline</span>
+        </div>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Schlauer aufwachen, nicht früher</h2>
+                <p>
+                    Workday Wake ist eine intelligente Wecker-App, die sich automatisch an deinen Arbeitszeitplan anpasst.
+                    Sie überspringt Wochenenden und Feiertage – du wachst nur auf, wenn du wirklich musst.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#download" class="btn btn-primary">
+                        App holen
+                    </a>
+                    <a href="https://github.com/peterandree/workday-wake-app" class="btn btn-outline">
+                        Issues und Dokumentation
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <div class="container">
+                <h2>Herunterladen</h2>
+                <p>Workday Wake ist noch nicht erschienen. Beide Installationswege unten gehen
+                    mit der ersten Veröffentlichung online &dash; dieser Abschnitt verlinkt sie, sobald sie existieren.</p>
+                <div class="channels">
+                    <div class="channel">
+                        <h3>Google Play</h3>
+                        <p>Vollständige Play-Version mit optionalem Trinkgeld-Kauf in der App. Zuerst startet
+                            die geschlossene Beta; diese Schaltfläche wird dann zum Store-Badge.</p>
+                        <span class="status">Kommt bald — erste Veröffentlichung</span>
+                    </div>
+                    <div class="channel">
+                        <h3>Direkt-APK</h3>
+                        <p>Signierte Universal-APK über GitHub Releases (dieselbe App, mit Ko-fi-
+                            Spendenlink statt des Trinkgeld-Kaufs). Der SHA-256-Fingerabdruck wird mit
+                            der Veröffentlichung angegeben.</p>
+                        <span class="status">Kommt bald — erste Veröffentlichung</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="specs" class="specs">
+            <div class="container">
+                <h2>Technische Daten</h2>
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <h3>Sprachen</h3>
+                        <p>English, Deutsch, Espa&ntilde;ol (LatAm), Fran&ccedil;ais, Portugu&ecirc;s (Brasil), 
+                        &#20013;&#25991; &#65288;&#31616;&#20307;&#65289;, &#26085;&#26412;&#35486; und mehr &dash; von der Community übersetzt
+                        und offen für Erweiterungen.</p>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Mindestens Android</h3>
+                        <p>Android 12 oder neuer (API 31). Wecker werden mit
+                        <code>setAlarmClock()</code> geplant, darum ist auf modernem Android
+                        keine Opt-out-Berechtigung für exakte Wecker nötig.</p>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Berechtigungen</h3>
+                        <ul>
+                            <li><code>USE_EXACT_ALARM</code> &dash; Wecker zur eingestellten Minute auslösen</li>
+                            <li><code>POST_NOTIFICATIONS</code> &dash; Wecker- und Warn-Benachrichtigungen anzeigen</li>
+                            <li><code>FOREGROUND_SERVICE</code> &dash; den Zuverlässigkeits-Wachdienst am Leben halten (optionale Schicht)</li>
+                            <li><code>RECEIVE_BOOT_COMPLETED</code> &dash; Wecker nach einem Neustart neu anlegen</li>
+                            <li><code>WAKE_LOCK</code>, <code>VIBRATE</code> &dash; zur Weckzeit aufwecken und vibrieren</li>
+                            <li><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code> &dash; nur für Feiertagskalender-Downloads</li>
+                        </ul>
+                        <p>Keine Standort-Berechtigung. Niemals.</p>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Datenschutz, überprüfbar</h3>
+                        <p>Der vollständige Nachweis &dash; exakte Berechtigungsliste, der eine ausgehende
+                        Feiertags-Netzwerkaufruf und was er sendet, die Data-safety-Angabe im Store &dash; ist
+                        <a href="privacy.html">Datenschutz-Seite</a> dokumentiert. Wecker, Zeitpläne
+                        und Einstellungen verlassen dein Gerät nie.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Funktionen</h2>
+                <div class="features-grid">
+                    <div class="feature-card animate">
+                        <div class="feature-icon">📅</div>
+                        <h3>Clevere Planung</h3>
+                        <p>Überspringt Wecker automatisch an Wochenenden und gesetzlichen Feiertagen der von dir gewählten Region.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🌍</div>
+                        <h3>Regionsbezogen</h3>
+                        <p>Passt sich den gesetzlichen Feiertagen und Arbeitstagen deines Landes und Bundeslandes an. Die App liest nie dein GPS.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Eigene Arbeitstage</h3>
+                        <p>Lege deinen eigenen Arbeitszeitplan fest. Ideal für Schichtdienste und unregelmäßige Wochen.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🏖️</div>
+                        <h3>Eigene Feiertage</h3>
+                        <p>Füge persönliche Feiertage, Urlaubstage oder beliebige Tage hinzu, an denen du ausschlafen willst.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🔔</div>
+                        <h3>Mehrere Wecker</h3>
+                        <p>Lege für verschiedene Tage verschiedene Wecker mit eigener Bezeichnung und eigenem Weckton an.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Schöne Oberfläche</h3>
+                        <p>Aufgeräumte, moderne Oberfläche nach den Material-Design-Richtlinien.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screenshot" class="screenshot-section">
+            <div class="container">
+                <h2>App-Vorschau</h2>
+                <img src="../screenshot-1.webp" alt="Workday-Wake-App: Weckerliste mit einem Arbeitstag-Wecker" class="screenshot" width="615" height="1315" loading="lazy">
+            </div>
+        </section>
+
+        <section id="documentation" class="docs">
+            <div class="container">
+                <h2>Dokumentation</h2>
+                <div class="docs-grid">
+                    <div class="doc-card animate">
+                        <h3>Erste Schritte</h3>
+                        <p>Neu bei Workday Wake? Erfahre, wie du deinen ersten Wecker einrichtest und deinen Arbeitszeitplan konfigurierst.</p>
+                        <a href="#getting-started">Mehr lesen</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Konfiguration</h3>
+                        <p>Tauche in alle Einstellungen und Optionen ein, um deinen Wecker anzupassen.</p>
+                        <a href="#configuration">Mehr lesen</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Regionseinstellungen</h3>
+                        <p>Verstehe, wie deine gewählte Region den Zeitplan und die Feiertagserkennung beeinflusst.</p>
+                        <a href="#location">Mehr lesen</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Eigene Feiertage</h3>
+                        <p>Erfahre, wie du eigene Feiertage und besondere Tage anlegst, wenn du nicht aufstehen musst.</p>
+                        <a href="#custom-holidays">Mehr lesen</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Problembehandlung</h3>
+                        <p>Finde Lösungen für häufige Probleme und lerne, Bugs effektiv zu melden.</p>
+                        <a href="#troubleshooting">Mehr lesen</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Alarmzuverlässigkeit</h3>
+                        <p>Wie Workday Wake gebaut ist, um auf Xiaomi, Samsung, Huawei und anderen aggressiven Akkuverwaltern weiterzuklingeln.</p>
+                        <a href="against-hostile-oems.html">Mehr lesen</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Mitwirken</h3>
+                        <p>Workday Wake wird von einem kleinen Team entwickelt; Code-Beiträge werden nicht angenommen. Du kannst helfen, indem du Fehler meldest, die App übersetzt und weiterempfiehlst.</p>
+                        <a href="https://github.com/peterandree/workday-wake-app/blob/main/CONTRIBUTING.md">Mehr lesen</a>
+                    </div>
+                </div>
+
+                <div id="getting-started" class="doc-section">
+                    <h3>Erste Schritte</h3>
+                    <p>Willkommen bei Workday Wake! So legst du los:</p>
+                    <ol>
+                        <li><strong>Workday Wake ist noch nicht erschienen.</strong> Die App wird auf ihre erste Veröffentlichung vorbereitet; diese Seite verlinkt die Installationswege, sobald ein Build veröffentlicht ist.</li>
+                        <li><strong>Öffne die App</strong> und erteile die Berechtigung für Benachrichtigungen</li>
+                        <li><strong>Wähle Land und Region</strong>, damit die App die gesetzlichen Feiertage deiner Region lädt</li>
+                        <li><strong>Konfiguriere deine Arbeitstage</strong> im Einstellungen-Menü</li>
+                        <li><strong>Erstelle deinen ersten Wecker</strong> mit dem +-Knopf</li>
+                    </ol>
+                </div>
+
+                <div id="configuration" class="doc-section">
+                    <h3>Konfigurationsanleitung</h3>
+                    <h4>Arbeitszeitplan</h4>
+                    <p>Standardmäßig geht Workday Wake von einer Arbeitswoche Montag bis Freitag aus. Zum Anpassen:</p>
+                    <ol>
+                        <li>Gehe zu Einstellungen &gt; Arbeitszeitplan</li>
+                        <li>Tippe auf die Tage, an denen du arbeitest</li>
+                        <li>Wähle deine üblichen Arbeitszeiten</li>
+                    </ol>
+                    <h4>Wecker-Einstellungen</h4>
+                    <p>Jeder Wecker lässt sich konfigurieren mit:</p>
+                    <ul>
+                        <li><strong>Zeit:</strong> Wann der Wecker klingeln soll</li>
+                        <li><strong>Bezeichnung:</strong> Ein Name für den Wecker (z.&nbsp;B. „Morgenpendeln“)</li>
+                        <li><strong>Weckton:</strong> Wähle aus verfügbaren Klängen</li>
+                        <li><strong>Vibration:</strong> Vibration ein- oder ausschalten</li>
+                        <li><strong>Schlummern:</strong> Schlummern erlauben und Dauer festlegen</li>
+                        <li><strong>Aktive Tage:</strong> Ausnahme vom globalen Arbeitszeitplan für diesen Wecker</li>
+                    </ul>
+                </div>
+
+                <div id="location" class="doc-section">
+                    <h3>Regionseinstellungen</h3>
+                    <p>Workday Wake lädt die gesetzlichen Feiertage für das Land und die Region, <strong>die
+                        du wählst</strong>. Damit:</p>
+                    <ul>
+                        <li>lädt die App die gesetzlichen Feiertage für dieses Land und dieses Bundesland</li>
+                        <li>bietet die App regionsbezogene Standard-Arbeitstage an</li>
+                    </ul>
+                    <p><strong>Es gibt keine automatische Standorterkennung.</strong> Die App fordert keine
+                        Standort-Berechtigung an und liest nie dein GPS &dash; deine
+                        Zeitzone kommt aus den Systemeinstellungen deines Geräts, nicht aus einem Standortfix.</p>
+                    <p><strong>Deine Region wählen:</strong></p>
+                    <ol>
+                        <li>Gehe zu Einstellungen &gt; Standort ändern</li>
+                        <li>Suche dein Land und wähle es aus</li>
+                        <li>Hat dein Land Bundesländer oder Regionen, wähle deins aus</li>
+                        <li>Die App aktualisiert den Feiertagskalender für diese Region</li>
+                    </ol>
+                    <p>Du kannst das auch beim ersten Start oder über den Hinweis „Standort
+                        einrichten“ auf dem Dashboard festlegen. Bis eine Region gewählt ist, bleibt
+                        das Feiertage-Überspringen aus, und die Wecker klingeln an jedem Tag.</p>
+                </div>
+
+                <div id="custom-holidays" class="doc-section">
+                    <h3>Eigene Feiertage</h3>
+                    <p>Zusätzlich zur automatischen Feiertagserkennung kannst du eigene besondere Tage hinzufügen:</p>
+                    <h4>Einzelnen Feiertag hinzufügen</h4>
+                    <ol>
+                        <li>Gehe zu Einstellungen &gt; Feiertage</li>
+                        <li>Tippe auf Feiertag hinzufügen</li>
+                        <li>Wähle das Datum und gib einen Namen ein (z.&nbsp;B. „Sommerurlaub“)</li>
+                        <li>Speichere den Feiertag</li>
+                    </ol>
+                    <h4>Wiederkehrende Feiertage hinzufügen</h4>
+                    <p>Für Feiertage, die jedes Jahr wiederkehren (z.&nbsp;B. Geburtstag oder Jahrestag):</p>
+                    <ol>
+                        <li>Gehe zu Einstellungen &gt; Feiertage</li>
+                        <li>Tippe auf Wiederkehrenden Feiertag hinzufügen</li>
+                        <li>Wähle Monat und Tag</li>
+                        <li>Gib einen Namen ein und speichere</li>
+                    </ol>
+                </div>
+
+                <div id="troubleshooting" class="doc-section">
+                    <h3>Problembehandlung</h3>
+                    <h4>Wecker klingeln nicht</h4>
+                    <p><strong>Prüfe Folgendes:</strong></p>
+                    <ol>
+                        <li>Stelle sicher, dass der Wecker aktiviert ist (Schalter an)</li>
+                        <li>Kontrolliere, ob die Weckzeit richtig eingestellt ist</li>
+                        <li>Prüfe, ob heute in deinem Zeitplan ein Arbeitstag ist</li>
+                        <li>Stelle sicher, dass die Lautstärke aufgedreht und „Nicht stören“ aus ist</li>
+                        <li>Kontrolliere, ob die App die Benachrichtigungs-Berechtigung hat</li>
+                    </ol>
+                    <h4>Wecker klingeln an Feiertagen</h4>
+                    <p><strong>Mögliche Ursachen:</strong></p>
+                    <ul>
+                        <li>Es ist noch keine Region gewählt &dash; gehe zu Einstellungen &gt; Standort ändern</li>
+                        <li>Die Feiertagsdaten deiner Region wurden nicht geladen (einmal Internet nötig)</li>
+                        <li>Du hast den Feiertag in den eigenen Einstellungen als Ausnahme überschrieben</li>
+                    </ul>
+                    <p><strong>Lösung:</strong> Füge den Feiertag manuell unter Einstellungen &gt; Feiertage hinzu</p>
+                    <h4>Probleme mit der Akkuoptimierung</h4>
+                    <p>Manche Android-Geräte optimieren den Akku aggressiv und verhindern so vielleicht, dass Wecker klingeln. So behebst du es:</p>
+                    <ol>
+                        <li>Gehe zu Einstellungen &gt; Akku &gt; Akkuoptimierung</li>
+                        <li>Finde Workday Wake in der Liste</li>
+                        <li>Wähle „Nicht optimieren“</li>
+                    </ol>
+					<p>Hinweis: Bei Geräten von Xiaomi, Realme, Oppo, Vivo oder Samsung reichen die Standard-Android-Einstellungen nicht aus.<br>
+						Öffne die Workday-Wake-App, gehe zu Einstellungen und folge dem „Akku-Guide für dein Gerät“, der für dein Telefon hinterlegt ist.
+					</p>
+					<p>Für das ganze Bild, wie Workday Wake auf diesen Geräten überlebt &dash; Watchdog-Prozess,
+						<a href="against-hostile-oems.html">Leitfaden zur Wecker-Zuverlässigkeit</a>.
+					</p>
+					<h4>Widgets aktualisieren sich nicht</h4>
+					<p>Wenn dein Startbildschirm-Widget hängen bleibt und „Morgenwecker“ zeigt oder sich nach dem Tippen auf Überspringen nicht sofort aktualisiert:</p>
+					<ol>
+						<li>Öffne <strong>Zuletzt verwendete Apps</strong>.</li>
+						<li>Tippe auf der Workday-Wake-Karte auf die drei Punkte (oder wische nach unten).</li>
+						<li>Wähle <strong>Sperren</strong>. Ein Schloss-Symbol erscheint, und deine Widgets aktualisieren sich ab sofort sofort.</li>
+					</ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq">
+            <div class="container">
+                <h2>Häufig gestellte Fragen</h2>
+                <div class="faq-list">
+                    <details class="faq-item">
+                        <summary>Gibt es Workday Wake für iOS?</summary>
+                        <div class="faq-answer">
+                            <p>Zurzeit gibt es Workday Wake ausschließlich für Android. Eine iOS-Version ist derzeit nicht geplant.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Funktioniert die App offline?</summary>
+                        <div class="faq-answer">
+                            <p>Ja! Sobald du Region und Arbeitszeitplan gewählt hast, funktioniert die App komplett offline. Die Feiertagsdaten werden lokal zwischengespeichert.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Woher kennt die App die Feiertage?</summary>
+                        <div class="faq-answer">
+                            <p>Workday Wake nutzt öffentlich verfügbare Feiertagsdaten für jedes Land. Wenn du deine Region wählst, lädt die App den passenden Feiertagskalender herunter.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Kann ich Wecker zwischen Geräten synchronisieren?</summary>
+                        <div class="faq-answer">
+                            <p>Nein. Workday Wake hat keine Konten und keine Cloud-Synchronisierung, und deine Wecker werden nirgendwo hochgeladen. Die Einrichtung geschieht pro Gerät: installiere die App auf jedem Gerät und wähle dort Arbeitszeitplan und Region.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Sind meine Daten privat?</summary>
+                        <div class="faq-answer">
+                            <p>Alle deine Wecker-Daten, die gewählte Region und die eigenen Einstellungen werden lokal auf deinem Gerät gespeichert. Auf der <a href="privacy.html">Datenschutz-Seite</a> findest du den überprüfbaren Nachweis: exakte Berechtigungsliste, den einen ausgehenden Netzwerkaufruf und den Data-safety-Link.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Wie melde ich einen Fehler oder einen Funktionswunsch?</summary>
+                        <div class="faq-answer">
+                            <p>Bitte öffne ein Issue in unserem GitHub-Repository mit so vielen Details wie möglich: Gerätemodell, Android-Version und Schritte zur Reproduktion.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <img src="../workday-wake.svg" class="logo" alt="Workday Wake Logo" style="width: 50px; height: auto; margin: 0;">
+                    <span style="margin-left: 10px; font-weight: 600;">Workday Wake</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/peterandree/workday-wake-app">GitHub</a>
+                    <a href="https://github.com/peterandree/workday-wake-app/blob/main/LICENSE" target="_blank">Lizenz</a>
+                    <a href="https://github.com/peterandree/workday-wake-app/issues">Issues</a>
+                    <a href="privacy.html">Datenschutz</a>
+                    <a href="support.html">Support</a>
+                    <a href="against-hostile-oems.html">Wecker-Zuverlässigkeit</a>
+                    <a href="impressum.html" hreflang="de">Impressum</a>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2026 NoirOrioN (peterandree). Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .doc-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>プライバシーポリシー — Workday Wake</title>
+<meta name="description" content="Workday Wake がデータを扱う方法。広告なし、分析なし、アカウントなし。すべて端末内にとどまります。">
+    <link rel="stylesheet" href="../css/privacy.css">
+<script src="../js/lang.js" defer></script>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="../index.html" hreflang="en" title="English">EN</a><a href="../de/index.html" hreflang="de" title="Deutsch">DE</a><a href="../zh-hans/index.html" hreflang="zh-Hans" title="中文（简体）">中文</a><a href="../es-419/index.html" hreflang="es-419" title="Español">ES</a><a href="../fr/index.html" hreflang="fr" title="Français">FR</a><a href="../pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="index.html" hreflang="ja" title="日本語" aria-current="page">日本語</a></div>
+
+
+<h1>プライバシーポリシー</h1>
+<p class="sub">Workday Wake — 2026年10月4日更新</p>
+
+<div class="box">
+  <strong>要約。</strong> Workday Wake には、アカウントも自社サーバーも広告も分析もありません。
+  アラームと設定は端末の内部ストレージにとどまります。アプリが通信するのは、公開祝日カレンダーの
+  ダウンロードと、任意の tip jar 使用時のストアの決済プロバイダーへの接続だけです。
+</div>
+
+<h2>収集するもの</h2>
+<p><strong>何も収集しません。</strong> アプリにはユーザーアカウントもサインインも、
+運営するバックエンドもありません。アラーム、ラベル、勤務時間、カスタム祝日は
+一切確認できません。すべて端末から出ないからです。</p>
+
+<h2>端末にとどまるもの</h2>
+<p>入力したものはすべて、アプリの非公開の端末内ストレージ（ローカルデータベースと
+ローカル設定ファイル）に保存されます。アップロードも当方へのバックアップもされず、
+当方を含む誰にも読めません：</p>
+<ul>
+  <li>アラーム &mdash; 時刻、ラベル、繰り返しパターン、着信音、音量、バイブレーション、スヌーズ設定</li>
+  <li>勤務週とアラームごとの曜日パターン</li>
+  <li>カスタム祝日（インポートしたカレンダーファイルを含む）</li>
+  <li>国/地域の選択、テーマや言語などの UI 設定</li>
+</ul>
+
+<h2>端末から出るものと、その理由</h2>
+<p>アプリの外向き通信は、以下のホストへの HTTPS 通信だけです。いずれも
+<em>あなたが</em>選んだ国/地域の公開祝日データの検索であり、アラームや設定、
+端末識別子、広告識別子は含まれません。</p>
+
+<table>
+  <tr><th>宛先</th><th>理由</th><th>送る内容</th></tr>
+  <tr>
+    <td><code>openholidaysapi.org</code></td>
+    <td>公開祝日・学校祝日カレンダー</td>
+    <td>国コード、地域コード、年</td>
+  </tr>
+  <tr>
+    <td><code>date.nager.at</code></td>
+    <td>主要ソースが応答しない場合の予備の祝日ソース</td>
+    <td>国コードと年</td>
+  </tr>
+  <tr>
+    <td><code>feiertage-api.de</code></td>
+    <td>ドイツ語圏向けの予備の祝日ソース</td>
+    <td>州コードと年</td>
+  </tr>
+  <tr>
+    <td><code>peterandree.github.io</code></td>
+    <td>任意のプロジェクト支援者一覧の取得</td>
+    <td>通常の Web 取得。個人を特定するものなし</td>
+  </tr>
+  <tr>
+    <td>Google Play Billing <em>(Play version only)</em></td>
+    <td>任意の tip jar</td>
+    <td>すべて Google Play が処理。アプリが受け取るのは購入トークンのみ、決済情報は一切</td>
+  </tr>
+  <tr>
+    <td>Ko-fi or Afdian <em>(direct version only)</em></td>
+    <td>Play Billing がない環境での任意の tip jar</td>
+    <td>普通のリンクをタップするだけ。決済ページはブラウザーで開き、アプリは何も受け取りません</td>
+  </tr>
+</table>
+<p>祝日カレンダーは端末にキャッシュされるため、オフラインでも動作し続けます。
+キャッシュは Android 設定でアプリのストレージを消去すればいつでもクリアできます。</p>
+
+<h2>権限と、それぞれの目的</h2>
+<p>アプリが要求するのは、アラームを鳴らすために必要な権限だけです。
+<strong>位置情報の権限は要求しません</strong> &mdash; 国と地域はリストからあなたが選ぶもので、
+アプリが GPS 位置を読むことはありません。</p>
+
+<table>
+  <tr><th>権限</th><th>用途</th></tr>
+  <tr><td><code>USE_EXACT_ALARM</code>, <code>USE_FULL_SCREEN_INTENT</code></td><td>正確な分にアラームを鳴らし、ロック画面の上に表示する</td></tr>
+  <tr><td><code>POST_NOTIFICATIONS</code></td><td>アラームと事前予告の通知を表示する</td></tr>
+  <tr><td><code>RECEIVE_BOOT_COMPLETED</code></td><td>再起動後にアラームを再設定する</td></tr>
+  <tr><td><code>FOREGROUND_SERVICE</code>（+ システム免除 / 特殊用途）</td><td>バックグラウンドアプリを積極的に終了させるメーカーの端末でもアラームを確実に鳴らす</td></tr>
+  <tr><td><code>WAKE_LOCK</code>, <code>VIBRATE</code></td><td>アラーム時に端末を起こし、バイブレーションさせる</td></tr>
+  <tr><td><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code></td><td>祝日カレンダーをダウンロードする</td></tr>
+</table>
+
+<h2>分析、広告、トラッキング</h2>
+<p>一切ありません。アナリティクス SDK、広告 SDK、クラッシュレポート
+サービス、フィンガープリンティングは含まれません。第三者のトラッキングコードを
+埋め込まず、Cookie も使いません。</p>
+
+<h2>子ども</h2>
+<p>アプリは子どもを対象としてはおらず、年齢を問わず誰からも個人情報を
+収集しません。</p>
+
+<h2>あなたの権利</h2>
+<p>データが当方に届かないため、当方がエクスポート・訂正・削除すべきものは
+ありません。アンインストールですべて削除できます。部分的には Android 設定で
+アプリのストレージを消去してください。</p>
+
+<h2>ポリシーの変更</h2>
+<p>将来のバージョンでアプリの送信内容が変わる場合は、その配布前にこのページを
+更新し、上記の発効日を変えます。</p>
+
+<h2>連絡先</h2>
+<p>このポリシーについての質問はプロジェクトの
+<a href="https://github.com/peterandree/workday-wake-app/issues">公開 issue トラッカー</a>で受け付けます。</p>
+
+<footer>
+  Workday Wake はオープンソースです。このポリシーは公開アプリについての説明であり、法文書ではありません。
+  <br><a href="impressum.html" hreflang="de">Impressum</a>
+</footer>
+
+</body>
+</html>

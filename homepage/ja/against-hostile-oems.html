@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>アラームの信頼性 — Workday Wake</title>
+<meta name="description" content="Workday Wake が Xiaomi、Samsung、Huawei など積極的なバッテリー管理の Android 端末でもアラームを鳴らし続ける仕組みと、お使いの端末で確認できること。">
+<meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="../css/against-hostile-oems.css">
+<script src="../js/lang.js" defer></script>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="../index.html" hreflang="en" title="English">EN</a><a href="../de/index.html" hreflang="de" title="Deutsch">DE</a><a href="../zh-hans/index.html" hreflang="zh-Hans" title="中文（简体）">中文</a><a href="../es-419/index.html" hreflang="es-419" title="Español">ES</a><a href="../fr/index.html" hreflang="fr" title="Français">FR</a><a href="../pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="index.html" hreflang="ja" title="日本語" aria-current="page">日本語</a></div>
+
+
+<h1>アラームの信頼性</h1>
+<p class="sub">Workday Wake が Xiaomi、Samsung、Huawei など積極的なバッテリー管理の
+  端末でも鳴り続けるよう設計されている仕組み &mdash; と、お使いの端末で確認できることを解説します。</p>
+
+<nav class="toc" aria-label="このガイドの内容">
+  <a href="#why">このページの目的</a> ·
+  <a href="#threats">敵対的な環境が実際にすること</a> ·
+  <a href="#layers">重ねてきた防御層</a> ·
+  <a href="#diagrams">図解</a> ·
+  <a href="#diag">端末内の診断</a> ·
+  <a href="#share">診断の共有 — 任意、あなたの裁量で</a> ·
+  <a href="#opt-out">あなたが制御します</a> ·
+  <a href="#limits">正直な限界</a> ·
+  <a href="#closing">まとめ</a>
+</nav>
+
+<h2 id="why">このページの目的</h2>
+<p>素の Android 端末（例: Google Pixel）では、きちんと作られたアラームアプリは
+  ほぼ問題なく動きます。しかし Android のインストール基盤の多くではそうはいきません。複数の
+  メーカーは、バックグラウンドアプリを終了させ、スケジュール済みアラームを黙って破棄し、アプリの
+  自己再起動を阻む電源管理機能を搭載しています。しかも普通は
+  <em>何かが取り消されたことをアプリに知らせる仕組みすらない</em>のです。</p>
+<div class="box">
+  本質的な問題はこの非対称性です: アラームは消えたのに、アプリは察知できない。
+  Workday Wake がこれに対して行うことはすべて、一つの問いを軸に設計されています:
+  <strong>ある仕組みが消されたとき、どの別の仕組みがそれに気づくのか？</strong>
+</div>
+<p>このページは、そのエンジニアリングの物語を一般向けに読みやすくした版です。こうした端末が
+  実際に何をするか、アプリがそれへどう応えるか、万一の際にアプリ内から診断を確認・共有する
+  方法を説明します。ブランド別の設定手順とアプリ内のガイドは同じ情報源から来ています。万一
+  このページとアプリが食い違った場合は、<em>設定 &gt; 信頼性</em> 画面のほうが
+  お使いの端末に関して確からしい情報です。</p>
+
+<h2 id="threats">敵対的な環境が実際にすること</h2>
+<table>
+  <tr><th>仕組み</th><th>典型機種</th><th>無防備なアラームアプリへの影響</th></tr>
+  <tr><td>最近のアプリからのスワイプ強制終了 / force-stop</td><td>Xiaomi (MIUI/HyperOS)、Samsung (One&nbsp;UI)</td><td>スケジュール済みアラームの登録が消え、アプリへのコールバックはない</td></tr>
+  <tr><td>キャッシュプロセスの削除（「メモリクリーナー」）</td><td>Xiaomi、Oppo/ColorOS、Samsung</td><td>プロセスが予告なく死に、プロセスレベルで予定していた処理がすべて失われる</td></tr>
+  <tr><td>バックグラウンド凍結 / autostart ゲート</td><td>Xiaomi (HyperOS/MIUI Autostart)、Oppo/ColorOS (DuraSpeed)</td><td>アラームは届いても鳴らすプロセスが凍結される &mdash; またはアプリが決して自己再起動できない</td></tr>
+  <tr><td>バッテリー最適化を「制限」に設定</td><td>素の Android も含む、各メーカーのバッテリー管理</td><td>アラームの配信が遅延・一括化され、最も優先度の高いアラーム API さえ阻害されうる</td></tr>
+  <tr><td>深い Doze / 低活動バケット</td><td>全 Android。しきい値は各 UI で異なる</td><td>アラーム API が免除でない限り配信が先送りされる</td></tr>
+  <tr><td>起動ブロードキャストの抑止（Autostart）</td><td>Xiaomi/MIUI、HyperOS</td><td>ユーザーが Autostart を許可するまで、再起動後のアラームが再設定されない</td></tr>
+  <tr><td>バックアップ/復元と OS アップデート</td><td>全 Android</td><td>スワイプ強制終了と同じ: 登録が黙って消える</td></tr>
+</table>
+
+<h2 id="layers">重ねてきた防御層</h2>
+<p>上記のどの UI も 1 つの仕組みではカバーできないため、Workday Wake は独立した
+  層を重ねています。それぞれの層は、前の層がすでに破壊されている可能性を想定しています:</p>
+<div class="layers">
+  <div class="layer"><b>予防</b><span>目覚ましアラームは
+    <code>setAlarmClock()</code> でスケジュールされます。Android が提供する最も優先度の高いアラーム API は
+    Doze から免除され、システム時計の UI に表示され、プロセスが死んでいても配信されます。
+    それがステータスバーに小さなアラームアイコンを出す理由でもあります。バグではなく、
+    アプリが動いている証拠です。</span></div>
+  <div class="layer"><b>復元</b><span>アラームは再起動後、
+    タイムゾーン変更後、アプリ起動のたび、そして定期オフライン保守ジョブによって
+    再登録されます（正確なアラームの権限は 8 時間ごとに確認）。これらのジョブは
+    プロセスの生存に依存しないため、OEM に消されたものをすべて再設定できます。</span></div>
+  <div class="layer"><b>監視</b><span>必要な端末では、小さな第二プロセスが
+    6 時間ごとに主プロセスへ通信します。どちらかの側が 13 時間
+    沈黙したら、もう一方がアラームを再設定します。この層は既定では <em>オフ</em>（メモリを消費）。
+    既知の挙動を持つブランドや、初めて記録された信頼性インシデントの後には自動でオンになり、
+    その後黙ってオフに戻ることは決してありません。</span></div>
+  <div class="layer"><b>検知・修復</b><span>全アラームが鳴る予定の時刻を記録し、
+   実際の ringing は実際に鳴ったことを記録します。予定されていたアラームが鳴らない場合、アプリは
+    ミスをカウントし、アラーム一覧と同じ情報源から黙って再スケジュールします &mdash;
+    あなたが眠っている間でもです。</span></div>
+  <div class="layer"><b>正直にエスカレーション</b><span>検知自体が壊れているように見える場合
+    （あるガードが 3 回連続で沈黙している場合）、アプリは「アラームの信頼性が
+    低下している」という一本の目立つ通知を出します。すべて問題ないと装うのではなく。
+    </span></div>
+</div>
+<p class="fallback-note">ある層が前の層の失敗を拾うためだけに存在するなら、
+  それがその層の仕事です &mdash; ミス、自己修復、エスカレーションは記録され、隠されません。</p>
+
+<h3 id="diagrams">層の図解</h3>
+<p>これらの図はエンジニアリング・ドキュメントから直接レンダリングされています。
+  実装と並行して手作業で管理されており、信頼性の設計自体が変わったときにのみ変更されます。</p>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d1dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d1.svg" alt="1 回のアラームミスの時系列: setAlarmClock でスケジュールされ、OEM がプロセスを殺して登録を消す、起動時と日次の監視ジョブですべてを再設定する、6 時間ごとの相互ハートビートが古い側に気づく、ミス検知が予定と実際の発火を比較する、自己修復が全アラームを再スケジュールする、1 つのインシデントで端末が Tier 2 に上がる、3 回連続の古い観察でユーザー向けの注意通知が出る。" loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 1 &mdash; 1 回のアラームミスと、各層の反応</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d2dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d2.svg" alt="主要な発火経路のフローチャート: ユーザーがアラームを設定、スケジューラが祝日を考慮した発火時刻を計算し AlarmManager に setAlarmClock を登録、壁時計がその時刻に達すると broadcast receiver がフォアグラウンドの鳴動サービスと音声を開始、全画面インテントを UI に上げ、次の予定を再スケジュール、鳴動マーカーが唯一のオラクル。" loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 2 &mdash; 主要な発火経路: <code>setAlarmClock()</code> はプロセスが死んでいても配信される</figcaption>
+</figure>
+
+<figure class="fig port">
+  <picture>
+    <source srcset="../d3dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d3.svg" alt="復元トリガーのフローチャート: direct-boot 対応の起動完了、時刻・タイムゾーン変更、アプリプロセス起動、WorkManager の定期ジョブがすべて中央の再スケジュールルーチンに流れ込み、setAlarmClock のエントリを再登録し夜間の予告を再設定する。" loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 3 &mdash; 復元: 4 つの独立したトリガーが OEM に消されたものを再設定する</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d4dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d4.svg" alt="監視層のフローチャート: 主プロセスと監視プロセスが 6 時間ごとに共有データベースへハートビートを書き込み、互いのビートを読んで 13 時間の鮮度しきい値と比較、古い側は再起動か再スケジュールを引き起こし、側ごとの失敗カウンターが注意通知器に流れ、3 回連続の古い観察後に 1 回ユーザー向け通知を出す（12 時間のクレームで重複を防ぐ）。" loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 4 &mdash; 監視: 主プロセスと監視プロセスの間の相互ハートビート</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d5dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d5.svg" alt="ローカルの検知・修復ループのフローチャート: ハートビートのたびに予定発火時刻を猶予窓内の最終発火時刻と照合、実際のミスはミスカウンターを増やし自己修復を引き、全アラームを再スケジュールして最終修復時刻を記録、直近の修復はループ防止のため沈黙し、診断画面に全タイムスタンプを表示、共有はユーザー明示同意のときのみ。" loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 5 &mdash; 検知・修復: ローカルのミス検知と、静かな自己修復</figcaption>
+</figure>
+
+<figure class="fig port">
+  <picture>
+    <source srcset="../d6dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d6.svg" alt="階層化のフローチャート: プロセス起動時に階層マネージャが初期化、敵対的な OEM の許可リストに一致すると監視有効のまま直接 Tier 2 へ、不一致なら Tier 1 に留まり監視無効、記録された信頼性インシデントが Tier 1 を Tier 2 へ昇格させる；Tier 2 は粘着的で自動降格しない。" loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 6 &mdash; 階層: ドッグウォッチャーは効果を発揮する時にだけメモリを消費する</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d7dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d7.svg" alt="ストレステストハーネスのフローチャート: スクリプトが使い捨ての Pixel エミュレーターを操り、デバッグ版をインストール、本番スケジューラ経由で実際のアラームを仕込み、force-stop やプロセス強制終了、ディープ Doze、スタンバーバケットなどの制限を適用、ログ内の鳴動マーカーを監視しながら待ち、レポートファイルとともに pass・fail・skip を報告、その後エミュレーターとディスクイメージは削除される。" loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 7 &mdash; 検証: ストレステストは合成テストではなく本番のアラームチェーンを動かす</figcaption>
+</figure>
+
+<h3 id="per-brand">メーカー別の設定手順（アプリ内ガイドより）</h3>
+<p>アプリには対象端末向けの内蔵ガイド（設定 &gt; 信頼性）があり、メーカーごとの
+  正確な手順を収録しています。主要なものを簡潔に &mdash; 設定内でアプリ名が出る箇所は
+  &ldquo;Workday Wake&rdquo; をランチャー内のアプリ名に置き換えてください:</p>
+<table>
+  <tr><th>ブランド / UI</th><th>手順（アプリの端末バッテリーガイドと同じ）</th></tr>
+  <tr><td>Xiaomi / MIUI, HyperOS</td><td><b>Autostart</b> を許可；高度な権限で「ロック画面に表示」と
+    「バックグラウンド実行中にポップアップウィンドウを表示」を有効化；アプリ &gt; 省電力を
+    「制限なし」に；最近使ったアプリでロック（下スワイプまたは錠前）。</td></tr>
+  <tr><td>Samsung / One UI</td><td>設定 &gt; バッテリーとデバイスケア &gt; バッテリー &gt; バックグラウンド
+    使用制限：「スリープ状態のアプリ」「深いスリープ状態のアプリ」から削除し
+    「スリープ状態にしないアプリ」へ追加；設定 &gt; アプリ &gt; Workday Wake &gt; バッテリー &gt; 制限なし。
+    「未使用アプリをスリープ状態にする」がオフになっているか確認 &mdash; 数日未使用のアプリの
+    アラームを抑圧することがあります。</td></tr>
+  <tr><td>Huawei / EMUI, HarmonyOS</td><td>設定 &gt; バッテリー &gt; アプリ起動：「手動で管理」にし、
+    自動起動・二次起動・バックグラウンド実行を許可；バッテリー最適化：「許可しない」。</td></tr>
+  <tr><td>OnePlus / Oppo / Realme (ColorOS)</td><td>バッテリー最適化：「未最適化」；アプリ情報 &gt;
+    バッテリー：「バックグラウンド アクティビティを許可」／「制限なし」；起動マネージャーで
+    自動起動を許可；DuraSpeed の監視リストから Workday Wake を外す。</td></tr>
+  <tr><td>Vivo / iQOO</td><td>権限マネージャーで自動起動を許可；バッテリー最適化を無効化；
+    バックグラウンド アクティビティを許可し、最近使ったアプリでロック。</td></tr>
+  <tr><td>Sony</td><td>設定 &gt; バッテリー &gt; STAMINA モード：「オフ」&mdash; または追加制限の
+    「バッテリー時間を優先」をオフに。</td></tr>
+</table>
+<p>他のファミリー（Asus PowerMaster、Meizu、Lenovo、Motorola Battery care、Nokia
+  DuraSpeed、Transsion/itel/Infinix の Phone Master）も、アプリ内で同じ扱いを受けます:
+  <em>設定 &gt; 信頼性</em> がメーカーを検出し、お使いの端末に当てはまる手順だけを表示します。
+  すべての手順はアプリ内に恒久的な文字列リソースとして存在します；ハードコードや
+  ブランド固有の分岐はありません。</p>
+<div class="box">
+  <strong>ほぼすべての UI で効くプロの小技:</strong> 最近使ったアプリを開き、Workday Wake を
+  <b>ロック</b>してください（錠前アイコン）。この一手でスワイプによる強制終了と
+  メモリクリーナーによる損失の大半を防げ、スキップをタップした後に更新が止まる
+  ウィジェットも直ります。
+</div>
+
+<h2 id="diag">端末内の診断</h2>
+<p>上記の信頼性エンジニアリングはどれも、端末内で確認できる痕跡を残します。
+  <em>設定 &gt; 診断</em> では、バグ報告が尋ねるのと同じ質問にアプリが答えます:</p>
+<ul>
+  <li>ウェブ側: 監視ハートビートは打たれているか？アラームが最後に <b>スケジュールされた</b>
+      いつか、<b>鳴る予定だった</b>とき、<b>実際に鳴った</b>ときは？</li>
+  <li><b>ミス</b>は何回検知されたか、最後に <b>自己修復</b>（ミス後の再スケジュール）したのはいつか？</li>
+  <li>アプリのバージョン、Android のバージョン、メーカーと機種 &mdash; メーカー固有の
+      挙動が実際に存在する場所です。</li>
+</ul>
+<div class="box ok">
+  この画面の内容はすべて端末上で計算・保存されます。診断は送信機ではなく
+  鏡です: アプリにはそれを自分でアップロードする手段がありません。
+</div>
+<p><em>設定 &gt; 信頼性</em> では、お使いの端末の保護階層（「Tier 1 / Tier 2」）、カウントされた
+  ミスの数、そして該当ブランドの端末バッテリーガイドそのものも見られます。</p>
+
+<h2 id="share">診断の共有 — 任意、あなたの裁量で</h2>
+<p>アラームが失敗し助けが必要な場合、<em>設定 &gt; 診断</em> には
+  「開発者へ送る」アクションがあります:</p>
+<ol>
+  <li><strong>オプトインです</strong>: 何かが起こる前に、ダイアログですべてのフィールドを一覧表示します。</li>
+  <li>レポートは技術情報のみ &mdash; タイムスタンプ、カウンター、バージョン、メーカー/機種。
+      アラームのラベル、名前、識別子は一切含みません。</li>
+  <li>送り先は<em>あなた</em>が選びます（メール、メッセンジャー、共有シート対応の何でも）。
+      ドラフトで送信を押さない限り、端末からは何も出ません。</li>
+</ol>
+<div class="box">
+  アプリのどこにもアップロード先、クラッシュレポートサービス、自動バックグラウンド送信は
+  ありません。共有シートをまったく使いたくない場合のためのクリップボード代替もあります。
+</div>
+
+<h2 id="opt-out">あなたが制御します</h2>
+<ul>
+  <li><strong>アカウントなし、分析なし、広告なし</strong> &mdash; 信頼性エンジニアリングは
+      端末内のリソースだけで行われます。<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</li>
+  <li><strong>Alarm Guard</strong>: アプリを生かし続ける常駐通知サービスは
+      設定 &gt; 信頼性 でオフにできます（制限の厳しい端末ではアラームミスに対する保護が
+      若干下がります）。</li>
+  <li><strong>Tier 2 監視</strong> は既知のブランド一致か記録済みインシデントの後にのみ
+      追加コンポーネントを有効化します。隠れた報告チャネルはありません。</li>
+  <li><strong>アンインストールまたはアプリのストレージ消去</strong>は完全なリセットです:
+      すべての診断カウンター、ハートビートのタイムスタンプ、アラームミスの記録は
+      お使いの端末のアプリストレージにのみ存在します。</li>
+</ul>
+
+<h2 id="limits">正直な限界</h2>
+<ul>
+  <li><strong>AOSP の基盤で検証されており、全部の端末ではありません。</strong> 耐性設計は
+      スローアウェイの Pixel AVD で、AOSP（Android Open Source Project）の
+      原始操作（プロセス強制終了、ディープ Doze、スタンドアロンバケット）でテストされています。
+      自動化できるのはそこまでだからです。エミュレーターは Xiaomi Autostart ゲート、
+      Samsung Device Care、OEM のアラームスロットリングを完全に再現できません &mdash;
+      実機の挙動は dontkillmyapp.com の情報、ブランド別レポート、そしてあなたのようなユーザーが
+      送る診断情報で拾っていきます。</li>
+  <li><strong>保証はありません。</strong> 積極的な OEM はファームウェアのバージョン間で
+      電源管理を変えます。ブランドが新しい kill 機構を導入した場合、対応にはアプリの
+      更新が必要になるかもしれません。それを見つけるのが診断情報です。</li>
+  <li><strong>ステータスバーのアラームアイコンは意図的なものです</strong> &mdash; アラームに最適な
+      スケジュール API が伴います。</li>
+  <li><strong>iOS 版は存在しません。</strong> 上記のエンジニアリングは Android の API
+      （契約ベースのアラーム、WorkManager、正確なアラーム権限）に依存しており、iOS には
+      比較可能な同等物がありません。</li>
+</ul>
+
+<h2 id="closing">まとめ</h2>
+<p>目覚まし時計の仕事は一つです。Workday Wake は最初から、その仕事の最も過酷な形を想定して
+  設計されています: プロセスの死をかいくぐるスケジューリング、消されたものの再設定、
+  必要な場合の第二プロセスによる自己監視、そして問題が起きたときの端末内での正直な報告。
+  そしてプライバシーの線は絶対です &mdash; その正直さがデータを犠牲にすることはありません。</p>
+<p>このガイドが当てはまらない端末を見つけましたか？
+  <a href="https://github.com/peterandree/workday-wake-app/issues">issue を立て</a>て、
+  可能であれば任意の共有アクション経由で端末の診断を添えてください。このフィードバックの
+  環は、エミュレーターでは代替できない唯一つのものです。</p>
+
+<footer>
+  Workday Wake &mdash; あなたの勤務スケジュールを理解するスマートアラーム。関連ページ:
+  <a href="index.html">ホーム</a> · <a href="privacy.html">プライバシーポリシー</a> ·
+  <a href="support.html">支援する</a> · <a href="impressum.html" hreflang="de">Impressum</a>
+</footer>
+
+</body>
+</html>

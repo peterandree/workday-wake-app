@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datenschutzerklärung — Workday Wake</title>
+<meta name="description" content="Wie Workday Wake mit deinen Daten umgeht. Keine Werbung, keine Analyse-Tools, keine Konten. Alles bleibt auf deinem Gerät.">
+    <link rel="stylesheet" href="../css/privacy.css">
+<script src="../js/lang.js" defer></script>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="../index.html" hreflang="en" title="English">EN</a><a href="index.html" hreflang="de" title="Deutsch" aria-current="page">DE</a><a href="../zh-hans/index.html" hreflang="zh-Hans" title="中文（简体）">中文</a><a href="../es-419/index.html" hreflang="es-419" title="Español">ES</a><a href="../fr/index.html" hreflang="fr" title="Français">FR</a><a href="../pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="../ja/index.html" hreflang="ja" title="日本語">日本語</a></div>
+
+
+<h1>Datenschutzerklärung</h1>
+<p class="sub">Workday Wake — zuletzt aktualisiert am 4. Oktober 2026</p>
+
+<div class="box">
+  <strong>Die Kurzfassung.</strong> Workday Wake hat keine Konten, keine eigenen Server,
+  keine Werbung und keine Analyse-Tools. Deine Wecker und Einstellungen bleiben im
+  eigenen Speicher deines Geräts. Die App kommt nur ins Netz, um gesetzliche
+  Feiertagskalender herunterzuladen und &dash; falls du das optionale Trinkgeld nutzt &dash;,
+  um den Zahlungsanbieter deines Stores zu erreichen.
+</div>
+
+<h2>Was wir sammeln</h2>
+<p><strong>Nichts wird gesammelt.</strong> Die App hat keine Benutzerkonten, keine Anmeldung
+und kein Backend, das wir betreiben. Wir können deine Wecker, deine Bezeichnungen, deine
+Arbeitszeiten oder deine eigenen Feiertage nicht sehen, denn nichts davon verlässt
+dein Gerät.</p>
+
+<h2>Was auf deinem Gerät bleibt</h2>
+<p>Alles, was du eingibst, wird im privaten Speicher der App auf dem Gerät abgelegt (eine
+lokale Datenbank und eine lokale Einstellungsdatei). Nichts davon wird hochgeladen, an uns
+gesichert oder ist für uns oder sonst jemanden lesbar:</p>
+<ul>
+  <li>Deine Wecker &mdash; Weckzeit, Bezeichnung, Wiederholungsmuster, Weckton, Lautstärke, Vibration und Schlummern-Einstellungen</li>
+  <li>Deine Arbeitswoche und die Tagesmuster je Wecker</li>
+  <li>Deine eigenen Feiertage, einschließlich importierter Kalendardateien</li>
+  <li>Deine Auswahl von Land und Region sowie Oberflächen-Einstellungen wie Design und Sprache</li>
+</ul>
+
+<h2>Was dein Gerät verlässt &ndash; und warum</h2>
+<p>Die App sendet Anfragen nur an die unten aufgeführten Hosts, immer über HTTPS. Jede Anfrage
+ist ein Abruf gesetzlicher Feiertagsdaten für das Land bzw. die Region, <em>die du</em>
+gewählt hast. Sie enthält keine Wecker, keine Einstellungen, keine Gerätekennung und keine
+Werbe-Kennung.</p>
+
+<table>
+  <tr><th>Ziel</th><th>Warum</th><th>Was gesendet wird</th></tr>
+  <tr>
+    <td><code>openholidaysapi.org</code></td>
+    <td>Gesetzliche Feiertags- und Schulferien-Kalender</td>
+    <td>Ländercode, Regionscode und Jahr</td>
+  </tr>
+  <tr>
+    <td><code>date.nager.at</code></td>
+    <td>Ausweichquelle für Feiertage, falls die erste nicht antwortet</td>
+    <td>Ländercode und Jahr</td>
+  </tr>
+  <tr>
+    <td><code>feiertage-api.de</code></td>
+    <td>Fallback holiday source for German-speaking regions</td>
+    <td>Bundesland-Code und Jahr</td>
+  </tr>
+  <tr>
+    <td><code>peterandree.github.io</code></td>
+    <td>Lädt die optionale Liste der Projekt-Sponsoren</td>
+    <td>Gewöhnliche Webanfrage; nichts Erkennbares</td>
+  </tr>
+  <tr>
+    <td>Google Play Billing <em>(nur Play-Version)</em></td>
+    <td>Optionales Trinkgeld</td>
+    <td>Wird vollständig von Google Play abgewickelt; die App erhält ein Kauf-Token, nie Zahlungsdaten</td>
+  </tr>
+  <tr>
+    <td>Ko-fi oder Afdian (爱发电) <em>(nur Direktversion)</em></td>
+    <td>Optionales Trinkgeld, wo es Play Billing nicht gibt</td>
+    <td>Nichts als ein gewöhnlicher Tipp auf einen Link; die Zahlungsseite öffnet sich im Browser, und die App erhält nichts zurück</td>
+  </tr>
+</table>
+<p>Feiertagskalender werden auf deinem Gerät zwischengespeichert, damit die App offline
+weiterarbeitet. Du kannst den Zwischenspeicher jederzeit leeren, indem du den App-Speicher
+in den Android-Einstellungen löschst.</p>
+
+<h2>Berechtigungen und wofür jede einzelne da ist</h2>
+<p>Die App fordert nur die Berechtigungen an, die sie braucht, um einen Wecker klingeln zu
+lassen. Sie fordert <strong>keine Standort-Berechtigung</strong> an &mdash; Land und Region
+wählst du selbst aus einer Liste, und die App liest nie deine GPS-Position.</p>
+
+<table>
+  <tr><th>Berechtigung</th><th>Zweck</th></tr>
+  <tr><td><code>USE_EXACT_ALARM</code>, <code>USE_FULL_SCREEN_INTENT</code></td><td>Deinen Wecker zur genauen Minute auslösen und über den Sperrbildschirm zeigen</td></tr>
+  <tr><td><code>POST_NOTIFICATIONS</code></td><td>Wecker- und Erinnerungs-Benachrichtigungen anzeigen</td></tr>
+  <tr><td><code>RECEIVE_BOOT_COMPLETED</code></td><td>Deine Wecker nach einem Neustart neu anlegen</td></tr>
+  <tr><td><code>FOREGROUND_SERVICE</code> (+ system-exempted / special-use)</td><td>Den Wecker auf Herstellern zuverlässig halten, die Hintergrund-Apps aggressiv beenden</td></tr>
+  <tr><td><code>WAKE_LOCK</code>, <code>VIBRATE</code></td><td>Das Gerät aufwecken und vibrieren, wenn ein Wecker ausgelöst wird</td></tr>
+  <tr><td><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code></td><td>Feiertagskalender herunterladen</td></tr>
+</table>
+
+<h2>Analyse-Tools, Werbung und Tracking</h2>
+<p>Gibt es nicht. Die App enthält kein Analyse-SDK, kein Werbe-SDK, keinen
+Absturzberichtedienst und kein Fingerprinting. Sie bettet keinen Tracking-Code von
+Drittanbietern ein und setzt keine Cookies.</p>
+
+<h2>Kinder</h2>
+<p>Die App richtet sich nicht an Kinder und sammelt von niemandem &ndash; gleich welchen
+Alters &ndash; keine persönlichen Informationen.</p>
+
+<h2>Deine Rechte</h2>
+<p>Weil deine Daten uns nie erreichen, gibt es bei uns nichts zu exportieren, zu korrigieren
+oder zu löschen. Du kannst alles löschen, was die App vorhält, indem du sie deinstallierst
+&ndash; oder gezielt, indem du ihren Speicher in den Android-Einstellungen leerst.</p>
+
+<h2>Änderungen an dieser Erklärung</h2>
+<p>Falls eine künftige Version ändert, was die App überträgt, wird diese Seite aktualisiert,
+bevor diese Version verteilt wird, und das Datum oben ändert sich.</p>
+
+<h2>Kontakt</h2>
+<p>Fragen zu dieser Erklärung kannst du als Issue im
+<a href="https://github.com/peterandree/workday-wake-app/issues">öffentlichen
+Issue-Tracker</a> des Projekts stellen.</p>
+
+<footer>
+  Workday Wake ist Open Source. Diese Erklärung beschreibt die ausgelieferte App; sie ist
+  kein Rechtsdokument und begründet keine Rechte über die hinaus, die das Gesetz ohnehin
+  gibt.
+  <br><a href="impressum.html" hreflang="de">Impressum</a>
+</footer>
+
+</body>
+</html>

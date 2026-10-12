@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wecker-Zuverlässigkeit — Workday Wake</title>
+<meta name="description" content="Wie Workday Wake auf Xiaomi, Samsung, Huawei und anderen Android-Geräten mit aggressivem Akku-Management das Klingeln hält &mdash; und was du auf deinem Gerät prüfen kannst.">
+<meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="../css/against-hostile-oems.css">
+<script src="../js/lang.js" defer></script>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="../index.html" hreflang="en" title="English">EN</a><a href="index.html" hreflang="de" title="Deutsch" aria-current="page">DE</a><a href="../zh-hans/index.html" hreflang="zh-Hans" title="中文（简体）">中文</a><a href="../es-419/index.html" hreflang="es-419" title="Español">ES</a><a href="../fr/index.html" hreflang="fr" title="Français">FR</a><a href="../pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="../ja/index.html" hreflang="ja" title="日本語">日本語</a></div>
+
+
+<h1>Alarmzuverlässigkeit</h1>
+<p class="sub">Wie Workday Wake konstruiert ist, um auf Xiaomi, Samsung, Huawei und anderen
+  Geräten mit aggressivem Akku-Management weiterzuklingeln &mdash; und was du auf deinem Telefon prüfen kannst.</p>
+
+<nav class="toc" aria-label="In this guide">
+  <a href="#why">Warum es diese Seite gibt</a> ·
+  <a href="#threats">Was eine feindliche Umgebung tatsächlich anrichtet</a> ·
+  <a href="#layers">Die Schichten, die wir stapeln</a> ·
+  <a href="#diagrams">Diagramme</a> ·
+  <a href="#diag">Deine Diagnose auf dem Gerät</a> ·
+  <a href="#share">Diagnose teilen &mdash; freiwillig, auf deine Art</a> ·
+  <a href="#opt-out">Du hast die Kontrolle</a> ·
+  <a href="#limits">Ehrliche Grenzen</a> ·
+  <a href="#closing">Schlusswort</a>
+</nav>
+
+<h2 id="why">Warum es diese Seite gibt</h2>
+<p>Auf einem reinen Android-Gerät (etwa einem Google Pixel) funktioniert eine sauber
+geschriebene Wecker-App meist einfach. Auf einem großen Teil der Android-Installationsbasis
+tut sie es nicht: Mehrere Hersteller liefern Energiespar-Funktionen aus, die Hintergrund-Apps
+beenden, geplante Wecker stillschweigend verwerfen oder der App den Neustart verwehren
+&mdash; üblicherweise <em>ohne die App überhaupt darüber zu informieren, dass etwas
+storniert wurde</em>.</p>
+<div class="box">
+  Das eigentliche Problem ist diese Asymmetrie: Dein Wecker ist weg, aber die App erfährt
+  es nie. Was Workday Wake dagegen tut, baut auf einer Frage auf:
+  <strong>Wenn ein Mechanismus ausgelöscht wird, welchem anderen Mechanismus fällt das auf?</strong>
+</div>
+<p>Diese Seite ist die öffentliche, lesbare Fassung dieser Entwicklungs-Geschichte. Sie erklärt,
+  was diese Geräte tatsächlich anrichten, wie die App reagiert, und wie du Diagnose direkt in
+  der App einsehen und teilen kannst, falls etwas schiefgeht. Die Schritte je Marke und die
+  Hinweis-Bildschirme in der App stammen aus derselben Quelle; falls diese Seite und die App
+  einmal abweichen, ist der Bildschirm <em>Einstellungen &gt; Zuverlässigkeit</em> in der App
+  maßgeblich für dein Gerät.</p>
+
+<h2 id="threats">Was eine feindliche Umgebung tatsächlich anrichtet</h2>
+<table>
+  <tr><th>Mechanismus</th><th>Typisch für</th><th>Wirkung auf eine naive Wecker-App</th></tr>
+  <tr><td>Wisch-Beenden in den letzten Apps / erzwungener Stopp</td><td>Xiaomi (MIUI/HyperOS), Samsung (One&nbsp;UI)</td><td>Angemeldete Wecker werden ausgelöscht, ohne Rückmeldung an die App</td></tr>
+  <tr><td>Töten von Prozessen aus dem Zwischenspeicher („Speicher-Cleaner“)</td><td>Xiaomi, Oppo/ColorOS, Samsung</td><td>Der Prozess stirbt ohne Warnung; alles, was die App auf Prozessebene vorhatte, ist verloren</td></tr>
+  <tr><td>Hintergrund-Freeze / Autostart-Schranken</td><td>Xiaomi (HyperOS/MIUI Autostart), Oppo/ColorOS (DuraSpeed)</td><td>Wecker werden zwar ausgeliefert, aber der Prozess, der sie klingeln lässt, ist eingefroren &mdash; oder die App kann sich nie selbst neu starten</td></tr>
+  <tr><td>Akkuoptimierung auf „Eingeschränkt“</td><td>Auch pures Android, dazu OEM-Akkumanager</td><td>Wecker-Auslieferungen werden verzögert oder gebündelt; selbst die höchstpriorisierte Alarm-API kann ausgehungert werden</td></tr>
+  <tr><td>Tiefer Doze / niedrige Aktivitäts-Buckets</td><td>Ganz Android; die Schwellen unterscheiden sich je Oberfläche</td><td>Auslieferungen werden aufgeschoben, außer die Alarm-API ist ausgenommen</td></tr>
+  <tr><td>Unterdrückte Boot-Broadcasts (Autostart)</td><td>Xiaomi/MIUI, HyperOS</td><td>Wecker werden nach einem Neustart erst neu angelegt, wenn der Nutzer Autostart erlaubt</td></tr>
+  <tr><td>Sicherung/Wiederherstellung und OS-Upgrades</td><td>All Android</td><td>Wie Wisch-Beenden: Anmeldungen stillschweigend verschwunden</td></tr>
+</table>
+
+<h2 id="layers">Die Schichten, die wir stapeln</h2>
+<p>Kein einzelner Mechanismus deckt jede der Oberflächen oben ab, deshalb stapelt Workday Wake
+  unabhängige Schichten. Jede geht davon aus, dass die vorige bereits zerstört sein kann:</p>
+<div class="layers">
+  <div class="layer"><b>Vorbeugen</b><span>Deine Wecker werden mit
+    <code>setAlarmClock()</code> geplant &mdash; der höchstpriorisierten Alarm-API, die
+    Android bietet: von Doze ausgenommen, in der Systemuhr sichtbar und auch dann
+    ausgeliefert, wenn der Prozess tot ist. Sie bringt zudem das kleine Wecksymbol in die
+    Statusleiste; das ist die App bei der Arbeit, kein Fehler.</span></div>
+  <div class="layer"><b>Wiederherstellen</b><span>Wecker werden neu angemeldet nach Neustart, nach
+    Zeitzonwechsel, bei jedem App-Start und durch regelmäßige Offline-Wartungsjobs
+    (die Berechtigung für exakte Wecker wird alle 8&nbsp;Stunden geprüft). Weil diese Jobs
+    nicht davon abhängen, dass der Prozess überlebt hat, können sie alles neu anlegen, was der OEM ausgelöscht hat.</span></div>
+  <div class="layer"><b>Kontrolle</b><span>Auf Geräten, die es brauchen, prüft sich ein kleiner
+    zweiter Prozess alle 6&nbsp;Stunden beim Haupt-Prozess ein. War eine Seite
+    13&nbsp;Stunden still, legt die andere die Wecker neu an. Diese Schicht ist standardmäßig
+    <em>aus</em> (sie kostet Speicher); sie schaltet sich automatisch ein bei Marken mit bekanntem
+    Verhalten oder nach dem ersten dokumentierten Zuverlässigkeits-Zwischenfall, und sie schaltet sich nie stillschweigend wieder aus.</span></div>
+  <div class="layer"><b>Erkennen &amp; heilen</b><span>Jeder Wecker notiert, wann er
+    <em>erwartet</em> klingeln sollte; jeder tatsächliche Klingelvorgang notiert, dass er geklingelt hat. Sollte ein erwarteter
+    Wecker nicht klingeln, zählt die App einen Ausfall und plant stillschweigend neu aus derselben
+    Quelle, aus der auch die Weckerliste stammt &mdash; selbst während du schliefst.</span></div>
+  <div class="layer"><b>Ehrlich hochstufen</b><span>Wenn die Erkennung selbst zu versagen
+    scheint (ein Wachdienst blieb dreimal hintereinander still), zeigt die App eine
+    einzige, sichtbare Benachrichtigung, dass ihre Wecker-Zuverlässigkeit beeinträchtigt ist &mdash;
+    statt zu behaupten, alles sei in Ordnung.</span></div>
+</div>
+<p class="fallback-note">Wenn eine Schicht nur dafür da ist, das Versagen der vorigen Schicht aufzufangen,
+  dann macht sie ihren Job &mdash; Ausfälle, Selbstheilungen und Hochstufungen werden protokolliert, nicht verborgen.</p>
+
+<h3 id="diagrams">Die Schichten im Diagramm</h3>
+<p>Diese Diagramme werden direkt aus der technischen Dokumentation erzeugt. Sie werden
+  parallel zur Implementierung manuell gepflegt und ändern sich nur, wenn sich das
+  Zuverlässigkeitsdesign selbst ändert.</p>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d1dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d1.svg" alt="Timeline of one missed alarm: it is scheduled with setAlarmClock, the OEM kills the process and wipes registrations, boot and per-day watchdog jobs re-arm everything, the 6-hour mutual heartbeat notices the stale peer, the miss detector compares expected against actual fire, a self-heal reschedules all alarms, one incident escalates the device to tier 2, and three consecutive stale observations raise a user-facing distress notification." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Abb. 1 &mdash; Ein einzelner ausgebliebener Wecker und wie jede Schicht reagiert</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d2dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d2.svg" alt="Flowchart of the primary fire path: the user sets an alarm, the scheduler computes a holiday-aware fire time and registers setAlarmClock with AlarmManager, when the wall clock is reached a broadcast receiver starts the foreground ring service and audio, raises a full-screen intent to the UI, reschedules the next occurrence, and the ring marker is the only oracle." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Abb. 2 &mdash; Der Haupt-Auslösungspfad: <code>setAlarmClock()</code> liefert auch, wenn der Prozess tot ist</figcaption>
+</figure>
+
+<figure class="fig port">
+  <picture>
+    <source srcset="../d3dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d3.svg" alt="Flowchart of restore triggers: boot completed is direct-boot aware, time and timezone changes, application process start, and WorkManager periodic jobs all feed one central reschedule routine that re-registers setAlarmClock entries and re-arms the evening warning." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Abb. 3 &mdash; Wiederherstellen: vier unabhängige Auslöser legen neu an, was der OEM ausgelöscht hat</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d4dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d4.svg" alt="Flowchart of the supervision layer: the main process and the watchdog process each write a heartbeat every six hours to a shared database, each reads the other's beat and checks it against a thirteen-hour staleness threshold, a stale peer triggers a restart or reschedule, per-side failure counters feed a distress notifier that posts one user-facing notification after three consecutive stale observations, with a twelve-hour claim preventing duplicate notices." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Abb. 4 &mdash; Kontrolle: der wechselseitige Herzschlag-Watchdog zwischen Haupt- und Wach-Prozess</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d5dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d5.svg" alt="Flowchart of the local detect and heal loop: on each heartbeat tick the expected fire time is checked against the last fired time within a grace window, a real miss increments the miss counter and triggers a self-heal that reschedules all alarms and stamps the last self-heal time, a recent self-heal coasts to avoid a heal loop, and the diagnostics screen shows all timestamps; sharing happens only on explicit user consent." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Abb. 5 &mdash; Erkennen &amp; heilen: der lokale Ausfallsdetektor und seine stille Selbstheilung</figcaption>
+</figure>
+
+<figure class="fig port">
+  <picture>
+    <source srcset="../d6dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d6.svg" alt="Flowchart of tiering: at process start the tier manager initializes, a hostile-OEM allowlist match escalates directly to tier 2 with the watchdog enabled, no match stays at tier 1 with the watchdog disabled, and a recorded reliability incident escalates tier 1 to tier 2; tier 2 is sticky with no automatic de-escalation." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Abb. 6 &mdash; Stufung: der Wachdienst wird genau dann aktiviert, wenn er seinen Speicher wert ist</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d7dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d7.svg" alt="Flowchart of the stress harness: a script drives a throwaway Pixel emulator, installs the debug app, seeds a real alarm through the production scheduler, applies a restriction such as force-stop, process kill, deep doze or a standby bucket, waits while checking for the ring marker in the log, and reports pass, fail or skip with a report file; the emulator and its disk image are deleted afterwards." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Abb. 7 &mdash; Prüfung: das Belastungswerkzeug fährt die Produktions-Weckette, keine synthetische Testarbeit</figcaption>
+</figure>
+
+<h3 id="per-brand">Einrichtungsschritte je Marke (aus der eigenen Anleitung der App)</h3>
+<p>Die App liefert eine eingebaute Anleitung mit (Einstellungen &gt; Zuverlässigkeit auf
+  betroffenen Geräten) mit den genauen Schritten je Hersteller. Die wichtigsten in Kurzform
+  &mdash; ersetze „Workday Wake“ durch den App-Namen in deinem Launcher, wo die Einstellung ihn nennt:</p>
+<table>
+  <tr><th>Marke / Oberfläche</th><th>Schritte (wie im Akku-Guide für dein Gerät der App)</th></tr>
+  <tr><td>Xiaomi / MIUI, HyperOS</td><td><b>Autostart</b> erlauben; in benutzerdefinierten Berechtigungen „Sperrbildschirm anzeigen“ und
+    „Hintergrund-Pop-ups anzeigen“ einschalten; Akkusparmodus der App auf „Uneingeschränkt“ stellen; App in den letzten Apps fixieren (nach unten wischen oder Schloss).
+    
+    
+  <tr><td>Samsung / One UI</td><td>Einstellungen &gt; Akku und Gerätepflege &gt; Akku &gt; Hintergrundnutzungslimits: aus „Schlafende Apps“ und „Tiefschlafende Apps“ entfernen, zu „Apps, die nie schlafen“ hinzufügen; Einstellungen &gt; Apps &gt; Workday Wake &gt; Akku &gt; Uneingeschränkt. Außerdem sicherstellen, dass „Unbenutzte Apps in den Ruhezustand versetzen“ aus ist &mdash; es kann Wecker für tagelang unbenutzte Apps unterdrücken.
+    
+    
+    
+    
+  <tr><td>Huawei / EMUI, HarmonyOS</td><td>Einstellungen &gt; Akku &gt; App-Start: „Manuell verwalten“ setzen und Autostart, Sekundärstart und Hintergrundbetrieb einschalten; Akkuoptimierung: „Nicht zulassen“.
+    
+    
+  <tr><td>OnePlus / Oppo / Realme (ColorOS)</td><td>Akkuoptimierung: „Nicht optimiert“; App-Info &gt; Akku: „Hintergrundaktivität erlauben“/„Uneingeschränkt“; im Startmanager Autostart erlauben; in DuraSpeed Workday Wake aus der überwachten Liste entfernen.
+    
+    
+  <tr><td>Vivo / iQOO</td><td>Im Berechtigungsmanager Autostart erlauben; Akkuoptimierung ausschalten; Hintergrundaktivität erlauben und in den letzten Apps fixieren.
+    
+  <tr><td>Sony</td><td>Einstellungen &gt; Akku &gt; STAMINA-Modus: „Aus“ &mdash; oder den zusätzlichen Restriktor „Bevorzugte Akkulaufzeit“ ausschalten.
+    
+</table>
+<p>Weitere Familien (Asus PowerMaster, Meizu, Lenovo, Motorola Battery care, Nokia
+  DuraSpeed, Transsion/itel/Infinix Phone Master) bekommen dieselbe Behandlung in der App:
+  <em>Einstellungen &gt; Zuverlässigkeit</em> erkennt deinen Hersteller und zeigt nur die Schritte,
+  die zu deinem Gerät passen. Alle Schritte liegen als dauerhafte Zeichenketten-Ressourcen in der App;
+  keine davon ist hartkodiert oder ein markenspezifischer Fork.</p>
+<div class="box">
+  <strong>Profi-Tipp, der auf fast jeder Oberfläche funktioniert:</strong> öffne Zuletzt verwendete Apps und
+  <b>fixiere</b> Workday Wake (Schloss-Symbol). Dieser einzige Schritt verhindert die meisten Verluste durch Wisch-Beenden und
+  Speicher-Cleaner &mdash; und behebt auch Widgets, die nach dem Tippen auf Überspringen aufhören, sich zu aktualisieren.
+</div>
+
+<h2 id="diag">Deine Diagnose auf dem Gerät</h2>
+<p>Jedes Zuverlässigkeitsdetail von oben hinterlässt eine Spur, die du lokal einsichtigen kannst.
+  Unter <em>Einstellungen &gt; Diagnose</em> beantwortet die App dieselben Fragen wie ein Fehlerbericht:
+  
+<ul>
+  <li>Website-Seite: Hat der Wachdienst geschlagen? Wann wurde der Wecker zuletzt <b>geplant</b>,
+      wann <b>erwartete</b> man sein Klingeln, wann hat er <b>tatsächlich geklingelt</b>?</li>
+  <li>Wie viele <b>Ausfälle</b> wurden erkannt, und wann hat die App zuletzt <b>sich selbst geheilt</b>
+      (nach einem Ausfall neu geplant)?</li>
+  <li>Deine App-Version, Android-Version, Hersteller und Modell &mdash; dort, wo sich
+      herstellerspezifisches Verhmen tatsächlich zeigt.</li>
+</ul>
+<div class="box ok">
+  Alles auf diesem Bildschirm wird auf deinem Gerät berechnet und gespeichert. Diagnose ist
+  ein Spiegel, kein Sender: Die App hat keine Möglichkeit, etwas davon selbst hochzuladen.
+</div>
+<p>Unter <em>Einstellungen &gt; Zuverlässigkeit</em> siehst du auch die Schutzstufe deines Geräts
+  („Stufe 1 / Stufe 2“), wie viele ausgebliebene Wecker gezählt wurden und &mdash; auf
+  betroffenen Marken &mdash; den Akku-Guide für dein Gerät selbst.</p>
+
+<h2 id="share">Diagnose teilen &mdash; freiwillig, auf deine Art</h2>
+<p>Wenn ein Wecker ausfiel und du Hilfe willst, gibt es unter <em>Einstellungen &gt; Diagnose</em>
+  die Aktion „An Entwickler senden“:</p>
+<ol>
+  <li>Sie ist <strong>opt-in</strong>: Ein Dialog listet jedes einzelne Feld auf, bevor etwas passiert.</li>
+  <li>Der Bericht ist rein technisch &mdash; Zeitstempel, Zähler, Version, Hersteller/Modell.
+      Keine Wecker-Bezeichnungen, keine Namen, keine Kennungen.</li>
+  <li><em>Du</em> wählst das Ziel (E-Mail, Messenger, alles mit Teilen-Sheet). Nichts verlässt
+      das Gerät, bis du auf „Senden“ in diesem Entwurf drückst.</li>
+</ol>
+<div class="box">
+  Es gibt keinen Upload-Endpunkt, keinen Absturzberichtedienst und kein automatisches
+  Senden im Hintergrund irgendwo in der App. Eine Zwischenablage-Alternative existiert, falls du
+  gar kein Teilen-Sheet nutzen willst.
+</div>
+
+<h2 id="opt-out">Du hast die Kontrolle</h2>
+<ul>
+  <li><strong>Keine Konten, keine Analyse-Tools, keine Werbung</strong> &mdash;
+      Zuverlässigkeitsentwicklung nutzt nur Ressourcen auf dem Gerät. Siehe die
+      <a href="privacy.html">Datenschutzerklärung</a>.</li>
+  <li><strong>Alarm Guard</strong>: Der Dienst mit dauerhafter Benachrichtigung, der die App
+      am Leben hält, lässt sich unter Einstellungen &gt; Zuverlässigkeit ausschalten (auf Kosten
+      des Schutzes vor ausgebliebenen Weckern auf restriktiven Geräten).</li>
+  <li><strong>Stufe-2-Überwachung</strong> aktiviert Zusatzkomponenten erst nach einem Treffer
+      in der Markenliste oder einem dokumentierten Zwischenfall; es gibt keinen verdeckten Berichtskanal.</li>
+  <li><strong>Deinstallieren oder App-Speicher leeren</strong> ist ein vollständiger Reset: Jeder Diagnose-Zähler,
+      jeder Herzschlag-Zeitstempel und jeder Ausfall-Eintrag lebt nur im App-Speicher
+      deines Geräts.</li>
+</ul>
+
+<h2 id="limits">Ehrliche Grenzen</h2>
+<ul>
+  <li><strong>Auf der AOSP-Basis verifiziert, nicht auf jedem Gerät.</strong> Das
+      Widerstandsdesign wird mit Primitive des Android Open Source Project geprüft (Prozess-Kills,
+      tiefer Doze, Standby-Buckets) auf einem Wegwerf-Pixel-AVD, denn genau das lässt sich automatisieren.
+      Ein Emulator kann Xiaomi-Autostart-Schranken, Samsung Device Care oder OEM-Wecker-Drosselung
+      nicht vollständig nachbilden &mdash; echtes Geräteverhalten wird angenähert über
+      dontkillmyapp.com-Leitfäden, Berichte je Marke und Diagnose von Nutzern wie dir.</li>
+  <li><strong>Keine Garantien.</strong> Aggressive OEMs ändern ihr Energiesparen zwischen
+      Firmware-Versionen. Führt eine Marke einen neuen Kill-Mechanismus ein, braucht die App
+      gegebenenfalls ein Update, um ihn abzudecken; die Diagnose zeigt es uns.</li>
+  <li><strong>Das Wecksymbol in der Statusleiste ist beabsichtigt</strong> &mdash; es kommt mit
+      der Planungs-API, die deinen Wecker am besten bedient.</li>
+  <li><strong>Es gibt keine iOS-Version.</strong> Die Technik oben hängt an Android-APIs
+      (vertragsbasierte Wecker, WorkManager, exakte Wecker-Berechtigung), für die iOS keine
+      vergleichbaren Äquivalente bietet.</li>
+</ul>
+
+<h2 id="closing">Schlusswort</h2>
+<p>Ein Wecker hat eine Aufgabe. Workday Wake wurde von Anfang an um die härtesten
+  Versionen dieser Aufgabe herum gebaut: Es plant so, dass Prozess-Tod überlebt wird,
+  es legt neu an, was ausgelöscht wird, es überwacht sich selbst mit einem zweiten Prozess,
+  wo nötig, und es berichtet ehrlich auf dem Gerät, wenn etwas schiefging. Und die
+  Datenschutz-Linie ist absolut &mdash; keine dieser Ehrlichkeit kostet dich deine Daten.</p>
+<p>Ein Gerät gefunden, auf dem der Leitfaden nicht gilt? Bitte
+  <a href="https://github.com/peterandree/workday-wake-app/issues">öffne ein Issue</a> und
+  hänge, wenn möglich, die Diagnose vom Gerät über die freiwillige Teilen-Aktion an. Diese
+  Rückkopplung ist das Eine, was ein Emulator nicht ersetzen kann.</p>
+
+<footer>
+  Workday Wake &mdash; der clevere Wecker, der deinen Arbeitszeitplan kennt. Begleitseiten:
+  <a href="index.html">die Startseite</a> · <a href="privacy.html">Datenschutzerklärung</a> ·
+  <a href="support.html">Support</a> · <a href="impressum.html" hreflang="de">Impressum</a>
+</footer>
+
+</body>
+</html>

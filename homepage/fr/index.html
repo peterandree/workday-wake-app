@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workday Wake - Le réveil intelligent pour vos jours travaillés</title>
+    <meta name="description" content="Workday Wake is a free Android alarm clock that skips weekends and public holidays for your region. No ads, no analytics, no location permission; your alarms never leave your device.">
+    <link rel="canonical" href="https://peterandree.github.io/workday-wake-app/">
+    <meta name="theme-color" content="#185776">
+    <link rel="icon" href="../favicon.ico" sizes="48x48">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Workday Wake">
+    <meta property="og:title" content="Workday Wake — le réveil intelligent qui connaît votre horaire de travail">
+    <meta property="og:description" content="A free Android alarm clock that skips weekends and public holidays for your region. No ads, no analytics, no location permission.">
+    <meta property="og:url" content="https://peterandree.github.io/workday-wake-app/">
+    <meta property="og:image" content="https://peterandree.github.io/workday-wake-app/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Workday Wake — le réveil intelligent qui connaît votre horaire de travail">
+    <meta name="twitter:description" content="A free Android alarm clock that skips weekends and public holidays for your region. No ads, no analytics, no location permission.">
+    <meta name="twitter:image" content="https://peterandree.github.io/workday-wake-app/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "Workday Wake",
+      "operatingSystem": "Android",
+      "applicationCategory": "UtilitiesApplication",
+      "description": "A free alarm clock that skips weekends and public holidays for your region. No ads, no analytics, no location permission; your alarms never leave your device.",
+      "url": "https://peterandree.github.io/workday-wake-app/",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": "Skips weekends and public holidays, region-aware holiday calendars, custom workdays, custom holidays, multiple alarms with labels and sounds, widgets, evening warning, snooze, on-device diagnostics",
+      "screenshot": "https://peterandree.github.io/workday-wake-app/screenshot-1.webp"
+    }
+    </script>
+    <link rel="stylesheet" href="../css/style.css">
+<script src="../js/lang.js" defer></script>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="../index.html" hreflang="en" title="English">EN</a><a href="../de/index.html" hreflang="de" title="Deutsch">DE</a><a href="../zh-hans/index.html" hreflang="zh-Hans" title="中文（简体）">中文</a><a href="../es-419/index.html" hreflang="es-419" title="Español">ES</a><a href="index.html" hreflang="fr" title="Français" aria-current="page">FR</a><a href="../pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="../ja/index.html" hreflang="ja" title="日本語">日本語</a></div>
+
+    <header>
+        <div class="container">
+            <img class="logo" width="100" height="100" src="../workday-wake.svg" alt="Workday-Wake Icon">
+            <h1>Workday Wake</h1>
+            <p class="tagline">Le réveil intelligent qui connaît votre horaire de travail</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="#download">Télécharger</a>
+            <a href="#specs">Détails</a>
+            <a href="#features">Fonctionnalités</a>
+            <a href="#screenshot">Capture d'écran</a>
+            <a href="#documentation">Documentation</a>
+            <a href="#faq">FAQ</a>
+        </div>
+    </nav>
+
+    <div class="trust-strip" role="list" aria-label="Product facts">
+        <div class="container">
+            <span role="listitem">Gratuite</span>
+            <span role="listitem">Sans publicité</span>
+            <span role="listitem">Sans outils d'analyse</span>
+            <span role="listitem">Sans permission de localisation</span>
+            <span role="listitem">Fonctionne hors ligne</span>
+        </div>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Réveillez-vous plus intelligemment</h2>
+                <p>
+                    Workday Wake est une app de réveil intelligente qui s'adapte automatiquement à votre horaire de travail.
+                    Elle saute les week-ends et les jours fériés, afin que vous ne vous réveilliez que quand il le faut.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#download" class="btn btn-primary">
+                        Obtenir l'app
+                    </a>
+                    <a href="https://github.com/peterandree/workday-wake-app" class="btn btn-outline">
+                        Issues et documentation
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <div class="container">
+                <h2>Téléchargement</h2>
+                <p>Workday Wake n'est pas encore publié. Les deux canaux d'installation ci-dessous seront actifs
+                    avec la première version &dash; cette section les liera le jour où ils existeront.</p>
+                <div class="channels">
+                    <div class="channel">
+                        <h3>Google Play</h3>
+                        <p>Version Play complète avec le pourboire intégré (en option). La béta fermée
+                            arrive d'abord ; ce bouton deviendra le badge de la boutique.</p>
+                        <span class="status">Bientôt &mdash; première version</span>
+                    </div>
+                    <div class="channel">
+                        <h3>APK direct</h3>
+                        <p>APK universel signé depuis GitHub Releases (même app, lien de don Ko-fi
+                            à la place du pourboire intégré). Empreinte SHA-256 publiée avec
+                            la version.</p>
+                        <span class="status">Bientôt &mdash; première version</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="specs" class="specs">
+            <div class="container">
+                <h2>Spécifications</h2>
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <h3>Langues</h3>
+                        <p>English, Deutsch, Espa&ntilde;ol (LatAm), Fran&ccedil;ais, Portugu&ecirc;s (Brasil), 
+                        &#20013;&#25991; &#65288;&#31616;&#20307;&#65289;, &#26085;&#26412;&#35486;, et plus &dash; traduit par la communauté,
+                        ouvert aux nouvelles langues.</p>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Android minimum</h3>
+                        <p>Android 12 ou plus récent (API 31). Les alarmes sont programmées via
+                        <code>setAlarmClock()</code>, donc aucune désactivation d'alarme exacte n'est à faire sur
+                        Android moderne.</p>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Autorisations</h3>
+                        <ul>
+                            <li><code>USE_EXACT_ALARM</code> &dash; déclencher les alarmes à la minute exacte que vous réglez</li>
+                            <li><code>POST_NOTIFICATIONS</code> &dash; afficher les notifications d'alarme et d'avertissement</li>
+                            <li><code>FOREGROUND_SERVICE</code> &dash; garder vivant le gardien de fiabilité (couche optionnelle)</li>
+                            <li><code>RECEIVE_BOOT_COMPLETED</code> &dash; re-programmer les alarmes après un redémarrage</li>
+                            <li><code>WAKE_LOCK</code>, <code>VIBRATE</code> &dash; réveiller et faire vibrer à l'heure de l'alarme</li>
+                            <li><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code> &dash; uniquement pour les téléchargements de calendriers de fériés</li>
+                        </ul>
+                        <p>Aucune autorisation de localisation. Jamais.</p>
+                    </div>
+                    <div class="spec-card">
+                        <h3>Confidentialité, vérifiable</h3>
+                        <p>Les preuves complètes &mdash; liste exacte des autorisations, l'appel réseau de fériés sortant
+                        et son contenu, la déclaration Data safety de la boutique &mdash; sont documentées sur la
+                        <a href="privacy.html">page de confidentialité</a>. Alarmes, horaires et réglages ne quittent jamais
+                        votre appareil.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Fonctionnalités</h2>
+                <div class="features-grid">
+                    <div class="feature-card animate">
+                        <div class="feature-icon">📅</div>
+                        <h3>Planification intelligente</h3>
+                        <p>Saute automatiquement les alarmes les week-ends et jours fériés de la région choisie.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🌍</div>
+                        <h3>Conscient de votre région</h3>
+                        <p>S'adapte aux fériés officiels et aux schémas de jours ouvrés du pays et de la subdivision choisis. L'app ne lit jamais votre GPS.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Jours ouvrés personnalisés</h3>
+                        <p>Définissez votre propre horaire de travail. Parfait pour les postés ou les semaines non standard.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🏖️</div>
+                        <h3>Jours fériés personnalisés</h3>
+                        <p>Ajoutez fériés personnels, congés, ou tout jour où vous voulez dormir.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🔔</div>
+                        <h3>Alarmes multiples</h3>
+                        <p>Réglez des alarmes différentes selon le jour, avec étiquettes et sonneries personnalisées.</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Interface soignée</h3>
+                        <p>Interface claire et moderne, conforme aux consignes Material Design.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screenshot" class="screenshot-section">
+            <div class="container">
+                <h2>Aperçu de l'app</h2>
+                <img src="../screenshot-1.webp" alt="App Workday Wake : liste d'alarmes avec une alarme de jour ouvré à 7h30" class="screenshot" width="615" height="1315" loading="lazy">
+            </div>
+        </section>
+
+        <section id="documentation" class="docs">
+            <div class="container">
+                <h2>Documentation</h2>
+                <div class="docs-grid">
+                    <div class="doc-card animate">
+                        <h3>Premiers pas</h3>
+                        <p>Nouveau sur Workday Wake ? Apprenez à créer votre première alarme et configurer votre horaire de travail.</p>
+                        <a href="#getting-started">Lire la suite</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Configuration</h3>
+                        <p>Explorez tous les réglages et options pour personnaliser votre expérience d'alarme.</p>
+                        <a href="#configuration">Lire la suite</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Réglage de la région</h3>
+                        <p>Comprenez comment la région choisie influence votre horaire d'alarme et la détection des fériés.</p>
+                        <a href="#location">Lire la suite</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Jours fériés personnalisés</h3>
+                        <p>Apprenez à ajouter vos fériés et jours spéciaux quand vous n'avez pas besoin de vous réveiller.</p>
+                        <a href="#custom-holidays">Lire la suite</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Dépannage</h3>
+                        <p>Trouvez des solutions aux problèmes courants et apprenez à rapporter les bugs efficacement.</p>
+                        <a href="#troubleshooting">Lire la suite</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Fiabilité des alarmes</h3>
+                        <p>Comment Workday Wake est conçu pour continuer à sonner sur Xiaomi, Samsung, Huawei et autres gestionnaires de batterie agressifs.</p>
+                        <a href="against-hostile-oems.html">Lire la suite</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>Contribuer</h3>
+                        <p>Workday Wake est développé par une petite équipe ; les contributions de code ne sont pas acceptées. Vous pouvez aider en rapportant des bugs, en traduisant l'app et en en parlant autour de vous.</p>
+                        <a href="https://github.com/peterandree/workday-wake-app/blob/main/CONTRIBUTING.md">Lire la suite</a>
+                    </div>
+                </div>
+
+                <div id="getting-started" class="doc-section">
+                    <h3>Premiers pas</h3>
+                    <p>Bienvenue sur Workday Wake ! Voici comment démarrer :</p>
+                    <ol>
+                        <li><strong>Workday Wake n'est pas encore publié.</strong> L'app est en préparation pour sa première version ; cette page liera les options d'installation dès qu'un build sortira.</li>
+                        <li><strong>Ouvrez l'app</strong> et accordez l'accès aux notifications</li>
+                        <li><strong>Choisissez votre pays et votre région</strong> pour que l'app charge vos fériés locaux</li>
+                        <li><strong>Configurez vos jours ouvrés</strong> dans le menu des réglages</li>
+                        <li><strong>Créez votre première alarme</strong> en touchant le bouton +</li>
+                    </ol>
+                </div>
+
+                <div id="configuration" class="doc-section">
+                    <h3>Guide de configuration</h3>
+                    <h4>Horaire de travail</h4>
+                    <p>Par défaut, Workday Wake suppose une semaine de lundi à vendredi. Pour personnaliser :</p>
+                    <ol>
+                        <li>Ouvrez Réglages &gt; Horaire de travail</li>
+                        <li>Toucher les jours où vous travaillez</li>
+                        <li>Choisissez vos heures de travail habituelles</li>
+                    </ol>
+                    <h4>Réglages d'alarme</h4>
+                    <p>Chaque alarme se configure avec :</p>
+                    <ul>
+                        <li><strong>Heure :</strong> quand l'alarme doit sonner</li>
+                        <li><strong>Étiquette :</strong> un nom pour l'alarme (ex. « Départ matinal »)</li>
+                        <li><strong>Sonnerie :</strong> parmi les sons d'alarme disponibles</li>
+                        <li><strong>Vibration :</strong> activer ou désactiver la vibration</li>
+                        <li><strong>Reporter :</strong> autoriser le report et fixer la durée</li>
+                        <li><strong>Jours actifs :</strong> remplacer l'horaire global pour cette alarme précise</li>
+                    </ul>
+                </div>
+
+                <div id="location" class="doc-section">
+                    <h3>Réglage de la région</h3>
+                    <p>Workday Wake prend les jours fériés du pays et de la région <strong>que vous
+                        choisissez</strong>. Il s'en sert pour :</p>
+                    <ul>
+                        <li>Charger les fériés officiels de ce pays et de cette subdivision</li>
+                        <li>Fournir les jours ouvrés par défaut de la région</li>
+                    </ul>
+                    <p><strong>Aucune détection automatique de position.</strong> L'app ne
+                        demande aucune permission de localisation et ne lit jamais votre GPS &mdash; votre
+                        fuseau horaire vient des réglages système de l'appareil, pas d'un fix GPS.</p>
+                    <p><strong>Choisir votre région :</strong></p>
+                    <ol>
+                        <li>Ouvrez Réglages &gt; Changer la position</li>
+                        <li>Cherchez votre pays et sélectionnez-le</li>
+                        <li>Si votre pays a des régions, sélectionnez la vôtre</li>
+                        <li>L'app recharge le calendrier des fériés pour cette région</li>
+                    </ol>
+                    <p>Vous pouvez aussi le régler lors de l'onboarding, ou depuis l'invite
+                        « Configurer la position » du tableau de bord. Tant qu'aucune région n'est choisie, le
+                        saut des fériés reste inactif et les alarmes sonnent tous les jours.</p>
+                </div>
+
+                <div id="custom-holidays" class="doc-section">
+                    <h3>Jours fériés personnalisés</h3>
+                    <p>En plus de la détection automatique des fériés, vous pouvez ajouter vos propres journées :</p>
+                    <h4>Ajouter un férié ponctuel</h4>
+                    <ol>
+                        <li>Ouvrez Réglages &gt; Fériés</li>
+                        <li>Toucher Ajouter un férié</li>
+                        <li>Choisissez la date et un nom (ex., « Vacances d'été »)</li>
+                        <li>Enregistrez le férié</li>
+                    </ol>
+                    <h4>Ajouter un férié récurrent</h4>
+                    <p>Pour les fériés qui reviennent chaque année (comme votre anniversaire) :</p>
+                    <ol>
+                        <li>Ouvrez Réglages &gt; Fériés</li>
+                        <li>Toucher Ajouter un férié récurrent</li>
+                        <li>Choisissez le mois et le jour</li>
+                        <li>Donnez un nom et enregistrez</li>
+                    </ol>
+                </div>
+
+                <div id="troubleshooting" class="doc-section">
+                    <h3>Dépannage</h3>
+                    <h4>Les alarmes ne sonnent pas</h4>
+                    <p><strong>Vérifiez les points suivants :</strong></p>
+                    <ol>
+                        <li>Vérifiez que l'alarme est activée (l'interrupteur doit être sur activé)</li>
+                        <li>Vérifiez que l'heure de l'alarme est correcte</li>
+                        <li>Vérifiez que ce jour est un jour travaillé dans votre horaire</li>
+                        <li>Vérifiez le volume du téléphone et que Ne pas déranger est désactivé</li>
+                        <li>Vérifiez que l'app a la permission des notifications</li>
+                    </ol>
+                    <h4>Les alarmes sonnent pendant les fériés</h4>
+                    <p><strong>Causes possibles :</strong></p>
+                    <ul>
+                        <li>Aucune région choisie &mdash; ouvrez Réglages &gt; Changer la position</li>
+                        <li>Les données de fériés de votre région ne sont pas chargées (internet requis une fois)</li>
+                        <li>Vous avez peut-être gardé ce férié dans vos réglages personnalisés</li>
+                    </ul>
+                    <p><strong>Solution :</strong> ajoutez-le manuellement dans Réglages &gt; Fériés</p>
+                    <h4>Problèmes d'optimisation de batterie</h4>
+                    <p>Certains appareils Android optimisent la batterie de façon agressive, ce qui peut empêcher les alarmes de sonner. Pour y remédier :</p>
+                    <ol>
+                        <li>Ouvrez Réglages &gt; Batterie &gt; Optimisation de la batterie</li>
+                        <li>Trouvez Workday Wake dans la liste</li>
+                        <li>Choisissez Ne pas optimiser</li>
+                    </ol>
+					<p>Note : sur un appareil Xiaomi, Realme, Oppo, Vivo ou Samsung, les réglages Android standards ne suffisent pas.<br>
+						Ouvrez l'app Workday Wake, allez dans les Réglages, et suivez le « Guide de batterie de l'appareil » fourni pour votre téléphone.
+					</p>
+					<p>Pour la vue d'ensemble &mdash; processus veilleur, auto-réparation, diagnostics &mdash; lisez le
+						<a href="against-hostile-oems.html">guide de fiabilité des alarmes</a>.
+					</p>
+					<h4>Les widgets ne se mettent pas à jour</h4>
+					<p>Si le widget de l'écran d'accueil reste bloqué sur « Alarme du matin » ou ne se met pas à jour juste après avoir tapé Sauter :</p>
+					<ol>
+						<li>Ouvrez l'écran <strong>Applications récentes</strong>.</li>
+						<li>Touchez les trois points (ou glissez vers le bas) sur la carte Workday Wake.</li>
+						<li>Choisissez <strong>Verrouiller</strong>. Un cadenas apparaît, et vos widgets se mettront à jour instantanément.</li>
+					</ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq">
+            <div class="container">
+                <h2>Questions fréquentes</h2>
+                <div class="faq-list">
+                    <details class="faq-item">
+                        <summary>Workday Wake existe-t-il pour iOS ?</summary>
+                        <div class="faq-answer">
+                            <p>Pour le moment, Workday Wake est exclusivement sur Android. Aucune version iOS n'est prévue à ce jour.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>L'app fonctionne-t-elle hors ligne ?</summary>
+                        <div class="faq-answer">
+                            <p>Oui ! Une fois la région et l'horaire choisis, l'app fonctionne entièrement hors ligne. Les données de fériés sont mises en cache en local.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Comment l'app connaît-elle les fériés ?</summary>
+                        <div class="faq-answer">
+                            <p>Workday Wake utilise des données de fériés publiques pour chaque pays. Quand vous choisissez votre région, l'app télécharge le calendrier des fériés correspondant.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Puis-je synchroniser les alarmes entre appareils ?</summary>
+                        <div class="faq-answer">
+                            <p>Non. Workday Wake n'a ni comptes ni synchronisation cloud, et vos alarmes ne sont jamais envoyées quelque part. La configuration se fait par appareil : installez l'app sur chaque appareil et choisissez-y l'horaire et la région.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Mes données sont-elles privées ?</summary>
+                        <div class="faq-answer">
+                            <p>Toutes vos données d'alarme, la région choisie et vos réglages restent en local sur votre appareil. Voyez la <a href="privacy.html">page de confidentialité</a> pour les preuves vérifiables : liste exacte des permissions, l'unique appel réseau sortant, et le lien Data safety.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Comment signaler un bug ou demander une fonctionnalité ?</summary>
+                        <div class="faq-answer">
+                            <p>Ouvrez un issue sur notre dépôt GitHub avec un maximum de détails : modèle de l'appareil, version d'Android, étapes de reproduction.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <img src="../workday-wake.svg" class="logo" alt="Workday Wake Logo" style="width: 50px; height: auto; margin: 0;">
+                    <span style="margin-left: 10px; font-weight: 600;">Workday Wake</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/peterandree/workday-wake-app">GitHub</a>
+                    <a href="https://github.com/peterandree/workday-wake-app/blob/main/LICENSE" target="_blank">Licence</a>
+                    <a href="https://github.com/peterandree/workday-wake-app/issues">Issues</a>
+                    <a href="privacy.html">Confidentialité</a>
+                    <a href="support.html">Soutien</a>
+                    <a href="against-hostile-oems.html">Fiabilité des alarmes</a>
+                    <a href="impressum.html" hreflang="de">Impressum</a>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2026 NoirOrioN (peterandree). Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .doc-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

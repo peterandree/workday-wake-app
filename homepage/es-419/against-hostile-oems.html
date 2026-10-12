@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es-419">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiabilidad de la alarma — Workday Wake</title>
+<meta name="description" content="Cómo Workday Wake mantiene sonando las alarmas en Xiaomi, Samsung, Huawei y otros aparatos Android con gestión de batería agresiva — y qué revisar en tu dispositivo.">
+<meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="../css/against-hostile-oems.css">
+<script src="../js/lang.js" defer></script>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="../index.html" hreflang="en" title="English">EN</a><a href="../de/index.html" hreflang="de" title="Deutsch">DE</a><a href="../zh-hans/index.html" hreflang="zh-Hans" title="中文（简体）">中文</a><a href="index.html" hreflang="es-419" title="Español" aria-current="page">ES</a><a href="../fr/index.html" hreflang="fr" title="Français">FR</a><a href="../pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="../ja/index.html" hreflang="ja" title="日本語">日本語</a></div>
+
+
+<h1>Fiabilidad de la alarma</h1>
+<p class="sub">Cómo está diseñado Workday Wake para seguir sonando en Xiaomi, Samsung, Huawei y
+  otros equipos con gestión de energía agresiva battery management &mdash; and what you can check on your phone.</p>
+
+<nav class="toc" aria-label="In this guide">
+  <a href="#why">Por qué existe esta página</a> ·
+  <a href="#threats">Lo que un entorno hostil en realidad hace</a> ·
+  <a href="#layers">Las capas que apilamos</a> ·
+  <a href="#diagrams">Diagramas</a> ·
+  <a href="#diag">Tus diagnósticos en el dispositivo</a> ·
+  <a href="#share">Compartir diagnósticos — voluntario, a tu manera</a> ·
+  <a href="#opt-out">Tú tienes el control</a> ·
+  <a href="#limits">Límites honestos</a> ·
+  <a href="#closing">Cierre</a>
+</nav>
+
+<h2 id="why">Por qué existe esta página</h2>
+<p>En un Android puro (un Google Pixel, por ejemplo), una app de alarma bien escrita
+  funciona sin más. En buena parte de la base instalada de Android no: varios
+  fabricantes traen funciones de gestión de energía que matan apps en segundo plano, descartan en silencio
+  alarmas programadas, o impiden que la app se reinicie sola &mdash; normalmente
+  <em>sin avisar siquiera a la app de que algo fue cancelado</em>.</p>
+<div class="box">
+  El problema de fondo es esa asimetría: tu alarma desapareció, pero a la app nadie se lo dice.
+  Todo lo que Workday Wake hace al respecto gira en torno a una pregunta:
+  <strong>si un mecanismo se borra, ¿cuál otro mecanismo se entera?</strong>
+</div>
+<p>Esta página es la versión pública y legible de ese relato ingenieril. Explica qué
+  hacen en realidad estos equipos, cómo responde la app y cómo puedes ver y compartir
+  diagnósticos desde la app si algo falla. Los pasos por marca y las pantallas de ayuda de
+  la propia app salen de la misma fuente; si esta página y la app alguna vez
+  discrepan, la pantalla <em>Ajustes &gt; Fiabilidad</em> de la app es la autoridad
+  para tu dispositivo.</p>
+
+<h2 id="threats">Lo que un entorno hostil en realidad hace</h2>
+<table>
+  <tr><th>Mecanismo</th><th>Típico en</th><th>Efecto en una app de alarma ingenua</th></tr>
+  <tr><td>Matar deslizando en recientes / forzar detención</td><td>Xiaomi (MIUI/HyperOS), Samsung (One&nbsp;UI)</td><td>Las alarmas programadas se borran, sin devolución de llamada a la app</td></tr>
+  <tr><td>Matar procesos en caché («limpiador de memoria»)</td><td>Xiaomi, Oppo/ColorOS, Samsung</td><td>El proceso muere sin aviso; todo lo que la app planeaba a nivel de proceso se pierde</td></tr>
+  <tr><td>Congelador en segundo plano / barreras de autoinicio</td><td>Xiaomi (HyperOS/MIUI Autostart), Oppo/ColorOS (DuraSpeed)</td><td>Las alarmas quizá lleguen, pero el proceso que las suena queda congelado &mdash; o la app nunca puede reiniciarse</td></tr>
+  <tr><td>Optimización de batería en «Restringida»</td><td>También Android puro, más gestores de batería del OEM</td><td>Las alarmas se retrasan o agrupan; hasta la API de alarma de mayor prioridad puede quedar sin comida</td></tr>
+  <tr><td>Doze profundo / depósitos de baja actividad</td><td>Todo Android; los umbrales varían según la capa</td><td>Entregas diferidas salvo que la API de alarma esté exenta</td></tr>
+  <tr><td>Supresión del broadcast de arranque (Autostart)</td><td>Xiaomi/MIUI, HyperOS</td><td>Las alarmas no se rearman tras un reinicio hasta que el usuario da Autostart</td></tr>
+  <tr><td>Copia de seguridad/restauración y actualizaciones del SO</td><td>All Android</td><td>Igual que el barrido: los registros desaparecen sin aviso</td></tr>
+</table>
+
+<h2 id="layers">Las capas que apilamos</h2>
+<p>Ningún mecanismo cubre todas las capas de arriba, así que Workday Wake apila capas
+  independientes. Cada una asume que la anterior quizá ya fue destruida:</p>
+<div class="layers">
+  <div class="layer"><b>Prevenir</b><span>Tus alarmas se programan con
+    <code>setAlarmClock()</code> &mdash; la API de alarma de mayor prioridad que ofrece Android:
+    exenta de Doze, visible en la interfaz del reloj del sistema y entregada aunque el
+    proceso esté muerto. También pone el ícono de alarma en la barra de estado; es la app
+    trabajando, no un error.</span></div>
+  <div class="layer"><b>Restaurar</b><span>Las alarmas se vuelven a registrar tras un reinicio, tras
+    un cambio de zona horaria, en cada arranque de la app, y por trabajos de mantenimiento offline
+    periódicos (el permiso de alarma exacta se revisa cada 8&nbsp;horas). Como estos trabajos no
+    dependen de que el proceso sobreviva, pueden rearmar todo lo que el OEM borró.</span></div>
+  <div class="layer"><b>Supervisar</b><span>En equipos que lo necesitan, un segundo proceso pequeño
+    se reporta con el principal cada 6&nbsp;horas. Si un lado lleva
+    13&nbsp;horas en silencio, el otro rearma las alarmas. Esta capa está <em>apagada</em> por defecto
+    (cuesta memoria); se enciende sola para marcas de comportamiento conocido, o
+    tras el primer incidente registrado de fiabilidad, y nunca vuelve a apagarse en silencio.</span></div>
+  <div class="layer"><b>Detectar y sanar</b><span>Cada alarma registra cuándo
+    <em>debía</em> sonar; cada timbrado real registra que sonó. Si una alarma esperada
+    no sonó, la app cuenta un fallo y reprograma en silencio desde la misma
+    fuente que usa la lista de alarmas &mdash; incluso mientras dormías.</span></div>
+  <div class="layer"><b>Escalar con honestidad</b><span>Si la propia detección parece
+    fallar (un guardián lleva tres comprobaciones seguidas callado), la app publica una
+    única notificación visible que te avisa que su fiabilidad de alarma está degradada &mdash;
+    en vez de fingir que todo está bien.</span></div>
+</div>
+<p class="fallback-note">Si una capa existe solo para atrapar el fallo de la capa anterior,
+  entonces está cumpliendo &mdash; fallos, autocuraciones y escaladas quedan registrados, no ocultos.</p>
+
+<h3 id="diagrams">Las capas, en diagramas</h3>
+<p>Estos diagramas se renderizan directo de la documentación ingenieril. Se mantienen a
+  mano junto con la implementación y cambian solo cuando el diseño de fiabilidad
+  propio cambia.</p>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d1dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d1.svg" alt="Timeline of one missed alarm: it is scheduled with setAlarmClock, the OEM kills the process and wipes registrations, boot and per-day watchdog jobs re-arm everything, the 6-hour mutual heartbeat notices the stale peer, the miss detector compares expected against actual fire, a self-heal reschedules all alarms, one incident escalates the device to tier 2, and three consecutive stale observations raise a user-facing distress notification." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 1 &mdash; Una sola alarma perdida y cómo reacciona cada capa</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d2dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d2.svg" alt="Flowchart of the primary fire path: the user sets an alarm, the scheduler computes a holiday-aware fire time and registers setAlarmClock with AlarmManager, when the wall clock is reached a broadcast receiver starts the foreground ring service and audio, raises a full-screen intent to the UI, reschedules the next occurrence, and the ring marker is the only oracle." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 2 &mdash; El sendero principal: <code>setAlarmClock()</code> entrega aunque el proceso esté muerto</figcaption>
+</figure>
+
+<figure class="fig port">
+  <picture>
+    <source srcset="../d3dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d3.svg" alt="Flowchart of restore triggers: boot completed is direct-boot aware, time and timezone changes, application process start, and WorkManager periodic jobs all feed one central reschedule routine that re-registers setAlarmClock entries and re-arms the evening warning." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 3 &mdash; Restaurar: cuatro disparadores independientes rearmean lo que el OEM borró</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d4dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d4.svg" alt="Flowchart of the supervision layer: the main process and the watchdog process each write a heartbeat every six hours to a shared database, each reads the other's beat and checks it against a thirteen-hour staleness threshold, a stale peer triggers a restart or reschedule, per-side failure counters feed a distress notifier that posts one user-facing notification after three consecutive stale observations, with a twelve-hour claim preventing duplicate notices." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 4 &mdash; Supervisión: el guardián de latidos mutuos entre el proceso principal y el guardián</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d5dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d5.svg" alt="Flowchart of the local detect and heal loop: on each heartbeat tick the expected fire time is checked against the last fired time within a grace window, a real miss increments the miss counter and triggers a self-heal that reschedules all alarms and stamps the last self-heal time, a recent self-heal coasts to avoid a heal loop, and the diagnostics screen shows all timestamps; sharing happens only on explicit user consent." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 5 &mdash; Detectar y sanar: el detector local de fallos y su autocuración silenciosa</figcaption>
+</figure>
+
+<figure class="fig port">
+  <picture>
+    <source srcset="../d6dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d6.svg" alt="Flowchart of tiering: at process start the tier manager initializes, a hostile-OEM allowlist match escalates directly to tier 2 with the watchdog enabled, no match stays at tier 1 with the watchdog disabled, and a recorded reliability incident escalates tier 1 to tier 2; tier 2 is sticky with no automatic de-escalation." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 6 &mdash; Niveles: el guardián se activa justo cuando se gana su memoria</figcaption>
+</figure>
+
+<figure class="fig">
+  <picture>
+    <source srcset="../d7dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="../d7.svg" alt="Flowchart of the stress harness: a script drives a throwaway Pixel emulator, installs the debug app, seeds a real alarm through the production scheduler, applies a restriction such as force-stop, process kill, deep doze or a standby bucket, waits while checking for the ring marker in the log, and reports pass, fail or skip with a report file; the emulator and its disk image are deleted afterwards." loading="lazy">
+  </picture>
+  <figcaption class="figcap">Fig. 7 &mdash; Verificación: el arnés de estrés empuja la cadena de alarma real, no trabajo sintético</figcaption>
+</figure>
+
+<h3 id="per-brand">Pasos por marca (de la propia guía de la app)</h3>
+<p>La app trae ayuda integrada (Ajustes &gt; Fiabilidad en equipos afectados) con
+  los pasos exactos por fabricante. Los relevantes en corto &mdash; reemplaza
+  «Workday Wake» por el nombre de la app en tu launcher donde el ajuste lo mencione:</p>
+<table>
+  <tr><th>Marca / capa</th><th>Pasos (como en la Guía de batería de la app)</th></tr>
+  <tr><td>Xiaomi / MIUI, HyperOS</td><td>Permite <b>Autoinicio</b>; en permisos especiales activa
+    «Mostrar en pantalla de bloqueo» y «Mostrar ventanas emergentes en segundo plano»;
+    pon Ahorro de batería de la app en «Sin restricciones»; bloquea la app en recientes
+    (desliza hacia abajo o candado).</td></tr>
+  <tr><td>Samsung / One UI</td><td>Ajustes &gt; Cuidado del dispositivo y batería &gt; Batería &gt; Límites de uso en segundo plano: quítala de «Aplicaciones suspendidas» y «Aplicaciones en suspensión profunda», agrégala a «Aplicaciones que nunca suspenden»; Ajustes &gt; Aplicaciones &gt; Workday Wake &gt; Batería &gt; Sin restricciones. Asegura también que «Poner apps no usadas a dormir» esté apagado — puede suprimir alarmas de apps sin uso por días.
+    
+    
+    
+    
+  <tr><td>Huawei / EMUI, HarmonyOS</td><td>Ajustes &gt; Batería &gt; Inicio de apps: pon «Gestionar manualmente» y activa Autoinicio, Inicio secundario y Ejecutar en segundo plano; Optimización de batería: «No permitir».
+    
+    
+  <tr><td>OnePlus / Oppo / Realme (ColorOS)</td><td>Optimización de batería: «No optimizado»; Información de la app &gt; Batería: «Permitir actividad en segundo plano»/«Sin restricciones»; en el administrador de arranque permite el autoinicio; en DuraSpeed quita Workday Wake de la lista supervisada.
+    
+    
+  <tr><td>Vivo / iQOO</td><td>En el administrador de permisos permite el autoinicio; desactiva la optimización de batería; permite actividad en segundo plano y bloquea la app en recientes.
+    
+  <tr><td>Sony</td><td>Ajustes &gt; Batería &gt; Modo STAMINA: «Desactivado» — o apaga su restrictor «Preferir tiempo de batería».
+    
+</table>
+<p>Otras familias (Asus PowerMaster, Meizu, Lenovo, Motorola Battery care, Nokia
+  DuraSpeed, Transsion/itel/Infinix Phone Master) reciben el mismo trato dentro de la app:
+  <em>Ajustes &gt; Fiabilidad</em> detecta tu fabricante y muestra solo los pasos
+  que aplican a tu dispositivo. Todos los pasos viven en la app como textos fijos;
+  no hay nada quemado en código ni bifurcaciones por marca.</p>
+<div class="box">
+  <strong>Truco profesional que funciona en casi todas las capas:</strong> abre Aplicaciones recientes y
+  <b>bloquea</b> Workday Wake (ícono de candado). Este único paso evita la mayoría de las pérdidas por barrido y
+  limpiadores de memoria, y también arregla widgets que dejan de actualizarse tras tocar Omitir.
+</div>
+
+<h2 id="diag">Tus diagnósticos en el dispositivo</h2>
+<p>Every piece of reliability engineering above leaves a trace you can inspect locally.
+  En <em>Ajustes &gt; Diagnósticos</em> la app responde lo mismo que preguntaría un reporte de fallo:
+  would ask:</p>
+<ul>
+  <li>Del lado web: ¿late el vigilante? ¿cuándo se <b>programó</b> la alarma por última vez,
+      cuándo <b>debía</b> sonar, cuándo <b>sonó de verdad</b>?</li>
+  <li>Cuántos <b>fallos</b> se detectaron y cuándo la app se <b>autocuró</b> la última vez
+      (reprogramó tras un fallo)?</li>
+  <li>Tu versión de app, de Android, fabricante y modelo &mdash; donde
+      de verdad vive el comportamiento por fabricante.</li>
+</ul>
+<div class="box ok">
+  Todo lo de esta pantalla se calcula y guarda en tu dispositivo. El diagnóstico es
+  un espejo, no un transmisor: la app no tiene forma de subir nada por sí sola.
+</div>
+<p>En <em>Ajustes &gt; Fiabilidad</em> también ves el nivel de protección de tu dispositivo
+  («Nivel 1 / Nivel 2»), cuántas alarmas perdidas se contaron y &mdash; en
+  marcas afectadas &mdash; la Guía de batería del dispositivo por marca.</p>
+
+<h2 id="share">Compartir diagnósticos &mdash; voluntario, a tu manera</h2>
+<p>Si una alarma falló y quieres ayuda, <em>Ajustes &gt; Diagnósticos</em> tiene la
+  acción «enviar al desarrollador»:</p>
+<ol>
+  <li>Es <strong>opt-in</strong>: un diálogo enumera cada campo antes de que pase nada.</li>
+  <li>El reporte es solo técnico &mdash; marcas de tiempo, contadores, versión, fabricante/modelo.
+      Sin etiquetas de alarma, sin nombres, sin identificadores.</li>
+  <li><em>Tú</em> eliges el destino (correo, mensajería, cualquiera con hoja de
+      compartir). Nada sale del dispositivo salvo que presiones enviar en ese borrador.</li>
+</ol>
+<div class="box">
+  No hay punto de subida, ni servicio de reporte de fallos, ni envío automático en segundo
+  plano en ningún lado de la app. Existe una alternativa de portapapeles si prefieres
+  ni usar la hoja de compartir.
+</div>
+
+<h2 id="opt-out">Tú tienes el control</h2>
+<ul>
+  <li><strong>Sin cuentas, sin análisis de datos, sin publicidad</strong> &mdash; la ingeniería
+      de fiabilidad usa solo recursos del dispositivo. Mira la
+      <a href="privacy.html">política de privacidad</a>.</li>
+  <li><strong>Alarm Guard</strong>: el servicio de notificación permanente que mantiene viva
+      la app se puede apagar en Ajustes &gt; Fiabilidad (con algo de costo en protección contra
+      alarmas perdidas en equipos restrictivos).</li>
+  <li><strong>Monitoreo Nivel 2</strong> solo activa componentes extra tras una marca
+      de comportamiento conocida o un incidente registrado; no hay canal oculto de reportes.</li>
+  <li><strong>Desinstalar o borrar el almacenamiento de la app es un reinicio total: cada contador de
+      diagnóstico, latido y registro de alarma perdida vive solo en el almacenamiento
+      de la app en tu dispositivo.</li>
+</ul>
+
+<h2 id="limits">Límites honestos</h2>
+<ul>
+  <li><strong>Verificado en un piso AOSP, no en todos los equipos.</strong> El diseño de
+      resiliencia se prueba con primitivas del proyecto AOSP (muertes de proceso, Doze
+      profundo, depósitos de espera) en un emulador Pixel desechable, porque es lo que se
+      puede automatizar. Un emulador no replica del todo las barreras Autostart de Xiaomi,
+      Device Care de Samsung ni la throttling de alarmas del OEM &mdash; el comportamiento real se
+      aproxima vía dontkillmyapp.com, informes por marca y diagnósticos que envían usuarios como tú.</li>
+  <li><strong>Sin garantías.</strong> Los OEM agresivos cambian su gestión de energía entre
+      versiones de firmware. Si una marca estrena un mecanismo nuevo de exterminio, la app quizá
+      necesite una actualización; los diagnósticos son como nos enteramos.</li>
+  <li><strong>El icono de alarma en la barra de estado es intencional</strong> &mdash; viene con
+      la API de programación que mejor sirve a tu alarma.</li>
+  <li><strong>No existe versión de iOS.</strong> La ingeniería de arriba depende de APIs de
+      Android (alarmas por contrato, WorkManager, permiso de alarma exacta) que iOS no
+      ofrece equivalentes comparables.</li>
+</ul>
+
+<h2 id="closing">Cierre</h2>
+<p>Un reloj despertador tiene un solo trabajo. Workday Wake se diseñó desde el inicio
+  alrededor de las versiones más duras del trabajo: programa de forma que sobrevive a la
+  muerte del proceso, rearma lo que se borra, se autovigila con un segundo proceso
+  cuando hace falta, y reporta honestamente en el dispositivo cuando algo falla. Y la línea
+  de privacidad es absoluta &mdash; nada de esa honestidad te cuesta tus datos.</p>
+<p>¿Encontraste un equipo donde esta guía no aplica? Por favor
+  <a href="https://github.com/peterandree/workday-wake-app/issues">abre un issue</a> y,
+  si puedes, adjunta los diagnósticos del dispositivo con la acción voluntaria de compartir. Ese
+  punto de retroalimentación es justo lo que un emulador no puede sustituir.</p>
+
+<footer>
+  Workday Wake &mdash; la alarma inteligente que conoce tu horario laboral. Páginas compagnas:
+  <a href="index.html">la página principal</a> · <a href="privacy.html">política de privacidad</a> ·
+  <a href="support.html">apoyo</a> · <a href="impressum.html" hreflang="de">Impressum</a>
+</footer>
+
+</body>
+</html>

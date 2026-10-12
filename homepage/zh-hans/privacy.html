@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>隐私政策 — Workday Wake</title>
+<meta name="description" content="Workday Wake 如何处理你的数据。无广告、无数据统计、无账号。一切都留在你的设备上。">
+    <link rel="stylesheet" href="../css/privacy.css">
+<script src="../js/lang.js" defer></script>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="../index.html" hreflang="en" title="English">EN</a><a href="../de/index.html" hreflang="de" title="Deutsch">DE</a><a href="index.html" hreflang="zh-Hans" title="中文（简体）" aria-current="page">中文</a><a href="../es-419/index.html" hreflang="es-419" title="Español">ES</a><a href="../fr/index.html" hreflang="fr" title="Français">FR</a><a href="../pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="../ja/index.html" hreflang="ja" title="日本語">日本語</a></div>
+
+
+<h1>隐私政策</h1>
+<p class="sub">Workday Wake — 最后更新于 2026 年 10 月 4 日</p>
+
+<div class="box">
+  <strong>简版说明。</strong>Workday Wake 没有账号，没有自己的服务器，
+  没有广告也没有数据统计。你的闹钟和设置保存在你自己设备的
+  存储空间里。应用只在下载法定节假日日历时联网，
+  以及（如果你使用可选的打赏功能）连接你的商店使用的支付服务商。
+</div>
+
+<h2>我们收集什么</h2>
+<p><strong>什么都不收集。</strong>应用没有账号、没有登录、
+也没有我们运营的后端。我们无法看到你的闹钟、标签、工作时间
+或自定义节假日，因为它们从不离开你的设备。</p>
+
+<h2>留在你设备上的内容</h2>
+<p>你输入的一切都保存在应用的设备内私有存储
+（本地数据库和本地偏好文件）。没有任何内容会被上传、
+备份给我们，或被我们或任何他人读取：</p>
+<ul>
+  <li>你的闹钟 &mdash; 时间、标签、重复模式、铃声、音量、振动和贪睡设置</li>
+  <li>你的工作周和每个闹钟的生效日设置</li>
+  <li>你的自定义节假日，包括导入的日历文件</li>
+  <li>你选择的国家/地区，以及主题和语言等界面偏好</li>
+</ul>
+
+<h2>哪些内容离开设备，为什么</h2>
+<p>应用只对下列主机发起对外请求，且始终使用 HTTPS。每条请求
+都只是按<em>你</em>选择的国家/地区查询法定节假日数据。
+其中不含你的闹钟、设置、设备标识符或广告
+标识符。</p>
+
+<table>
+  <tr><th>目标</th><th>原因</th><th>发送内容</th></tr>
+  <tr>
+    <td><code>openholidaysapi.org</code></td>
+    <td>法定节假日和学校假期日历</td>
+    <td>国家代码、地区代码和年份</td>
+  </tr>
+  <tr>
+    <td><code>date.nager.at</code></td>
+    <td>主数据源无响应时的备用假日数据源</td>
+    <td>国家代码和年份</td>
+  </tr>
+  <tr>
+    <td><code>feiertage-api.de</code></td>
+    <td>Fallback holiday source for German-speaking regions</td>
+    <td>省级行政区代码和年份</td>
+  </tr>
+  <tr>
+    <td><code>peterandree.github.io</code></td>
+    <td>获取可选的项目赞助者列表</td>
+    <td>普通网页请求；不含任何识别信息</td>
+  </tr>
+  <tr>
+    <td>Google Play Billing <em>（仅 Play 版本）</em></td>
+    <td>可选的打赏</td>
+    <td>完全由 Google Play 处理；应用只收到购买令牌，不接触支付信息</td>
+  </tr>
+  <tr>
+    <td>Ko-fi 或 爱发电 <em>（仅直接分发版本）</em></td>
+    <td>在没有 Play Billing 时的可选打赏</td>
+    <td>只是普通地打开一个链接；支付页面在浏览器中打开，应用不会收到任何回传</td>
+  </tr>
+</table>
+<p>假日日历缓存在设备上，应用因此可以离线工作。
+你随时可以在安卓设置中清除应用存储来清空缓存。</p>
+
+<h2>权限及各自用途</h2>
+<p>应用只申请响铃所需的权限。
+<strong>不申请定位权限</strong> &mdash; 国家和地区由你从列表中选择，
+应用从不读取 GPS 位置。</p>
+
+<table>
+  <tr><th>权限</th><th>用途</th></tr>
+  <tr><td><code>USE_EXACT_ALARM</code>, <code>USE_FULL_SCREEN_INTENT</code></td><td>在设定的精确分钟触发闹钟并显示在锁屏之上</td></tr>
+  <tr><td><code>POST_NOTIFICATIONS</code></td><td>显示闹钟和提醒通知</td></tr>
+  <tr><td><code>RECEIVE_BOOT_COMPLETED</code></td><td>重启后重新注册闹钟</td></tr>
+  <tr><td><code>FOREGROUND_SERVICE</code> (+ system-exempted / special-use)</td><td>在激进杀后台应用的厂商设备上保持闹钟可靠</td></tr>
+  <tr><td><code>WAKE_LOCK</code>, <code>VIBRATE</code></td><td>闹钟触发时唤醒设备并振动</td></tr>
+  <tr><td><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code></td><td>下载假日日历</td></tr>
+</table>
+
+<h2>数据统计、广告与追踪</h2>
+<p>完全没有。应用不含数据统计 SDK、广告 SDK、崩溃
+上报服务，也不做指纹识别。不嵌入第三方追踪代码，
+不设置 Cookie。</p>
+
+<h2>儿童</h2>
+<p>应用不面向儿童，也不收集任何人
+（无论年龄）的个人信息。</p>
+
+<h2>你的权利</h2>
+<p>因为你的数据从不到达我们这里，我们没有什么可导出、更正或删除的。
+卸载应用即可删除它保存的一切，
+或在安卓设置中清除应用存储进行部分删除。</p>
+
+<h2>政策变更</h2>
+<p>如果未来版本改变了传输内容，会在该版本分发前更新本页，
+并更新上方生效日期。</p>
+
+<h2>联系</h2>
+<p>对本政策的疑问请在项目的
+<a href="https://github.com/peterandree/workday-wake-app/issues">公开
+问题跟踪器</a>中提出。</p>
+
+<footer>
+  Workday Wake 是开源软件。本政策描述已发布的应用；它不是
+  法律文件，不创设法律之外的权利。
+  <br><a href="impressum.html" hreflang="de">Impressum</a>
+</footer>
+
+</body>
+</html>

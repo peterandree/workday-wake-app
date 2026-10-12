@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workday Wake - 勤務日のアラームに最適なスマート時計</title>
+    <meta name="description" content="Workday Wake は、お住まいの地域の週末と祝日を自動でスキップする無料の Android 目覚まし時計です。広告なし・分析なし・位置情報の許可なし。アラームは端末から出ることはありません。">
+    <link rel="canonical" href="https://peterandree.github.io/workday-wake-app/">
+    <meta name="theme-color" content="#185776">
+    <link rel="icon" href="../favicon.ico" sizes="48x48">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Workday Wake">
+    <meta property="og:title" content="Workday Wake — あなたの勤務スケジュールを理解するスマートアラーム">
+    <meta property="og:description" content="地域の週末と祝日を自動でスキップする無料の Android アラームアプリ。広告なし、分析なし、位置情報の権限なし。">
+    <meta property="og:url" content="https://peterandree.github.io/workday-wake-app/">
+    <meta property="og:image" content="https://peterandree.github.io/workday-wake-app/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Workday Wake — あなたの勤務スケジュールを理解するスマートアラーム">
+    <meta name="twitter:description" content="地域の週末と祝日を自動でスキップする無料の Android アラームアプリ。広告なし、分析なし、位置情報の権限なし。">
+    <meta name="twitter:image" content="https://peterandree.github.io/workday-wake-app/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "Workday Wake",
+      "operatingSystem": "Android",
+      "applicationCategory": "UtilitiesApplication",
+      "description": "地域の週末と祝日をスキップする無料のアラームアプリ。広告なし、分析なし、位置情報の権限なし。アラームデータが端末の外に出ることはありません。",
+      "url": "https://peterandree.github.io/workday-wake-app/",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": "Skips weekends and public holidays, region-aware holiday calendars, custom workdays, custom holidays, multiple alarms with labels and sounds, widgets, evening warning, snooze, on-device diagnostics",
+      "screenshot": "https://peterandree.github.io/workday-wake-app/screenshot-1.webp"
+    }
+    </script>
+    <link rel="stylesheet" href="../css/style.css">
+<script src="../js/lang.js" defer></script>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language / Sprache / 语言"><a href="../index.html" hreflang="en" title="English">EN</a><a href="../de/index.html" hreflang="de" title="Deutsch">DE</a><a href="../zh-hans/index.html" hreflang="zh-Hans" title="中文（简体）">中文</a><a href="../es-419/index.html" hreflang="es-419" title="Español">ES</a><a href="../fr/index.html" hreflang="fr" title="Français">FR</a><a href="../pt-br/index.html" hreflang="pt-BR" title="Português">PT</a><a href="index.html" hreflang="ja" title="日本語" aria-current="page">日本語</a></div>
+
+    <header>
+        <div class="container">
+            <img class="logo" width="100" height="100" src="../workday-wake.svg" alt="Workday-Wake Icon">
+            <h1>Workday Wake</h1>
+            <p class="tagline">あなたの勤務スケジュールを理解するスマートアラーム</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="#download">ダウンロード</a>
+            <a href="#specs">詳細</a>
+            <a href="#features">機能</a>
+            <a href="#screenshot">スクリーンショット</a>
+            <a href="#documentation">ドキュメント</a>
+            <a href="#faq">FAQ</a>
+        </div>
+    </nav>
+
+    <div class="trust-strip" role="list" aria-label="Product facts">
+        <div class="container">
+            <span role="listitem">無料</span>
+            <span role="listitem">広告なし</span>
+            <span role="listitem">分析ツールなし</span>
+            <span role="listitem">位置情報の権限なし</span>
+            <span role="listitem">オフラインで動作</span>
+        </div>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>もっと賢く目覚める、無理はしない</h2>
+                <p>
+                    Workday Wake は、勤務スケジュールに合わせて自動調整する賢いアラームアプリです。
+                    週末と祝日はスキップされるので、必要なときだけ目覚められます。
+                </p>
+                <div class="cta-buttons">
+                    <a href="#download" class="btn btn-primary">
+                        アプリを入れる
+                    </a>
+                    <a href="https://github.com/peterandree/workday-wake-app" class="btn btn-outline">
+                        Issues とドキュメント
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <div class="container">
+                <h2>ダウンロード</h2>
+                <p>Workday Wake はまだリリースされていません。以下の 2 つの導入経路は初回リリース
+                    とともに公開されます &dash; 公開日にここからリンクします。</p>
+                <div class="channels">
+                    <div class="channel">
+                        <h3>Google Play</h3>
+                        <p>任意の応援チップ（気持ちばかり）付きの Play 完全版。まずクローズド・ベータから始まり、
+                            このボタンはストア・バッジになります。</p>
+                        <span class="status">近日 — 最初のリリース</span>
+                    </div>
+                    <div class="channel">
+                        <h3>直接 APK</h3>
+                        <p>GitHub Releases から署名済みユニバーサル APK を入手（同じアプリ、応援チップの代わりに
+                            Ko-fi の寄付リンク）。SHA-256 フィンガープリントをリリースとともに公開します。</p>
+                        <span class="status">近日 — 最初のリリース</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="specs" class="specs">
+            <div class="container">
+                <h2>仕様</h2>
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <h3>言語</h3>
+                        <p>English, Deutsch, Espa&ntilde;ol (LatAm), Fran&ccedil;ais, Portugu&ecirc;s (Brasil), 
+                        &#20013;&#25991; &#65288;&#31616;&#20307;&#65289;, &#26085;&#26412;&#35486;, など &mdash; コミュニティによる翻訳、追加歓迎。</p>
+                    </div>
+                    <div class="spec-card">
+                        <h3>対応 Android</h3>
+                        <p>Android 12 以降（API 31）。アラームは <code>setAlarmClock()</code> で
+                        スケジュールされるため、新しい Android では正確なアラームの解除設定は不要です。</p>
+                    </div>
+                    <div class="spec-card">
+                        <h3>権限</h3>
+                        <ul>
+                            <li><code>USE_EXACT_ALARM</code> &dash; 設定した分にアラームを鳴らす</li>
+                            <li><code>POST_NOTIFICATIONS</code> &dash; アラームと事前予告の通知を表示</li>
+                            <li><code>FOREGROUND_SERVICE</code> &dash; 信頼性ガードを生かし続ける（任意の層）</li>
+                            <li><code>RECEIVE_BOOT_COMPLETED</code> &dash; 再起動後にアラームを再設定</li>
+                            <li><code>WAKE_LOCK</code>, <code>VIBRATE</code> &dash; アラーム時刻に起こして振動させる</li>
+                            <li><code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code> &dash; 祝日カレンダーのダウンロード専用</li>
+                        </ul>
+                        <p>位置情報の権限は一切要求しません。</p>
+                    </div>
+                    <div class="spec-card">
+                        <h3>検証可能なプライバシー</h3>
+                        <p>完全な証拠 &dash; 正確な権限リスト、祝日のための唯一の外向き通信と
+                        その中身、ストアのデータ安全への記載 &mdash; は<a href="privacy.html">プライバシーページ</a>
+                        に文書化されています。アラーム、スケジュール、設定が端末から出ることはありません。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2>機能</h2>
+                <div class="features-grid">
+                    <div class="feature-card animate">
+                        <div class="feature-icon">📅</div>
+                        <h3>スマートなスケジューリング</h3>
+                        <p>選んだ地域の週末と祝日には、アラームを自動で鳴らしません。</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🌍</div>
+                        <h3>地域に対応</h3>
+                        <p>国と地方区分の公式な祝日・勤務日パターンに合わせて動作します。GPS は一切読みません。</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>勤務日をカスタマイズ</h3>
+                        <p>自分の勤務スケジュールを定義できます。シフト勤務や変則週にも最適です。</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🏖️</div>
+                        <h3>祝日もカスタマイズ</h3>
+                        <p>個人の祝日、休暇、ゆっくり寝ていたい日を追加できます。</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🔔</div>
+                        <h3>複数アラーム</h3>
+                        <p>曜日ごとに別のアラームを、ラベルとサウンド付きで設定できます。</p>
+                    </div>
+                    <div class="feature-card animate">
+                        <div class="feature-icon">🎨</div>
+                        <h3>美しい UI</h3>
+                        <p>Material Design に沿った、洗練されたモダンなインターフェイス。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screenshot" class="screenshot-section">
+            <div class="container">
+                <h2>アプリのプレビュー</h2>
+                <img src="../screenshot-1.webp" alt="Workday Wake アプリ: 午前7:30の平日アラームが並ぶアラーム一覧" class="screenshot" width="615" height="1315" loading="lazy">
+            </div>
+        </section>
+
+        <section id="documentation" class="docs">
+            <div class="container">
+                <h2>ドキュメント</h2>
+                <div class="docs-grid">
+                    <div class="doc-card animate">
+                        <h3>はじめに</h3>
+                        <p>初めてのご利用ですか？最初のアラームの作成と勤務スケジュールの設定方法を学びましょう。</p>
+                        <a href="#getting-started">詳しく読む</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>設定</h3>
+                        <p>アラーム体験を自分仕様にするための、すべての設定とオプションを詳しく解説します。</p>
+                        <a href="#configuration">詳しく読む</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>地域の設定</h3>
+                        <p>選んだ地域がアラームの予定と祝日判定にどう関わるかを説明します。</p>
+                        <a href="#location">詳しく読む</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>祝日もカスタマイズ</h3>
+                        <p>起きる必要のない日に、独自の祝日や特別な日を追加する方法を説明します。</p>
+                        <a href="#custom-holidays">詳しく読む</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>トラブルシューティング</h3>
+                        <p>よくある問題の解決方法と、効果的なバグ報告の仕方を説明します。</p>
+                        <a href="#troubleshooting">詳しく読む</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>アラームの信頼性</h3>
+                        <p>Xiaomi、Samsung、Huawei など積極的なバッテリー管理搭載機でも鳴り続けるための設計について。</p>
+                        <a href="against-hostile-oems.html">詳しく読む</a>
+                    </div>
+                    <div class="doc-card animate">
+                        <h3>貢献する</h3>
+                        <p>Workday Wake は少人数チームで開発しており、コードの寄稿は受け付けていません。バグ報告、アプリの翻訳、周囲への紹介で参与できます。</p>
+                        <a href="https://github.com/peterandree/workday-wake-app/blob/main/CONTRIBUTING.md">詳しく読む</a>
+                    </div>
+                </div>
+
+                <div id="getting-started" class="doc-section">
+                    <h3>はじめに</h3>
+                    <p>Workday Wake へようこそ！始め方はこちら：</p>
+                    <ol>
+                        <li><strong>Workday Wake はまだリリースされていません。</strong> 初回リリースに向けて準備中です。ビルドが公開され次第、このページから導入オプションへリンクします。</li>
+                        <li><strong>アプリを開き</strong>、通知の権限を許可する</li>
+                        <li><strong>国と地域を選ぶ</strong>と、お住まいの地域の祝日が読み込まれます</li>
+                        <li>設定メニューで<strong>勤務日を設定する</strong></li>
+                        <li><strong>+ ボタンで最初のアラームを作る</strong></li>
+                    </ol>
+                </div>
+
+                <div id="configuration" class="doc-section">
+                    <h3>設定ガイド</h3>
+                    <h4>勤務スケジュール</h4>
+                    <p>既定では月〜金の勤務週を想定しています。カスタマイズするには：</p>
+                    <ol>
+                        <li>設定 &gt; 勤務スケジュール を開く</li>
+                        <li>勤務する曜日をタップする</li>
+                        <li>普段の勤務時間を選ぶ</li>
+                    </ol>
+                    <h4>アラームの設定</h4>
+                    <p>各アラームで設定できる項目：</p>
+                    <ul>
+                        <li><strong>時刻:</strong> アラームが鳴る時間</li>
+                        <li><strong>ラベル:</strong> アラームの名前（例:「朝の通勤」）</li>
+                        <li><strong>サウンド:</strong> 利用できるアラーム音から選択</li>
+                        <li><strong>バイブレーション:</strong> オン/オフ</li>
+                        <li><strong>スヌーズ:</strong> 許可し、間隔を設定</li>
+                        <li><strong>有効日:</strong> このアラーム専用にグローバルな勤務設定を上書き</li>
+                    </ul>
+                </div>
+
+                <div id="location" class="doc-section">
+                    <h3>地域の設定</h3>
+                    <p>Workday Wake は、<strong>あなたが選んだ</strong>国と地域の祝日を使います。その目的：</p>
+                    <ul>
+                        <li>その国と地方区分の公式な祝日を読み込む</li>
+                        <li>地域ごとの勤務日の初期値を提供する</li>
+                    </ul>
+                    <p><strong>位置情報の自動検出はありません。</strong> アプリは位置情報の権限を一切
+                        要求せず、GPS も読みません &dash; タイムゾーンは端末のシステム設定から取得し、
+                        測位結果からではありません。</p>
+                    <p><strong>地域の選び方：</strong></p>
+                    <ol>
+                        <li>設定 &gt; 位置の変更 を開く</li>
+                        <li>国を検索して選ぶ</li>
+                        <li>国に州や地域がある場合は、該当するものを選ぶ</li>
+                        <li>アプリがその地域の祝日カレンダーを再読み込みする</li>
+                    </ol>
+                    <p>初回セットアップ中や、ダッシュボードの&ldquo;位置を設定&rdquo;の案内からも設定できます。
+地域を選ぶまで祝日スキップは無効のまま、アラームは毎日鳴ります。</p>
+                </div>
+
+                <div id="custom-holidays" class="doc-section">
+                    <h3>祝日もカスタマイズ</h3>
+                    <p>自動の祝日判定に加えて、自分だけの特別な日を追加できます：</p>
+                    <h4>単発の祝日を追加</h4>
+                    <ol>
+                        <li>設定 &gt; 祝日 を開く</li>
+                        <li>祝日を追加 をタップ</li>
+                        <li>日付を選び、名前を付ける（例：「夏休み」）</li>
+                        <li>祝日を保存する</li>
+                    </ol>
+                    <h4>繰り返す祝日を追加</h4>
+                    <p>毎年繰り返す祝日（誕生日や記念日など）の場合：</p>
+                    <ol>
+                        <li>設定 &gt; 祝日 を開く</li>
+                        <li>繰り返す祝日を追加 をタップ</li>
+                        <li>月と日を選ぶ</li>
+                        <li>名前を付けて保存する</li>
+                    </ol>
+                </div>
+
+                <div id="troubleshooting" class="doc-section">
+                    <h3>トラブルシューティング</h3>
+                    <h4>アラームが鳴らない</h4>
+                    <p><strong>以下を確認してください：</strong></p>
+                    <ol>
+                        <li>アラームが有効になっているか（スイッチがオンか）</li>
+                        <li>アラームの時刻が正しいか</li>
+                        <li>今日が勤務日になっているか</li>
+                        <li>端末の音量が上がっていて、サイレントモードが無効か</li>
+                        <li>アプリに通知の権限があるか</li>
+                    </ol>
+                    <h4>祝日にアラームが鳴る</h4>
+                    <p><strong>考えられる原因：</strong></p>
+                    <ul>
+                        <li>まだ地域を選んでいない &dash; 設定 &gt; 位置の変更 を開く</li>
+                        <li>地域の祝日データが未読み込み（1 回だけネットが必要）</li>
+                        <li>カスタム設定でその祝日を「鳴らす」にしている可能性</li>
+                    </ul>
+                    <p><strong>対処：</strong>設定 &gt; 祝日 から手動で追加してください</p>
+                    <h4>バッテリー最適化の問題</h4>
+                    <p>積極的にバッテリーを最適化する Android 端末では、アラームが鳴らないことがあります。対処：</p>
+                    <ol>
+                        <li>端末の 設定 &gt; バッテリー &gt; バッテリー最適化 を開く</li>
+                        <li>リストから Workday Wake を探す</li>
+                        <li>「最適化しない」を選ぶ</li>
+                    </ol>
+					<p>注意：Xiaomi、Realme、Oppo、Vivo、Samsung の端末では、標準の Android 設定だけでは足りません。<br>
+						Workday Wake アプリを開き、設定からご自分の端末向けの「端末バッテリーガイド」に従ってください。
+					</p>
+					<p>これらの端末で Workday Wake が生き延ぶ仕組みの全体像 &dash; 監視プロセス、自己修復、診断 &mdash; については、
+						<a href="against-hostile-oems.html">アラーム信頼性ガイド</a>。
+					</p>
+					<h4>ウィジェットが更新されない</h4>
+					<p>ホーム画面のウィジェットが「朝のアラーム」のまま固まる、またはスキップをタップ後すぐ更新されない場合：</p>
+					<ol>
+						<li>端末の <strong>最近使ったアプリ</strong> 画面を開く</li>
+						<li>Workday Wake のカードで三点ボタン（または下へスワイプ）をタップ</li>
+						<li><strong>ロック</strong> を選ぶ。鍵アイコンが表示され、ウィジェットが即座に更新されるようになります。</li>
+					</ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq">
+            <div class="container">
+                <h2>よくある質問</h2>
+                <div class="faq-list">
+                    <details class="faq-item">
+                        <summary>Workday Wake は iOS にもありますか？</summary>
+                        <div class="faq-answer">
+                            <p>現在、Workday Wake は Android 専用です。iOS 版は今後も予定していません。</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>オフラインでも使えますか？</summary>
+                        <div class="faq-answer">
+                            <p>はい！地域と勤務スケジュールを選べば、完全オフラインで動作します。祝日データはローカルにキャッシュされます。</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>アプリは祝日をどこで知るのですか？</summary>
+                        <div class="faq-answer">
+                            <p>Workday Wake は各国の公開されている祝日データを使います。地域を選ぶと、それに対応する祝日カレンダーをダウンロードします。</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>端末間でアラームを同期できますか？</summary>
+                        <div class="faq-answer">
+                            <p>できません。Workday Wake にはアカウントもクラウド同期もなく、アラームがどこかに送信されることもありません。設定は端末ごとです。</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>データのプライバシーは守られますか？</summary>
+                        <div class="faq-answer">
+                            <p>アラームのデータ、選んだ地域、カスタム設定はすべて端末内に保存されます。検証可能な証拠は <a href="privacy.html">プライバシーページ</a> をご覧ください。</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>バグ報告や機能要望はどうすれば？</summary>
+                        <div class="faq-answer">
+                            <p>GitHub リポジトリに issue を立ててください。端末モデル、Android のバージョン、再現手順など、できる限り詳しくお願いします。</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <img src="../workday-wake.svg" class="logo" alt="Workday Wake Logo" style="width: 50px; height: auto; margin: 0;">
+                    <span style="margin-left: 10px; font-weight: 600;">Workday Wake</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/peterandree/workday-wake-app">GitHub</a>
+                    <a href="https://github.com/peterandree/workday-wake-app/blob/main/LICENSE" target="_blank">ライセンス</a>
+                    <a href="https://github.com/peterandree/workday-wake-app/issues">Issues</a>
+                    <a href="privacy.html">プライバシー</a>
+                    <a href="support.html">支援する</a>
+                    <a href="against-hostile-oems.html">アラームの信頼性</a>
+                    <a href="impressum.html" hreflang="de">Impressum</a>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2026 NoirOrioN (peterandree). All rights reserved.（無断転載禁止）</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .doc-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
